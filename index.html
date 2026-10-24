@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-TW" data-theme="kawaii"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="zh-TW" data-theme="kawaii">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>✨ 1~6課成語闖關大挑戰 ✨ 國小四年級測驗遊戲</title>
   <!-- 引入 Google Fonts 圓潤清晰繁體中文字體 Zen Maru Gothic 與 Noto Sans TC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&amp;family=Zen+Maru+Gothic:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     /* ==========================================================================
        1. 主題一：夢幻甜心風 (Kawaii Pastel — 預設風格)
@@ -1344,6 +1345,60 @@
       gap: 14px;
     }
 
+    /* 錯題筆記本專屬樣式 */
+    .mistake-badge-pill {
+      background: #E63946;
+      color: #FFF;
+      font-weight: 900;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mistake-card {
+      background: #FFFFFF;
+      border: 3px solid #FFD6E0;
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.08);
+      position: relative;
+    }
+
+    .mistake-card.frequent {
+      border-color: #E63946;
+      background: #FFFDFD;
+    }
+
+    .player-chip {
+      background: var(--option-index-bg);
+      color: var(--option-index-color);
+      border: 2px solid var(--card-inner-border);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 0.92rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .player-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-deep);
+    }
+
+    .player-chip.active {
+      background: var(--primary-deep);
+      color: #FFF;
+      border-color: var(--primary-deep);
+    }
+
     #confetti-canvas {
       position: fixed;
       inset: 0;
@@ -1391,6 +1446,9 @@
         <button class="kawaii-btn btn-primary" id="header-player-btn" onclick="openNameModal()">
           <span id="header-player-icon">👧</span> 挑戰者：<span id="header-player-name">小小挑戰者</span> ✏️
         </button>
+        <button class="kawaii-btn btn-butter" id="header-mistakes-btn" onclick="openMistakesModal()" title="查看錯題筆記本">
+          📝 錯題筆記 <span id="header-mistakes-count" class="mistake-badge-pill" style="padding:2px 7px; font-size:0.8rem; margin-left:3px; display:none;">0</span>
+        </button>
         <button class="kawaii-btn btn-secondary" onclick="openDictionaryModal()">
           📖 成語圖鑑 (36)
         </button>
@@ -1415,7 +1473,7 @@
           <span id="mascot-tagline" style="font-size:0.84rem; opacity:0.85;">💖 陪伴你一起闖關</span>
         </div>
         <div class="mascot-text" id="mascot-message">
-          歡迎來到成語闖關大挑戰！每一關只要「10 題全部答對（100%）」就能解鎖下一級喔！
+          歡迎來到成語闖關大挑戰！每一關只要「答對 8 題以上（80分）」就能過關解鎖下一級，也支援「⚡ 強制過關」喔！
         </div>
       </div>
     </section>
@@ -1440,25 +1498,50 @@
     </div>
   </div>
 
-  <!-- 挑戰者名字設定 Modal -->
+  <!-- 挑戰者名單設定 Modal -->
   <div class="modal-backdrop" id="name-modal" onclick="if(event.target===this) closeNameModal()">
-    <div class="modal-content" style="max-width: 480px;">
+    <div class="modal-content" style="max-width: 520px;">
       <div class="modal-header">
-        <h2 id="name-modal-title">✨ 輸入挑戰者名字 ✨</h2>
+        <h2 id="name-modal-title">✨ 挑戰者名單設定 ✨</h2>
         <button class="kawaii-btn btn-primary" onclick="closeNameModal()">✖</button>
       </div>
-      <div class="modal-body" style="text-align: center; padding: 28px 24px;">
-        <div style="font-size: 3.4rem; margin-bottom: 10px;" id="name-modal-icon">👑</div>
-        <p style="font-size: 1.08rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px;">
-          請輸入你的名字或暱稱，<br>應援夥伴會在闖關時為你加油，全破榮譽證書也會印上你的名字喔！
+      <div class="modal-body" style="text-align: center; padding: 22px 20px;">
+        <div style="font-size: 3.2rem; margin-bottom: 8px;" id="name-modal-icon">👑</div>
+        <p style="font-size: 1.02rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px;">
+          每位挑戰者擁有獨立的<b>關卡進度與錯題溫習筆記</b>，點選即可一鍵切換！
         </p>
-        <input type="text" id="modal-name-input" class="challenger-input" style="width: 85%; max-width: 280px; font-size: 1.3rem; padding: 10px 20px; margin-bottom: 18px;" placeholder="請輸入挑戰者名字..." maxlength="16" onkeydown="if(event.key==='Enter') saveNameFromModal()">
-        <div style="display: flex; justify-content: center; gap: 12px;">
-          <button class="kawaii-btn btn-accent" style="font-size: 1.1rem; padding: 12px 28px;" onclick="saveNameFromModal()">
-            ✅ 確定儲存
+
+        <!-- 現有挑戰者清單快速切換 -->
+        <div style="margin-bottom: 16px; text-align: left; background: var(--card-inner-bg); border: 2.5px solid var(--card-inner-border); border-radius: var(--radius-md); padding: 12px 14px;">
+          <div style="font-size: 0.92rem; font-weight: 900; color: var(--primary-deep); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <span>👥 現有挑戰者（Cookie 獨立儲存）：</span>
+            <span style="font-size: 0.82rem; color: var(--text-soft);">點選立即切換</span>
+          </div>
+          <div id="player-chips-list" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+        </div>
+
+        <!-- 輸入或新增挑戰者 -->
+        <div style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <input type="text" id="modal-name-input" class="challenger-input"
+                 style="width: 220px; font-size: 1.15rem; padding: 8px 14px;"
+                 placeholder="輸入新挑戰者名字..." maxlength="16"
+                 onkeydown="if(event.key==='Enter') saveNameFromModal()" />
+          <button class="kawaii-btn btn-accent" style="font-size: 1rem; padding: 9px 20px;" onclick="saveNameFromModal()">
+            ➕ 加入 / 切換
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 錯題溫習筆記本 Modal -->
+  <div class="modal-backdrop" id="mistakes-modal" onclick="if(event.target===this) closeMistakesModal()">
+    <div class="modal-content" style="max-width: 900px;">
+      <div class="modal-header">
+        <h2 id="mistakes-modal-title">📝 錯題溫習筆記本</h2>
+        <button class="kawaii-btn btn-primary" onclick="closeMistakesModal()">✖ 關閉</button>
+      </div>
+      <div class="modal-body" id="mistakes-modal-body" style="padding: 18px 22px;"></div>
     </div>
   </div>
 
@@ -1482,7 +1565,7 @@
         mascotVictory: '👑',
         mascotTitle: '🎀 魔法小精靈・蜜桃兔兔',
         mascotTagline: '💖 揮動小魔法棒陪你闖關',
-        welcomeMsg: (name) => `嗨嗨 <b>${name}</b>！歡迎來到成語魔法學園 💖 每一關只要「10 題全部答對（100%）」就能解鎖下一級，朝向【<b>成語魔法小公主／甜心小達人</b>】邁進吧！✨`,
+        welcomeMsg: (name) => `嗨嗨 <b>${name}</b>！歡迎來到成語魔法學園 💖 每一關只要「答對 8 題以上（80分）」就能解鎖下一級，朝向【<b>成語魔法小公主／甜心小達人</b>】邁進吧！✨`,
         scoreStatusIcon: '💖',
         scorePointIcon: '✨',
         progressIcon: '🎀',
@@ -1514,7 +1597,7 @@
         mascotVictory: '🏆',
         mascotTitle: '⚡ 太空柴犬隊長・阿波羅號',
         mascotTagline: '🛡️ 啟動護盾與雷射光陪你破關',
-        welcomeMsg: (name) => `呼叫指揮官 <b>${name}</b>！🚀 歡迎登陸星際成語艦隊！每關達成「10 題全對（100% 能量）」即可突破防線，奪下【<b>星際成語大勇者／傳奇指揮官</b>】最高榮耀！🏆`,
+        welcomeMsg: (name) => `呼叫指揮官 <b>${name}</b>！🚀 歡迎登陸星際成語艦隊！每關達成「答對 8 題以上（80% 能量）」即可突破防線，奪下【<b>星際成語大勇者／傳奇指揮官</b>】最高榮耀！🏆`,
         scoreStatusIcon: '🛡️',
         scorePointIcon: '⚡',
         progressIcon: '🚀',
@@ -1546,7 +1629,7 @@
         mascotVictory: '⛺',
         mascotTitle: '🍀 博學貓頭鷹博士・奧利',
         mascotTagline: '🧭 帶著指南針與放大鏡陪你尋寶',
-        welcomeMsg: (name) => `早安探險家 <b>${name}</b>！🍀 歡迎加入森林成語探險隊！每座營地只要「10 題全部答對（100%）」就能點亮露營燈 ⛺，獲得【<b>森林成語探險王／博學小博士</b>】稱號！🔍`,
+        welcomeMsg: (name) => `早安探險家 <b>${name}</b>！🍀 歡迎加入森林成語探險隊！每座營地只要「答對 8 題以上（80分）」就能點亮露營燈 ⛺，獲得【<b>森林成語探險王／博學小博士</b>】稱號！🔍`,
         scoreStatusIcon: '🍀',
         scorePointIcon: '🌰',
         progressIcon: '🧭',
@@ -1568,10 +1651,12 @@
     // ====== 狀態管理與 Cookie + LocalStorage 儲存機制 ======
     const STORAGE_KEY = 'kawaii_idiom_game_v2';
     const COOKIE_PROGRESS_KEY = 'study_game_idiom_progress';
+    const COOKIE_PLAYERS_KEY = 'study_game_players';
     const COOKIE_NAME_KEY = 'study_game_player_name';
     const COOKIE_THEME_KEY = 'study_game_theme';
     const DEFAULT_PLAYER_NAME = '小小挑戰者';
     const QUESTIONS_PER_ROUND = 10;
+    const PASS_SCORE = 8; // 答對 8 題 (80分) 即可過關
 
     function setCookie(name, value, days = 365) {
       try {
@@ -1600,24 +1685,78 @@
       return '';
     }
 
-    let progress = loadProgress();
-    let soundEnabled = true;
-    let currentSession = null;
+    // ====== 玩家清單管理（Cookie + LocalStorage 雙重備份） ======
+    function getPlayerList() {
+      try {
+        const rawCookie = getCookie(COOKIE_PLAYERS_KEY);
+        if (rawCookie) {
+          const parsed = JSON.parse(rawCookie);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      try {
+        const rawLocal = localStorage.getItem(COOKIE_PLAYERS_KEY);
+        if (rawLocal) {
+          const parsed = JSON.parse(rawLocal);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      return ['真真'];
+    }
 
-    function loadProgress() {
-      const cookieName = getCookie(COOKIE_NAME_KEY);
+    function savePlayerList(list) {
+      try {
+        const clean = Array.from(new Set(list.map(s => String(s).trim()).filter(Boolean)));
+        const str = JSON.stringify(clean);
+        setCookie(COOKIE_PLAYERS_KEY, str, 365);
+        localStorage.setItem(COOKIE_PLAYERS_KEY, str);
+      } catch (e) {}
+    }
+
+    function getActivePlayerName() {
+      const fromCookie = getCookie(COOKIE_NAME_KEY);
+      if (fromCookie && fromCookie.trim()) return fromCookie.trim();
+      const list = getPlayerList();
+      return list[0] || DEFAULT_PLAYER_NAME;
+    }
+
+    function setActivePlayer(name) {
+      name = (name || '').trim() || DEFAULT_PLAYER_NAME;
+      setCookie(COOKIE_NAME_KEY, name, 365);
+      const list = getPlayerList();
+      if (!list.includes(name)) {
+        list.push(name);
+        savePlayerList(list);
+      }
+    }
+
+    function getProgressKey(name) {
+      return `sg_idiom_prog_${encodeURIComponent(name || 'default')}`;
+    }
+
+    function loadProgress(name) {
+      const currentName = (name || getActivePlayerName()).trim() || DEFAULT_PLAYER_NAME;
       const cookieTheme = getCookie(COOKIE_THEME_KEY);
-      const cookieProg = getCookie(COOKIE_PROGRESS_KEY);
+      const key = getProgressKey(currentName);
 
       let parsed = null;
-      if (cookieProg) {
-        try { parsed = JSON.parse(cookieProg); } catch (e) {}
-      }
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved) parsed = JSON.parse(saved);
+      } catch (e) {}
+
+      // 若尚未儲存過獨立檔案，且當前為真真或第一位玩家，嘗試讀取既有進度
       if (!parsed) {
         try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (saved) parsed = JSON.parse(saved);
+          const legacyCookie = getCookie(COOKIE_PROGRESS_KEY);
+          if (legacyCookie) parsed = JSON.parse(legacyCookie);
         } catch (e) {}
+        if (!parsed) {
+          try {
+            const legacyLocal = localStorage.getItem(STORAGE_KEY);
+            if (legacyLocal) parsed = JSON.parse(legacyLocal);
+          } catch (e) {}
+        }
       }
 
       if (parsed) {
@@ -1626,7 +1765,7 @@
           clearedLevels: Array.isArray(parsed.clearedLevels) ? parsed.clearedLevels : [],
           bestScores: parsed.bestScores || {},
           totalStars: parsed.totalStars || 0,
-          playerName: cookieName || parsed.playerName || DEFAULT_PLAYER_NAME,
+          playerName: currentName,
           theme: THEME_CONFIGS[cookieTheme || parsed.theme] ? (cookieTheme || parsed.theme) : 'kawaii'
         };
       }
@@ -1636,21 +1775,153 @@
         clearedLevels: [],
         bestScores: {},
         totalStars: 0,
-        playerName: cookieName || DEFAULT_PLAYER_NAME,
+        playerName: currentName,
         theme: THEME_CONFIGS[cookieTheme] ? cookieTheme : 'kawaii'
       };
     }
 
+    let progress = loadProgress();
+    let soundEnabled = true;
+    let currentSession = null;
+
     function saveProgress() {
       try {
+        const key = getProgressKey(progress.playerName);
         const jsonStr = JSON.stringify(progress);
+        localStorage.setItem(key, jsonStr);
         setCookie(COOKIE_PROGRESS_KEY, jsonStr, 365);
         setCookie(COOKIE_NAME_KEY, progress.playerName, 365);
         setCookie(COOKIE_THEME_KEY, progress.theme, 365);
-        localStorage.setItem(STORAGE_KEY, jsonStr);
+        setActivePlayer(progress.playerName);
       } catch (e) {
         console.warn('儲存進度失敗:', e);
       }
+    }
+
+    // ====== 錯題溫習筆記本儲存機制（依玩家獨立隔離） ======
+    function getMistakesKey(name) {
+      return `sg_idiom_mistakes_${encodeURIComponent(name || progress.playerName)}`;
+    }
+
+    function loadMistakes(name) {
+      try {
+        const key = getMistakesKey(name);
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {}
+      return [];
+    }
+
+    function saveMistakes(mistakes, name) {
+      try {
+        const key = getMistakesKey(name || progress.playerName);
+        localStorage.setItem(key, JSON.stringify(mistakes));
+        updateMistakesBadge();
+      } catch (e) {}
+    }
+
+    function recordMistake(q, chosenOption, idiom) {
+      const mistakes = loadMistakes();
+      const qId = q.idiomId ? `${q.idiomId}_${q.answer}` : q.prompt;
+      const existingIndex = mistakes.findIndex(m => m.id === qId || m.prompt === q.prompt);
+
+      if (existingIndex >= 0) {
+        mistakes[existingIndex].wrongCount = (mistakes[existingIndex].wrongCount || 1) + 1;
+        mistakes[existingIndex].lastWrongAnswer = chosenOption;
+        mistakes[existingIndex].lastWrongAt = Date.now();
+        mistakes[existingIndex].options = q.shuffledOptions || q.options;
+      } else {
+        mistakes.unshift({
+          id: qId,
+          prompt: q.prompt,
+          options: q.shuffledOptions || q.options,
+          answer: q.answer,
+          hint: q.hint || '',
+          idiomId: q.idiomId,
+          level: currentSession ? currentSession.level : 1,
+          idiomName: idiom ? idiom.idiom : '',
+          zhuyin: idiom ? idiom.zhuyin : '',
+          lessonTitle: idiom ? (idiom.lessonTitle || `第${idiom.lesson}課`) : '',
+          meaning: idiom ? idiom.meaning : '',
+          example: idiom ? idiom.example : '',
+          synonyms: idiom && idiom.synonyms ? idiom.synonyms : [],
+          antonyms: idiom && idiom.antonyms ? idiom.antonyms : [],
+          wrongCount: 1,
+          lastWrongAnswer: chosenOption,
+          lastWrongAt: Date.now()
+        });
+      }
+      saveMistakes(mistakes);
+    }
+
+    function resolveMistake(qPrompt) {
+      const mistakes = loadMistakes();
+      const idx = mistakes.findIndex(m => m.prompt === qPrompt);
+      if (idx >= 0) {
+        if (mistakes[idx].wrongCount > 1) {
+          mistakes[idx].wrongCount--;
+        } else {
+          mistakes.splice(idx, 1);
+        }
+        saveMistakes(mistakes);
+      }
+    }
+
+    function removeMistakeManually(qId) {
+      let mistakes = loadMistakes();
+      mistakes = mistakes.filter(m => m.id !== qId && m.prompt !== qId);
+      saveMistakes(mistakes);
+      renderMistakesModalContent(currentMistakesFilter);
+      playCorrectSound();
+    }
+
+    function clearAllMistakes() {
+      if (confirm(`確定要清空挑戰者「${progress.playerName}」的所有錯題溫習筆記嗎？`)) {
+        saveMistakes([]);
+        renderMistakesModalContent(currentMistakesFilter);
+        playCorrectSound();
+      }
+    }
+
+    function updateMistakesBadge() {
+      const mistakes = loadMistakes();
+      const badgeEl = document.getElementById('header-mistakes-count');
+      if (badgeEl) {
+        badgeEl.textContent = mistakes.length;
+        badgeEl.style.display = mistakes.length > 0 ? 'inline-flex' : 'none';
+      }
+      const mapCountEl = document.getElementById('map-mistakes-count');
+      if (mapCountEl) mapCountEl.textContent = mistakes.length;
+    }
+
+    function switchPlayer(name) {
+      name = (name || '').trim();
+      if (!name) return;
+      setActivePlayer(name);
+      progress = loadProgress(name);
+      saveProgress();
+      applyThemeUI();
+      updateMistakesBadge();
+      closeNameModal();
+      playCorrectSound();
+      const t = getTheme();
+      setMascot(t.mascotHappy, `已切換為挑戰者「<b>${name}</b>」！${t.welcomeMsg(name)}`);
+      showMapScreen();
+    }
+
+    function renderPlayerChips() {
+      const container = document.getElementById('player-chips-list');
+      if (!container) return;
+      const list = getPlayerList();
+      const current = progress.playerName;
+      container.innerHTML = list.map(name => `
+        <button class="player-chip ${name === current ? 'active' : ''}" onclick="switchPlayer('${name.replace(/'/g, "\\'")}')">
+          ${name === current ? '⭐' : '👤'} ${name}
+        </button>
+      `).join('');
     }
 
     function getTheme() {
@@ -1813,7 +2084,7 @@
 
         let statusPill = '';
         if (isCleared) {
-          statusPill = `<span class="level-status-pill pill-cleared">${t.scorePointIcon} 已完美通關</span>`;
+          statusPill = `<span class="level-status-pill pill-cleared">${t.scorePointIcon} 已通關</span>`;
         } else if (isUnlocked) {
           statusPill = `<span class="level-status-pill pill-open">🔓 開放挑戰中</span>`;
         } else {
@@ -1826,7 +2097,10 @@
             <div>
               <div class="level-top">
                 <div class="level-icon">${isUnlocked ? themeIcon : '🔒'}</div>
-                ${statusPill}
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+                  ${statusPill}
+                  ${!isCleared ? `<button class="kawaii-btn btn-butter" style="padding: 4px 10px; font-size: 0.78rem;" title="直接強制通過此關卡" onclick="event.stopPropagation(); forcePassLevel(${lvl.level})">⚡ 強制過關</button>` : ''}
+                </div>
               </div>
               <div class="level-title">${lvl.name}</div>
               <div class="level-desc">${lvl.subtitle}</div>
@@ -1838,8 +2112,8 @@
               </div>
             </div>
             <div class="level-footer">
-              <span>🎯 過關條件：10 / 10 全對</span>
-              <span>${isCleared ? `${t.scoreStatusIcon} 100分` : (bestScore > 0 ? `最高 ${bestScore * 10}分` : '尚未挑戰')}</span>
+              <span>🎯 過關條件：答對 ${PASS_SCORE} / 10 題</span>
+              <span>${bestScore > 0 ? `${t.scoreStatusIcon} 最高 ${bestScore * 10}分` : (isCleared ? `${t.scoreStatusIcon} 已過關` : '尚未挑戰')}</span>
             </div>
           </div>
         `;
@@ -1848,7 +2122,7 @@
       const certBanner = progress.clearedLevels.includes(5) ? `
         <div style="margin-top: 24px; text-align: center; background: var(--mascot-banner-bg); padding: 18px; border-radius: var(--radius-lg); border: 3px dashed var(--primary-strong);">
           <p style="font-size: 1.15rem; font-weight: 900; color: var(--primary-deep); margin-bottom: 10px;">
-            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部五個關卡的 100% 完美挑戰！
+            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部五個關卡的闖關挑戰！
           </p>
           <button class="kawaii-btn btn-primary" onclick="showCertificateScreen()">
             🏆 查看專屬「${t.levelBadges[4]}」榮譽證書
@@ -1859,7 +2133,7 @@
       stage.innerHTML = `
         <div class="map-header">
           <h2>${t.brandIcon} 選擇主題風格與挑戰關卡 ${t.brandIcon}</h2>
-          <p>每關題庫皆有 36 題（五關共 180 題），每次挑戰隨機抽 10 題！必須「10 題全對 (100%)」才能解鎖下一關喔！</p>
+          <p>每關題庫皆有 36 題（五關共 180 題），每次挑戰隨機抽 10 題！只要「答對 ${PASS_SCORE} 題以上 (80分)」就能解鎖下一關（也支援點選「⚡ 強制過關」）！</p>
 
           <!-- 首頁三大主題風格切換卡片 -->
           <div class="home-theme-selector">
@@ -1886,22 +2160,63 @@
             </button>
           </div>
 
-          <!-- 挑戰者名字輸入區 -->
-          <div class="challenger-bar">
-            <label class="challenger-label" for="map-player-name">${t.playerIcon} 挑戰者名字：</label>
-            <input type="text" id="map-player-name" class="challenger-input"
-                   value="${progress.playerName}"
-                   placeholder="輸入你的名字..."
-                   maxlength="16"
-                   oninput="updatePlayerName(this.value)" />
-            <button class="kawaii-btn btn-accent" style="padding: 7px 15px; font-size: 0.92rem;" onclick="confirmInlineName()">
-              ${t.scorePointIcon} 確認名字
-            </button>
+          <!-- 挑戰者名字輸入與多玩家切換區 -->
+          <div class="challenger-bar" style="flex-direction:column; align-items:stretch; gap:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <label class="challenger-label" for="map-player-name">${t.playerIcon} 當前挑戰者：</label>
+                <input type="text" id="map-player-name" class="challenger-input"
+                       value="${progress.playerName}"
+                       placeholder="輸入挑戰者名字..."
+                       maxlength="16"
+                       onkeydown="if(event.key==='Enter') confirmInlineName()" />
+                <button class="kawaii-btn btn-accent" style="padding: 7px 15px; font-size: 0.92rem;" onclick="confirmInlineName()">
+                  ${t.scorePointIcon} 切換／儲存
+                </button>
+              </div>
+              <button class="kawaii-btn btn-butter" style="padding:6px 12px; font-size:0.86rem;" onclick="openNameModal()">
+                👥 管理挑戰者名單
+              </button>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <span style="font-size:0.84rem; font-weight:700; color:var(--text-soft);">快速切換：</span>
+              ${getPlayerList().map(name => `
+                <button class="player-chip ${name === progress.playerName ? 'active' : ''}" style="padding:3px 10px; font-size:0.84rem;" onclick="switchPlayer('${name.replace(/'/g, "\\'")}')">
+                  ${name === progress.playerName ? '⭐' : '👤'} ${name}
+                </button>
+              `).join('')}
+            </div>
           </div>
 
           <div class="overall-progress-bar">
             <div class="overall-progress-fill" style="width: ${percent}%;"></div>
             <div class="overall-progress-label">${t.scorePointIcon} ${progress.playerName} 的總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}</div>
+          </div>
+
+          <!-- 錯題溫習筆記本快捷橫條 -->
+          <div style="background:var(--card-inner-bg); border:3px solid var(--card-inner-border); border-radius:var(--radius-lg); padding:16px 20px; margin-top:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:var(--shadow-card);">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="font-size:2.4rem;">📝</div>
+              <div>
+                <div style="font-size:1.18rem; font-weight:900; color:var(--primary-deep); display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <span>${progress.playerName} 的錯題溫習筆記本</span>
+                  ${loadMistakes().filter(m => (m.wrongCount || 1) >= 2).length > 0 ? `<span class="mistake-badge-pill" style="background:#E63946; font-size:0.78rem;">🔥 常錯 ${loadMistakes().filter(m => (m.wrongCount || 1) >= 2).length} 題</span>` : ''}
+                </div>
+                <div style="font-size:0.92rem; font-weight:700; color:var(--text-soft); margin-top:2px;">
+                  目前已收錄 <b style="color:#E63946;" id="map-mistakes-count">${loadMistakes().length}</b> 題錯題${loadMistakes().filter(m => (m.wrongCount || 1) >= 2).length > 0 ? `（其中 <b>${loadMistakes().filter(m => (m.wrongCount || 1) >= 2).length}</b> 題為常錯題目需加強）` : '，隨時溫習強化弱點！'}
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="kawaii-btn btn-secondary" style="padding:8px 16px; font-size:0.94rem;" onclick="openMistakesModal()">
+                📖 查閱錯題本 (${loadMistakes().length})
+              </button>
+              ${loadMistakes().length > 0 ? `
+                <button class="kawaii-btn btn-accent" style="padding:8px 16px; font-size:0.94rem;" onclick="startMistakeQuiz('all')">
+                  🎯 錯題強化重測
+                </button>
+              ` : ''}
+            </div>
           </div>
         </div>
         <div class="levels-grid">
@@ -1915,7 +2230,37 @@
     function lockedLevelTip(levelNum) {
       playWrongSound();
       const t = getTheme();
-      setMascot(t.mascotCheer, `報告 <b>${progress.playerName}</b>！<b>Level ${levelNum}</b> 目前還是上鎖狀態 🔒～請先把 <b>Level ${levelNum - 1}</b> 的 10 題全部答對（100%），就能解鎖囉！${t.scoreStatusIcon}`);
+      setMascot(t.mascotCheer, `報告 <b>${progress.playerName}</b>！<b>Level ${levelNum}</b> 目前還是上鎖狀態 🔒～請先把 <b>Level ${levelNum - 1}</b> 答對 ${PASS_SCORE} 題以上（或點選卡片上的「⚡ 強制過關」），就能解鎖囉！${t.scoreStatusIcon}`);
+    }
+
+    // 強制過關（可從關卡地圖或測驗中直接觸發）
+    function forcePassLevel(levelNum) {
+      const levelObj = window.GAME_DATA.levels.find(l => l.level === levelNum);
+      if (!levelObj) return;
+      playFanfareSound();
+      if (!progress.clearedLevels.includes(levelNum)) {
+        progress.clearedLevels.push(levelNum);
+      }
+      if ((progress.bestScores[levelNum] || 0) < PASS_SCORE) {
+        progress.bestScores[levelNum] = PASS_SCORE;
+      }
+      if (levelNum < 5 && progress.unlockedLevel < levelNum + 1) {
+        progress.unlockedLevel = levelNum + 1;
+      }
+      saveProgress();
+      const t = getTheme();
+      if (levelNum === 5) {
+        setMascot(t.mascotVictory, `已為 <b>${progress.playerName}</b> 強制通過 <b>${levelObj.name}</b>！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+        showCertificateScreen();
+      } else {
+        setMascot(t.mascotHappy, `⚡ 已為 <b>${progress.playerName}</b> 強制通過 <b>${levelObj.name}</b>，並成功解鎖 <b>Level ${levelNum + 1}</b> 囉！${t.scorePointIcon}`);
+        showMapScreen();
+      }
+    }
+
+    function forcePassCurrentLevel() {
+      if (!currentSession) return;
+      finishLevel(true);
     }
 
     // ====== 畫面 2：開始關卡測驗 ======
@@ -1944,11 +2289,23 @@
 
       setMascot(
         t.mascotAvatar,
-        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已從本關 <b>${levelObj.questions.length} 道題庫</b> 中隨機抽出 <b>10 道題目</b>，全部答對就能晉級喔！${t.hintIcon}`
+        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已隨機抽出 <b>10 道題目</b>，只要答對 <b>${PASS_SCORE} 題以上（80分）</b> 就能過關晉級喔！${t.hintIcon}`
       );
       renderQuestionScreen();
       const stage = document.getElementById('main-stage');
       if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function getPassStatusText(s) {
+      const totalQ = s.questions.length;
+      const maxMistakes = totalQ - PASS_SCORE; // 2
+      if (s.correctCount >= PASS_SCORE) {
+        return '已達標過關！🎉';
+      }
+      if (s.wrongRecords.length <= maxMistakes) {
+        return `目標${PASS_SCORE}題 (還可錯 ${maxMistakes - s.wrongRecords.length} 題)`;
+      }
+      return '未達8題 (可點強制過關)';
     }
 
     function renderQuestionScreen() {
@@ -1970,24 +2327,23 @@
         </button>
       `).join('');
 
-      const hasMistake = s.wrongRecords.length > 0;
-
       stage.innerHTML = `
         <div class="quiz-topbar">
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
             <button class="kawaii-btn btn-reset" onclick="showMapScreen()">⬅ 返回地圖</button>
             <div class="quiz-level-tag">${levelThemeIcon} ${s.levelObj.name}</div>
+            <button class="kawaii-btn btn-butter" style="padding: 6px 13px; font-size: 0.86rem;" onclick="forcePassCurrentLevel()">⚡ 強制過關</button>
           </div>
           <div class="scoreboard">
             <div class="score-pill">${t.playerIcon} 挑戰者：${progress.playerName}</div>
-            <div class="score-pill" id="pill-status">${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}</div>
+            <div class="score-pill" id="pill-status">${t.scoreStatusIcon} 狀態：${getPassStatusText(s)}</div>
             <div class="score-pill" id="pill-score">${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}</div>
           </div>
         </div>
 
         <div class="progress-section">
           <div class="progress-info">
-            <span>${t.progressIcon} 當前關卡進度：第 ${qNum} / ${totalQ} 題</span>
+            <span>${t.progressIcon} 當前關卡進度：第 ${qNum} / ${totalQ} 題（答對 ${PASS_SCORE} 題即可過關）</span>
             <span>${progressPct}%</span>
           </div>
           <div class="quiz-progress-track">
@@ -2047,8 +2403,12 @@
       if (isCorrect) {
         s.correctCount++;
         playCorrectSound();
-        setMascot(t.mascotHappy, `太棒了 <b>${progress.playerName}</b>！答對囉！${t.scorePointIcon}「<b>${idiom.idiom}</b>」的意思和用法你掌握得超棒！${t.scoreStatusIcon}`);
+        if (s.isMistakeQuiz) {
+          resolveMistake(q.prompt);
+        }
+        setMascot(t.mascotHappy, `太棒了 <b>${progress.playerName}</b>！答對囉！${s.isMistakeQuiz ? '已成功克服一題弱點！' : ''}${t.scorePointIcon}「<b>${idiom.idiom}</b>」掌握得超棒！${t.scoreStatusIcon}`);
       } else {
+        recordMistake(q, chosenOption, idiom);
         s.wrongRecords.push({
           question: q.prompt,
           yourAnswer: chosenOption,
@@ -2056,15 +2416,14 @@
           idiom
         });
         playWrongSound();
-        setMascot(t.mascotCheer, `別氣餒 <b>${progress.playerName}</b>！正確答案是「<b>${q.answer}</b>」，快看看下方的成語圖鑑小卡把「<b>${idiom.idiom}</b>」記起來吧！💪`);
+        setMascot(t.mascotCheer, `別氣餒 <b>${progress.playerName}</b>！已為你收錄至錯題溫習筆記本，正確答案是「<b>${q.answer}</b>」，多看一次解析小卡加深記憶喔！💪`);
       }
 
       // 即時更新計分板
       const totalQ = s.questions.length;
-      const hasMistake = s.wrongRecords.length > 0;
       const pillStatus = document.getElementById('pill-status');
       const pillScore = document.getElementById('pill-score');
-      if (pillStatus) pillStatus.innerHTML = `${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}`;
+      if (pillStatus) pillStatus.innerHTML = `${t.scoreStatusIcon} 狀態：${getPassStatusText(s)}`;
       if (pillScore) pillScore.innerHTML = `${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}`;
 
       const panel = document.getElementById('feedback-panel');
@@ -2127,26 +2486,99 @@
           stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       } else {
-        finishLevel();
+        finishLevel(false);
       }
     }
 
-    // ====== 畫面 3：關卡結算畫面 ======
-    function finishLevel() {
+    // ====== 畫面 3：關卡結算畫面（答對 8 題即可過關，亦支援強制過關） ======
+    function finishLevel(isForced = false) {
       document.body.classList.remove('in-quiz');
       const stage = document.getElementById('main-stage');
       const s = currentSession;
       const t = getTheme();
       const total = s.questions.length;
-      const isPerfect = s.correctCount === total;
-      const themeBadge = t.levelBadges[s.level - 1] || s.levelObj.badge;
 
-      const prevBest = progress.bestScores[s.level] || 0;
-      if (s.correctCount > prevBest) {
-        progress.bestScores[s.level] = s.correctCount;
+      if (s.isMistakeQuiz) {
+        playFanfareSound();
+        startConfetti();
+        const currentMistakes = loadMistakes();
+        const reviewHtml = s.wrongRecords.length > 0 ? `
+          <div class="review-list" style="margin-top: 20px;">
+            <h3>📝 本次仍需加強題目（共 ${s.wrongRecords.length} 題）</h3>
+            ${s.wrongRecords.map((item, idx) => `
+              <div class="review-item">
+                <div class="review-q">${idx + 1}. ${item.question}</div>
+                <div class="review-wrong-ans">❌ 你的選擇：${item.yourAnswer}</div>
+                <div class="review-ans">⭕ 正確答案：${item.correctAnswer}</div>
+                <div style="font-size:0.96rem; color:var(--text-main); font-weight:700; margin-top:6px; background:var(--progress-track-bg); padding:8px 12px; border-radius:10px;">
+                  📘 <b>${item.idiom.idiom}（${item.idiom.zhuyin}）</b>：${item.idiom.meaning}<br>
+                  💬 例句：${item.idiom.example}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '';
+
+        setMascot(t.mascotVictory, `太厲害了 <b>${progress.playerName}</b>！錯題強化特訓完成！本次答對 <b>${s.correctCount} / ${total} 題</b>！答對題目已自動降低錯題次數或移出錯題本！${t.scorePointIcon}`);
+
+        stage.innerHTML = `
+          <div class="result-box">
+            <div class="result-icon">🎯</div>
+            <div class="result-title">${t.scorePointIcon} 錯題強化特訓完成！ ${t.scorePointIcon}</div>
+            <div class="result-subtitle">
+              你在本次錯題強化挑戰中答對了 <b>${s.correctCount} / ${total} 題</b>！<br>
+              答對的題目已成功克服弱點！目前你的錯題本剩餘 <b>${currentMistakes.length}</b> 題。
+            </div>
+            <div class="score-big-badge">
+              <span>🎯 答對率：${Math.round((s.correctCount / total) * 100)}%（答對 ${s.correctCount} / ${total} 題）</span>
+            </div>
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+              ${currentMistakes.length > 0 ? `
+                <button class="kawaii-btn btn-primary" style="font-size:1.12rem; padding:13px 24px;" onclick="stopConfetti(); startMistakeQuiz('all')">
+                  🔄 再測一次剩餘錯題 (${currentMistakes.length} 題)
+                </button>
+              ` : ''}
+              <button class="kawaii-btn btn-secondary" onclick="stopConfetti(); openMistakesModal()">
+                📖 查閱錯題筆記本
+              </button>
+              <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">
+                ${t.brandIcon} 返回關卡地圖
+              </button>
+            </div>
+            ${reviewHtml}
+          </div>
+        `;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
       }
 
-      if (isPerfect) {
+      const isPassed = isForced || (s.correctCount >= PASS_SCORE);
+      const themeBadge = t.levelBadges[s.level - 1] || s.levelObj.badge;
+
+      const effectiveScore = isForced && s.correctCount < PASS_SCORE ? PASS_SCORE : s.correctCount;
+      const prevBest = progress.bestScores[s.level] || 0;
+      if (effectiveScore > prevBest) {
+        progress.bestScores[s.level] = effectiveScore;
+      }
+
+      const reviewHtml = s.wrongRecords.length > 0 ? `
+        <div class="review-list" style="margin-top: 20px;">
+          <h3>📝 本次錯題溫習筆記（共 ${s.wrongRecords.length} 題）</h3>
+          ${s.wrongRecords.map((item, idx) => `
+            <div class="review-item">
+              <div class="review-q">${idx + 1}. ${item.question}</div>
+              <div class="review-wrong-ans">❌ 你的選擇：${item.yourAnswer}</div>
+              <div class="review-ans">⭕ 正確答案：${item.correctAnswer}</div>
+              <div style="font-size:0.96rem; color:var(--text-main); font-weight:700; margin-top:6px; background:var(--progress-track-bg); padding:8px 12px; border-radius:10px;">
+                📘 <b>${item.idiom.idiom}（${item.idiom.zhuyin}）</b>：${item.idiom.meaning}<br>
+                💬 例句：${item.idiom.example}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : '';
+
+      if (isPassed) {
         playFanfareSound();
         if (!progress.clearedLevels.includes(s.level)) {
           progress.clearedLevels.push(s.level);
@@ -2156,73 +2588,69 @@
         }
         saveProgress();
 
-        if (s.level === 5) {
+        if (s.level === 5 && s.wrongRecords.length === 0) {
           startConfetti();
-          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把五個等級的成語難關全部 100% 破解了！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把五個等級的成語難關全部破解了！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
           showCertificateScreen();
           return;
         }
 
         startConfetti();
-        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> 10 題全部答對（100分）！成功解鎖 <b>Level ${s.level + 1}</b> 囉！${t.scorePointIcon}`);
+        const passTypeLabel = isForced ? '⚡ 強制過關成功' : `答對 ${s.correctCount} / ${total} 題（${s.correctCount * 10}分）過關`;
+        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> ${passTypeLabel}！${s.level < 5 ? `成功解鎖 <b>Level ${s.level + 1}</b> 囉！` : '已完成全部五個關卡！'}${t.scorePointIcon}`);
 
         stage.innerHTML = `
           <div class="result-box">
             <div class="result-icon">🏆</div>
-            <div class="result-title">${t.progressIcon} 恭喜 ${progress.playerName} 100% 完美過關！ ${t.progressIcon}</div>
+            <div class="result-title">${t.progressIcon} 恭喜 ${progress.playerName} 闖關成功！ ${t.progressIcon}</div>
             <div class="result-subtitle">
-              你在「${s.levelObj.name}」答對了全部 ${total} 道題目！<br>
-              獲得本關榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} 並成功解鎖下一關！
+              你在「${s.levelObj.name}」${isForced ? '使用了「⚡ 強制過關」特權' : `答對了 ${s.correctCount} 道題目（達 ${PASS_SCORE} 題過關標準）`}！<br>
+              獲得本關榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} ${s.level < 5 ? '並成功解鎖下一關！' : '並解鎖全破榮譽證書！'}
             </div>
             <div class="score-big-badge">
-              <span>💯 得分：100 分（${s.correctCount} / ${total} 題全對）</span>
+              <span>🎉 成績：${isForced ? `強制過關（答對 ${s.correctCount} / ${total} 題）` : `${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題）`}</span>
             </div>
             <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); startLevel(${s.level + 1})">
-                ${t.progressIcon} 立即挑戰 Level ${s.level + 1} ➡
-              </button>
+              ${s.level < 5 ? `
+                <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); startLevel(${s.level + 1})">
+                  ${t.progressIcon} 立即挑戰 Level ${s.level + 1} ➡
+                </button>
+              ` : `
+                <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); showCertificateScreen()">
+                  🏆 領取「${t.levelBadges[4]}」榮譽證書
+                </button>
+              `}
               <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">
                 ${t.brandIcon} 返回關卡地圖
               </button>
             </div>
+            ${reviewHtml}
           </div>
         `;
       } else {
         saveProgress();
-        setMascot(t.mascotCheer, `<b>${progress.playerName}</b> 這次答對了 <b>${s.correctCount} / ${total} 題</b>，已經很棒了喔！只要把下面複習清單的錯題看懂，再挑戰一次拿 100% 就能解鎖下一關！💪`);
-
-        const reviewHtml = s.wrongRecords.map((item, idx) => `
-          <div class="review-item">
-            <div class="review-q">${idx + 1}. ${item.question}</div>
-            <div class="review-wrong-ans">❌ 你的選擇：${item.yourAnswer}</div>
-            <div class="review-ans">⭕ 正確答案：${item.correctAnswer}</div>
-            <div style="font-size:0.96rem; color:var(--text-main); font-weight:700; margin-top:6px; background:var(--progress-track-bg); padding:8px 12px; border-radius:10px;">
-              📘 <b>${item.idiom.idiom}（${item.idiom.zhuyin}）</b>：${item.idiom.meaning}<br>
-              💬 例句：${item.idiom.example}
-            </div>
-          </div>
-        `).join('');
+        setMascot(t.mascotCheer, `<b>${progress.playerName}</b> 這次答對了 <b>${s.correctCount} / ${total} 題</b>！只要答對 <b>${PASS_SCORE} 題（80分）</b> 就能過關，你也可以選擇再挑戰一次，或點選「⚡ 直接強制過關」喔！💪`);
 
         stage.innerHTML = `
           <div class="result-box">
             <div class="result-icon">${t.levelIcons[0]}</div>
-            <div class="result-title">${t.scorePointIcon} 差一點點就滿分囉！加油！ ${t.scorePointIcon}</div>
+            <div class="result-title">${t.scorePointIcon} 差一點點就過關囉！加油！ ${t.scorePointIcon}</div>
             <div class="result-subtitle">
-              本關需要「<b>10 題全部答對 (100%)</b>」才能解鎖下一級喔！<br>
-              先看看下方的錯題複習小卡，準備好就重新洗牌再挑戰一次吧！${t.scoreStatusIcon}
+              本關只要「<b>答對 ${PASS_SCORE} 題以上 (80分)</b>」就能過關解鎖下一級喔！<br>
+              先看看下方的錯題複習小卡，準備好就重新洗牌再挑戰一次，或點選「⚡ 直接強制過關」吧！${t.scoreStatusIcon}
             </div>
             <div class="score-big-badge">
-              <span>${t.scorePointIcon} 本次成績：${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題）</span>
+              <span>${t.scorePointIcon} 本次成績：${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題，過關標準 ${PASS_SCORE} 題）</span>
             </div>
 
-            <div class="review-list">
-              <h3>📝 錯題溫習筆記（共 ${s.wrongRecords.length} 題）</h3>
-              ${reviewHtml}
-            </div>
+            ${reviewHtml}
 
             <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="startLevel(${s.level})">
+              <button class="kawaii-btn btn-primary" style="font-size:1.12rem; padding:13px 24px;" onclick="startLevel(${s.level})">
                 🔄 重新隨機抽 10 題・再挑戰一次！
+              </button>
+              <button class="kawaii-btn btn-accent" style="font-size:1.12rem; padding:13px 24px;" onclick="forcePassCurrentLevel()">
+                ⚡ 直接強制過關（解鎖下一關）
               </button>
               <button class="kawaii-btn btn-butter" onclick="showMapScreen()">
                 ${t.brandIcon} 返回關卡地圖
@@ -2263,7 +2691,7 @@
 
           <div class="cert-body">
             在「國小四年級第一課至第六課成語闖關測驗（180 題大題庫）」中，<br>
-            以 <b>100% 全對</b> 的完美表現在五大難度關卡中過關斬將，<br>
+            以優異表現在五大難度關卡中過關斬將、完成所有挑戰，<br>
             正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[4]}</b>】之最高稱號！<br>
             展現了<b>精衛填海</b>的堅定毅力與<b>登峰造極</b>的語文實力，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
           </div>
@@ -2289,15 +2717,12 @@
     }
 
     function updatePlayerName(val) {
-      progress.playerName = val.trim() || DEFAULT_PLAYER_NAME;
-      saveProgress();
-      syncHeaderName();
-      const t = getTheme();
-      const mapLabel = document.querySelector('.overall-progress-label');
-      if (mapLabel) {
-        const clearedCount = progress.clearedLevels.length;
-        const percent = Math.round((clearedCount / 5) * 100);
-        mapLabel.textContent = `${t.scorePointIcon} ${progress.playerName} 的總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}`;
+      const trimmed = (val || '').trim() || DEFAULT_PLAYER_NAME;
+      if (trimmed !== progress.playerName) {
+        switchPlayer(trimmed);
+      } else {
+        saveProgress();
+        syncHeaderName();
       }
     }
 
@@ -2310,7 +2735,8 @@
       const inputEl = document.getElementById('map-player-name');
       const t = getTheme();
       if (inputEl) {
-        updatePlayerName(inputEl.value);
+        const val = inputEl.value.trim() || DEFAULT_PLAYER_NAME;
+        switchPlayer(val);
         playCorrectSound();
         setMascot(t.mascotHappy, `太棒了！已將挑戰者名字「<b>${progress.playerName}</b>」儲存至你的專屬瀏覽器 Cookie 中囉！${t.scorePointIcon}`);
       }
@@ -2321,8 +2747,9 @@
       const input = document.getElementById('modal-name-input');
       const t = getTheme();
       document.getElementById('name-modal-icon').textContent = t.brandIcon;
+      renderPlayerChips();
       if (modal && input) {
-        input.value = progress.playerName === DEFAULT_PLAYER_NAME ? '' : progress.playerName;
+        input.value = '';
         modal.style.display = 'flex';
         setTimeout(() => input.focus(), 50);
       }
@@ -2335,20 +2762,234 @@
 
     function saveNameFromModal() {
       const input = document.getElementById('modal-name-input');
-      const t = getTheme();
-      if (input) {
-        updatePlayerName(input.value);
-        const mapInput = document.getElementById('map-player-name');
-        if (mapInput) mapInput.value = progress.playerName;
-        const certInput = document.getElementById('cert-player-name');
-        if (certInput) certInput.value = progress.playerName;
-        playCorrectSound();
-        setMascot(t.mascotHappy, t.welcomeMsg(progress.playerName));
+      const val = input ? input.value.trim() : '';
+      if (val) {
+        switchPlayer(val);
       }
       closeNameModal();
-      if (currentSession && document.querySelector('.quiz-topbar')) {
-        renderQuestionScreen();
+    }
+
+    // ====== 錯題筆記本視窗渲染與錯題重測 ======
+    let currentMistakesFilter = 'all';
+
+    function openMistakesModal(filter = 'all') {
+      currentMistakesFilter = filter;
+      const modal = document.getElementById('mistakes-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        renderMistakesModalContent(currentMistakesFilter);
       }
+    }
+
+    function closeMistakesModal() {
+      const modal = document.getElementById('mistakes-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function renderMistakesModalContent(filter = 'all') {
+      currentMistakesFilter = filter;
+      const body = document.getElementById('mistakes-modal-body');
+      if (!body) return;
+      const t = getTheme();
+      const mistakes = loadMistakes();
+      const frequentMistakes = mistakes.filter(m => (m.wrongCount || 1) >= 2);
+      const players = getPlayerList();
+
+      let filtered = mistakes;
+      if (filter === 'frequent') {
+        filtered = frequentMistakes;
+      } else if (filter.startsWith('level_')) {
+        const lvlNum = parseInt(filter.replace('level_', ''), 10);
+        filtered = mistakes.filter(m => m.level === lvlNum);
+      }
+
+      const playerChipsHtml = players.map(name => `
+        <button class="player-chip ${name === progress.playerName ? 'active' : ''}" onclick="switchPlayer('${name.replace(/'/g, "\\\'")}'); renderMistakesModalContent('${filter}')">
+          ${name === progress.playerName ? '⭐' : '👤'} ${name}
+        </button>
+      `).join('');
+
+      body.innerHTML = `
+        <!-- 玩家切換橫條 -->
+        <div style="background:var(--card-inner-bg); border:2px solid var(--card-inner-border); border-radius:var(--radius-md); padding:10px 14px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div style="font-weight:900; color:var(--primary-deep); font-size:0.95rem;">
+            👤 正在查閱：<b>${progress.playerName}</b> 的專屬錯題筆記
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:0.85rem; font-weight:700; color:var(--text-soft);">切換玩家：</span>
+            ${playerChipsHtml}
+          </div>
+        </div>
+
+        <!-- 統計與操作 -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <div>
+            <span style="font-size:1.1rem; font-weight:900; color:var(--text-main);">
+              共收錄 <b style="color:var(--primary-deep);">${mistakes.length}</b> 題錯題
+            </span>
+            <span style="font-size:0.95rem; font-weight:900; color:#E63946; margin-left:8px;">
+              🔥 常錯題目：<b>${frequentMistakes.length}</b> 題（答錯2次以上）
+            </span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            ${mistakes.length > 0 ? `
+              <button class="kawaii-btn btn-accent" style="padding:7px 16px; font-size:0.92rem;" onclick="startMistakeQuiz('all')">
+                🎯 錯題強化重測 (全部 ${mistakes.length} 題)
+              </button>
+            ` : ''}
+            ${frequentMistakes.length > 0 ? `
+              <button class="kawaii-btn btn-primary" style="padding:7px 16px; font-size:0.92rem;" onclick="startMistakeQuiz('frequent')">
+                🔥 重測常錯精選 (${frequentMistakes.length} 題)
+              </button>
+            ` : ''}
+            ${mistakes.length > 0 ? `
+              <button class="kawaii-btn btn-reset" style="padding:7px 14px; font-size:0.88rem;" onclick="clearAllMistakes()">
+                🗑️ 清空錯題本
+              </button>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- 篩選標籤頁 -->
+        <div class="filter-tabs" style="margin-bottom:14px;">
+          <button class="filter-tab ${filter === 'all' ? 'active' : ''}" onclick="renderMistakesModalContent('all')">
+            📋 全部錯題 (${mistakes.length})
+          </button>
+          <button class="filter-tab ${filter === 'frequent' ? 'active' : ''}" onclick="renderMistakesModalContent('frequent')">
+            🔥 常錯精選 (${frequentMistakes.length})
+          </button>
+          ${[1, 2, 3, 4, 5].map(lvl => {
+            const count = mistakes.filter(m => m.level === lvl).length;
+            return `<button class="filter-tab ${filter === 'level_' + lvl ? 'active' : ''}" onclick="renderMistakesModalContent('level_${lvl}')">
+              ${t.levelIcons[lvl - 1] || '⭐'} Level ${lvl} (${count})
+            </button>`;
+          }).join('')}
+        </div>
+
+        <!-- 題目卡片清單 -->
+        <div style="max-height: 55vh; overflow-y: auto; padding-right: 4px;">
+          ${filtered.length === 0 ? `
+            <div style="text-align:center; padding:36px 20px; background:var(--card-inner-bg); border-radius:var(--radius-md);">
+              <div style="font-size:3.5rem; margin-bottom:10px;">🎉</div>
+              <div style="font-size:1.3rem; font-weight:900; color:var(--primary-deep); margin-bottom:6px;">目前沒有此分類的錯題紀錄喔！</div>
+              <p style="font-size:0.95rem; font-weight:700; color:var(--text-soft);">
+                ${filter === 'frequent' ? '太厲害了！沒有連續答錯2次以上的題目，成語觀念非常清楚！' : '繼續保持！闖關時若有選錯的成語題目會自動為你收錄在這裡隨時溫習喔！'}
+              </p>
+            </div>
+          ` : filtered.map((m, idx) => {
+            const isFreq = (m.wrongCount || 1) >= 2;
+            return `
+              <div class="mistake-card ${isFreq ? 'frequent' : ''}">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span class="lesson-badge">${m.level ? `Level ${m.level}` : ''} ${m.lessonTitle || ''}</span>
+                    ${isFreq ? `
+                      <span class="mistake-badge-pill" style="background:#E63946;">
+                        🔥 常錯題目（累計答錯 ${m.wrongCount} 次）
+                      </span>
+                    ` : `
+                      <span class="mistake-badge-pill" style="background:#F4A261;">
+                        ⚠️ 錯題（答錯 1 次）
+                      </span>
+                    `}
+                    ${m.idiomName ? `<span style="font-weight:900; color:var(--primary-deep); font-size:1.05rem;">【${m.idiomName}】</span>` : ''}
+                  </div>
+                  <button class="kawaii-btn btn-butter" style="padding:4px 10px; font-size:0.8rem;" onclick="removeMistakeManually('${m.id.replace(/'/g, "\\'")}')">
+                    🗑️ 移出錯題
+                  </button>
+                </div>
+
+                <div style="font-size:1.15rem; font-weight:900; color:var(--text-main); margin-bottom:10px; line-height:1.5;">
+                  ${idx + 1}. ${m.prompt}
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:6px; margin-bottom:10px;">
+                  ${(m.options || []).map(opt => {
+                    const isCorrect = opt === m.answer;
+                    const wasWrongChoice = opt === m.lastWrongAnswer;
+                    let bg = '#FFFFFF';
+                    let border = 'var(--card-inner-border)';
+                    let color = 'var(--text-main)';
+                    let icon = '';
+                    if (isCorrect) {
+                      bg = '#E8F5E9';
+                      border = '#2E7D32';
+                      color = '#1B5E20';
+                      icon = '⭕ 正確解答：';
+                    } else if (wasWrongChoice) {
+                      bg = '#FFEBEE';
+                      border = '#E63946';
+                      color = '#C2185B';
+                      icon = '❌ 上次選了：';
+                    }
+                    return `
+                      <div style="background:${bg}; border:2px solid ${border}; color:${color}; padding:7px 12px; border-radius:var(--radius-sm); font-size:0.95rem; font-weight:700;">
+                        ${icon}${opt}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+
+                ${m.meaning ? `
+                  <div style="background:var(--progress-track-bg); border-left:4px solid var(--primary-deep); padding:8px 12px; border-radius:0 var(--radius-sm) var(--radius-sm) 0; font-size:0.92rem; font-weight:700; color:var(--text-main); line-height:1.55;">
+                    <div>📖 <b>成語釋義：</b>${m.meaning}</div>
+                    ${m.example ? `<div style="margin-top:4px;">💬 <b>例句：</b>${m.example}</div>` : ''}
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function startMistakeQuiz(filterType = 'all') {
+      closeMistakesModal();
+      let pool = loadMistakes();
+      if (filterType === 'frequent') {
+        pool = pool.filter(m => (m.wrongCount || 1) >= 2);
+      }
+      if (!pool || pool.length === 0) {
+        alert('目前沒有符合條件的錯題可以複習喔！');
+        return;
+      }
+
+      const selected = shuffleArray(pool).slice(0, QUESTIONS_PER_ROUND);
+      const preparedQuestions = selected.map(m => ({
+        idiomId: m.idiomId,
+        prompt: m.prompt,
+        answer: m.answer,
+        hint: m.hint || '這是你之前答錯過的題目，仔細想想正確答案喔！',
+        shuffledOptions: shuffleArray(m.options || [m.answer]),
+        originalMistakeId: m.id
+      }));
+
+      document.body.classList.add('in-quiz');
+      currentSession = {
+        level: 99,
+        levelObj: {
+          level: 99,
+          name: filterType === 'frequent' ? '🔥 常錯題目強化重測' : '📝 錯題溫習複習測驗',
+          icon: '🎯',
+          badge: '🎯 弱點克服大師',
+          desc: '針對記錄下來的錯題與常錯題目進行精準重測，答對即可克服弱點！'
+        },
+        questions: preparedQuestions,
+        currentIndex: 0,
+        correctCount: 0,
+        wrongRecords: [],
+        answered: false,
+        isMistakeQuiz: true
+      };
+
+      const t = getTheme();
+      setMascot(
+        t.mascotAvatar,
+        `🎯 <b>${progress.playerName}</b> 的錯題強化特訓開始囉！本次共 <b>${preparedQuestions.length} 道題目</b>，只要答對就會自動降低答錯次數或移出錯題筆記，加油！💪`
+      );
+      renderQuestionScreen();
+      const stage = document.getElementById('main-stage');
+      if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // ====== 成語圖鑑 Modal ======
@@ -2468,6 +3109,7 @@
     // 初始化啟動
     window.addEventListener('DOMContentLoaded', () => {
       applyThemeUI();
+      updateMistakesBadge();
       const t = getTheme();
       setMascot(t.mascotAvatar, t.welcomeMsg(progress.playerName));
       showMapScreen();
@@ -2476,4 +3118,6 @@
         openNameModal();
       }
     });
-  </script></body></html>
+  </script>
+</body>
+</html>
