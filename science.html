@@ -1489,11 +1489,64 @@
     </div>
   </div>
 
+  <!-- 挑戰者名字設定 Modal -->
+  <div class="modal-backdrop" id="name-modal" onclick="if(event.target===this) closeNameModal()">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <div style="font-size:1.22rem; font-weight:900; color:var(--primary-deep);">✨ 輸入挑戰者名字 ✨</div>
+        <button class="kawaii-btn btn-reset" onclick="closeNameModal()">✖</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 26px 24px;">
+        <div style="font-size: 3.2rem; margin-bottom: 10px;" id="name-modal-icon">🔬</div>
+        <p style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px;">
+          請輸入你的名字或暱稱（會記錄在你的個人瀏覽器 Cookie 中），<br>應援夥伴會在闖關時為你加油，全破證書也會印上你的名字喔！
+        </p>
+        <input type="text" id="modal-name-input" class="challenger-input" style="width: 85%; max-width: 280px; font-size: 1.25rem; padding: 10px 20px; margin-bottom: 18px;" placeholder="請輸入挑戰者名字..." maxlength="16" onkeydown="if(event.key==='Enter') saveNameFromModal()">
+        <div style="display: flex; justify-content: center; gap: 12px;">
+          <button class="kawaii-btn btn-accent" style="font-size: 1.08rem; padding: 11px 26px;" onclick="saveNameFromModal()">
+            ✅ 確定儲存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 載入自然題庫資料 (36張科學卡 + 180道題目) -->
   <script src="science_game_data.js"></script>
   <script>
-    const STORAGE_KEY = 'grade4_science_aquatic_quiz_v1';
+    const STORAGE_KEY = 'grade4_science_aquatic_quiz_v2';
+    const COOKIE_PROGRESS_KEY = 'study_game_science_progress';
+    const COOKIE_NAME_KEY = 'study_game_player_name';
+    const COOKIE_THEME_KEY = 'study_game_theme';
+    const DEFAULT_PLAYER_NAME = '小小科學家';
     const QUESTIONS_PER_ROUND = 10;
+
+    function setCookie(name, value, days = 365) {
+      try {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = 'expires=' + d.toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(value)};${expires};path=/;SameSite=Lax`;
+      } catch (e) {
+        console.warn('Cookie 寫入失敗:', e);
+      }
+    }
+
+    function getCookie(name) {
+      try {
+        const target = name + '=';
+        const parts = document.cookie.split(';');
+        for (let i = 0; i < parts.length; i++) {
+          let c = parts[i].trim();
+          if (c.indexOf(target) === 0) {
+            return decodeURIComponent(c.substring(target.length, c.length));
+          }
+        }
+      } catch (e) {
+        console.warn('Cookie 讀取失敗:', e);
+      }
+      return '';
+    }
 
     // 互動水生生物棲位觀察箱資料
     const HABITAT_ZONES = [
@@ -1628,35 +1681,49 @@
     let activeHabitatKey = 'emergent';
 
     function loadProgress() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          return {
-            unlockedLevel: parsed.unlockedLevel || 1,
-            clearedLevels: Array.isArray(parsed.clearedLevels) ? parsed.clearedLevels : [],
-            bestScores: parsed.bestScores || {},
-            playerName: parsed.playerName || '小小科學家',
-            theme: THEMES[parsed.theme] ? parsed.theme : 'kawaii'
-          };
-        }
-      } catch (e) {
-        console.warn('無法讀取進度，使用預設進度', e);
+      const cookieName = getCookie(COOKIE_NAME_KEY);
+      const cookieTheme = getCookie(COOKIE_THEME_KEY);
+      const cookieProg = getCookie(COOKIE_PROGRESS_KEY);
+
+      let parsed = null;
+      if (cookieProg) {
+        try { parsed = JSON.parse(cookieProg); } catch (e) {}
       }
+      if (!parsed) {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) parsed = JSON.parse(raw);
+        } catch (e) {}
+      }
+
+      if (parsed) {
+        return {
+          unlockedLevel: parsed.unlockedLevel || 1,
+          clearedLevels: Array.isArray(parsed.clearedLevels) ? parsed.clearedLevels : [],
+          bestScores: parsed.bestScores || {},
+          playerName: cookieName || parsed.playerName || DEFAULT_PLAYER_NAME,
+          theme: THEMES[cookieTheme || parsed.theme] ? (cookieTheme || parsed.theme) : 'kawaii'
+        };
+      }
+
       return {
         unlockedLevel: 1,
         clearedLevels: [],
         bestScores: {},
-        playerName: '小小科學家',
-        theme: 'kawaii'
+        playerName: cookieName || DEFAULT_PLAYER_NAME,
+        theme: THEMES[cookieTheme] ? cookieTheme : 'kawaii'
       };
     }
 
     function saveProgress() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        const jsonStr = JSON.stringify(progress);
+        setCookie(COOKIE_PROGRESS_KEY, jsonStr, 365);
+        setCookie(COOKIE_NAME_KEY, progress.playerName, 365);
+        setCookie(COOKIE_THEME_KEY, progress.theme, 365);
+        localStorage.setItem(STORAGE_KEY, jsonStr);
       } catch (e) {
-        console.warn('無法寫入 localStorage', e);
+        console.warn('無法寫入進度', e);
       }
     }
 
@@ -1711,9 +1778,16 @@
 
     function updatePlayerName(newName) {
       const trimmed = (newName || '').trim();
-      progress.playerName = trimmed || '小小科學家';
+      progress.playerName = trimmed || DEFAULT_PLAYER_NAME;
       saveProgress();
       syncHeaderName();
+      const t = getTheme();
+      const mapLabel = document.querySelector('.overall-progress-label');
+      if (mapLabel) {
+        const clearedCount = progress.clearedLevels.length;
+        const percent = Math.round((clearedCount / 5) * 100);
+        mapLabel.textContent = `${t.scorePointIcon} ${progress.playerName} 的自然總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}`;
+      }
     }
 
     function syncHeaderName() {
@@ -1721,22 +1795,42 @@
       if (el) el.textContent = progress.playerName;
     }
 
-    function focusPlayerNameInput() {
-      const mapInput = document.getElementById('map-player-name');
-      const certInput = document.getElementById('cert-player-name');
-      if (mapInput) {
-        mapInput.focus();
-        mapInput.select();
-      } else if (certInput) {
-        certInput.focus();
-        certInput.select();
-      } else {
-        const entered = window.prompt('請輸入挑戰者的名字：', progress.playerName);
-        if (entered !== null) {
-          updatePlayerName(entered);
-          if (currentSession) renderQuestionScreen();
-        }
+    function openNameModal() {
+      const modal = document.getElementById('name-modal');
+      const input = document.getElementById('modal-name-input');
+      const t = getTheme();
+      const iconEl = document.getElementById('name-modal-icon');
+      if (iconEl) iconEl.textContent = t.brandIcon;
+      if (modal && input) {
+        input.value = progress.playerName === DEFAULT_PLAYER_NAME ? '' : progress.playerName;
+        modal.style.display = 'flex';
+        setTimeout(() => input.focus(), 50);
       }
+    }
+
+    function closeNameModal() {
+      const modal = document.getElementById('name-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function saveNameFromModal() {
+      const input = document.getElementById('modal-name-input');
+      const t = getTheme();
+      if (input) {
+        updatePlayerName(input.value);
+        const mapInput = document.getElementById('map-player-name');
+        if (mapInput) mapInput.value = progress.playerName;
+        const certInput = document.getElementById('cert-player-name');
+        if (certInput) certInput.value = progress.playerName;
+        playCorrectSound();
+        setMascot(t.mascotHappy, `太棒了！已將挑戰者名字「<b>${progress.playerName}</b>」儲存至你的個人瀏覽器 Cookie 中！${t.scorePointIcon}`);
+      }
+      closeNameModal();
+      if (currentSession) renderQuestionScreen();
+    }
+
+    function focusPlayerNameInput() {
+      openNameModal();
     }
 
     function confirmInlineName() {
@@ -1745,7 +1839,7 @@
         updatePlayerName(mapInput.value);
         const t = getTheme();
         playCorrectSound();
-        setMascot(t.mascotHappy, `太棒了！已經將挑戰者名字設定為「<b>${progress.playerName}</b>」！準備好就選擇關卡出發吧！${t.scorePointIcon}`);
+        setMascot(t.mascotHappy, `太棒了！已將挑戰者名字「<b>${progress.playerName}</b>」儲存至你的個人瀏覽器 Cookie 中！準備好就選擇關卡出發吧！${t.scorePointIcon}`);
         showMapScreen();
       }
     }
@@ -2498,5 +2592,9 @@
         `嗨，<b>${progress.playerName}</b>！歡迎來到「<b>水生生物與環境</b>」自然科學闖關實驗室！${t.scorePointIcon}`
       );
       showMapScreen();
+      // 若瀏覽器 Cookie 中尚未紀錄挑戰者名字，自動彈出輸入視窗讓玩家輸入並寫入個人 Cookie
+      if (!getCookie(COOKIE_NAME_KEY)) {
+        openNameModal();
+      }
     });
   </script></body></html>

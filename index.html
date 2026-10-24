@@ -1389,7 +1389,7 @@
         </div>
 
         <button class="kawaii-btn btn-primary" id="header-player-btn" onclick="openNameModal()">
-          <span id="header-player-icon">👧</span> 挑戰者：<span id="header-player-name">真真</span> ✏️
+          <span id="header-player-icon">👧</span> 挑戰者：<span id="header-player-name">小小挑戰者</span> ✏️
         </button>
         <button class="kawaii-btn btn-secondary" onclick="openDictionaryModal()">
           📖 成語圖鑑 (36)
@@ -1565,44 +1565,89 @@
       }
     };
 
-    // ====== 狀態管理與 LocalStorage ======
-    const STORAGE_KEY = 'kawaii_idiom_game_v1';
+    // ====== 狀態管理與 Cookie + LocalStorage 儲存機制 ======
+    const STORAGE_KEY = 'kawaii_idiom_game_v2';
+    const COOKIE_PROGRESS_KEY = 'study_game_idiom_progress';
+    const COOKIE_NAME_KEY = 'study_game_player_name';
+    const COOKIE_THEME_KEY = 'study_game_theme';
+    const DEFAULT_PLAYER_NAME = '小小挑戰者';
     const QUESTIONS_PER_ROUND = 10;
+
+    function setCookie(name, value, days = 365) {
+      try {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = 'expires=' + d.toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(value)};${expires};path=/;SameSite=Lax`;
+      } catch (e) {
+        console.warn('Cookie 寫入失敗:', e);
+      }
+    }
+
+    function getCookie(name) {
+      try {
+        const target = name + '=';
+        const parts = document.cookie.split(';');
+        for (let i = 0; i < parts.length; i++) {
+          let c = parts[i].trim();
+          if (c.indexOf(target) === 0) {
+            return decodeURIComponent(c.substring(target.length, c.length));
+          }
+        }
+      } catch (e) {
+        console.warn('Cookie 讀取失敗:', e);
+      }
+      return '';
+    }
 
     let progress = loadProgress();
     let soundEnabled = true;
     let currentSession = null;
 
     function loadProgress() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          return {
-            unlockedLevel: parsed.unlockedLevel || 1,
-            clearedLevels: parsed.clearedLevels || [],
-            bestScores: parsed.bestScores || {},
-            totalStars: parsed.totalStars || 0,
-            playerName: parsed.playerName || '真真',
-            theme: THEME_CONFIGS[parsed.theme] ? parsed.theme : 'kawaii'
-          };
-        }
-      } catch (e) {
-        console.warn('讀取進度失敗:', e);
+      const cookieName = getCookie(COOKIE_NAME_KEY);
+      const cookieTheme = getCookie(COOKIE_THEME_KEY);
+      const cookieProg = getCookie(COOKIE_PROGRESS_KEY);
+
+      let parsed = null;
+      if (cookieProg) {
+        try { parsed = JSON.parse(cookieProg); } catch (e) {}
       }
+      if (!parsed) {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) parsed = JSON.parse(saved);
+        } catch (e) {}
+      }
+
+      if (parsed) {
+        return {
+          unlockedLevel: parsed.unlockedLevel || 1,
+          clearedLevels: Array.isArray(parsed.clearedLevels) ? parsed.clearedLevels : [],
+          bestScores: parsed.bestScores || {},
+          totalStars: parsed.totalStars || 0,
+          playerName: cookieName || parsed.playerName || DEFAULT_PLAYER_NAME,
+          theme: THEME_CONFIGS[cookieTheme || parsed.theme] ? (cookieTheme || parsed.theme) : 'kawaii'
+        };
+      }
+
       return {
         unlockedLevel: 1,
         clearedLevels: [],
         bestScores: {},
         totalStars: 0,
-        playerName: '真真',
-        theme: 'kawaii'
+        playerName: cookieName || DEFAULT_PLAYER_NAME,
+        theme: THEME_CONFIGS[cookieTheme] ? cookieTheme : 'kawaii'
       };
     }
 
     function saveProgress() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        const jsonStr = JSON.stringify(progress);
+        setCookie(COOKIE_PROGRESS_KEY, jsonStr, 365);
+        setCookie(COOKIE_NAME_KEY, progress.playerName, 365);
+        setCookie(COOKIE_THEME_KEY, progress.theme, 365);
+        localStorage.setItem(STORAGE_KEY, jsonStr);
       } catch (e) {
         console.warn('儲存進度失敗:', e);
       }
@@ -1663,13 +1708,13 @@
     }
 
     function confirmResetProgress() {
-      if (confirm('確定要將闖關進度重置回 Level 1 嗎？\n（你的挑戰者名字與目前選擇的主題風格會保留喔！）')) {
+      if (confirm('確定要將闖關進度重置回 Level 1 嗎？\n（你的挑戰者名字與目前選擇的主題風格會保留在 Cookie 中喔！）')) {
         progress = {
           unlockedLevel: 1,
           clearedLevels: [],
           bestScores: {},
           totalStars: 0,
-          playerName: progress.playerName || '真真',
+          playerName: progress.playerName || DEFAULT_PLAYER_NAME,
           theme: progress.theme || 'kawaii'
         };
         saveProgress();
@@ -2244,7 +2289,7 @@
     }
 
     function updatePlayerName(val) {
-      progress.playerName = val.trim() || '真真';
+      progress.playerName = val.trim() || DEFAULT_PLAYER_NAME;
       saveProgress();
       syncHeaderName();
       const t = getTheme();
@@ -2267,7 +2312,7 @@
       if (inputEl) {
         updatePlayerName(inputEl.value);
         playCorrectSound();
-        setMascot(t.mascotHappy, t.welcomeMsg(progress.playerName));
+        setMascot(t.mascotHappy, `太棒了！已將挑戰者名字「<b>${progress.playerName}</b>」儲存至你的專屬瀏覽器 Cookie 中囉！${t.scorePointIcon}`);
       }
     }
 
@@ -2277,9 +2322,9 @@
       const t = getTheme();
       document.getElementById('name-modal-icon').textContent = t.brandIcon;
       if (modal && input) {
-        input.value = progress.playerName;
+        input.value = progress.playerName === DEFAULT_PLAYER_NAME ? '' : progress.playerName;
         modal.style.display = 'flex';
-        setTimeout(() => input.select(), 50);
+        setTimeout(() => input.focus(), 50);
       }
     }
 
@@ -2426,5 +2471,9 @@
       const t = getTheme();
       setMascot(t.mascotAvatar, t.welcomeMsg(progress.playerName));
       showMapScreen();
+      // 若瀏覽器 Cookie 中尚未紀錄挑戰者名字，自動彈出輸入視窗讓玩家輸入並寫入個人 Cookie
+      if (!getCookie(COOKIE_NAME_KEY)) {
+        openNameModal();
+      }
     });
   </script></body></html>
