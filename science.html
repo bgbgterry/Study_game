@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔬 水生生物與環境・科學闖關大冒險｜國小四年級自然</title>
+  <!-- 引入圓潤清晰的繁體中文字體 Zen Maru Gothic 與 Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       三大主題風格 CSS Variables (支援一鍵切換 + localStorage 記憶)
+       1. theme-kawaii (預設：夢幻人魚水族風 — 少女可愛 Kawaii Pastel)
+       2. theme-scifi  (深海潛艦勇者風 — 男孩帥氣 Sci-Fi & Cyber Submarine)
+       3. theme-woodland (溪流森林探險風 — 自然清新 Woodland & Stream Adventure)
+       ========================================================================== */
+    :root,
+    [data-theme="kawaii"] {
+      --bg-gradient: linear-gradient(135deg, #FFF0F6 0%, #E8F8FF 50%, #F2FFE9 100%);
+      --bg-pattern-1: rgba(255, 183, 197, 0.35);
+      --bg-pattern-2: rgba(168, 230, 207, 0.35);
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --card-border: #FFFFFF;
+      --card-outline: #FFD6E6;
+      --primary: #FFB7C5;
+      --primary-strong: #FF7597;
+      --primary-deep: #D94B72;
+      --secondary: #E2C2FF;
+      --secondary-strong: #9B5DE5;
+      --accent: #B5EAD7;
+      --accent-strong: #2EC4B6;
+      --highlight: #FFF5BA;
+      --highlight-strong: #F4A261;
+      --text-main: #4A3B4E;
+      --text-soft: #7E6B84;
+      --header-badge-bg: linear-gradient(135deg, #FF9EBB, #C896FF);
+      --mascot-banner-bg: linear-gradient(135deg, #FFF8FB 0%, #F0FBFF 100%);
+      --mascot-banner-border: #FFC4D6;
+      --mascot-avatar-bg: linear-gradient(135deg, #FFD6E5, #D6F5FF);
+      --question-box-bg: linear-gradient(135deg, #FFFDF7 0%, #FFF3F8 100%);
+      --question-box-border: #FFD6E5;
+      --option-bg: #FFFFFF;
+      --option-border: #F2DCE7;
+      --option-hover-border: #FF8DA8;
+      --option-index-bg: #FFEBF1;
+      --option-index-color: #D94B72;
+      --progress-track-bg: #F7E8F0;
+      --progress-track-border: #FFD6E5;
+      --progress-fill: linear-gradient(90deg, #FF8DA8, #B983FF, #56CFE1);
+      --lvl-1-bg: linear-gradient(135deg, #FFF3F6 0%, #FFE0E9 100%);
+      --lvl-2-bg: linear-gradient(135deg, #F6EEFF 0%, #E7D4FF 100%);
+      --lvl-3-bg: linear-gradient(135deg, #EAFFF6 0%, #C9F5E3 100%);
+      --lvl-4-bg: linear-gradient(135deg, #FFFCE6 0%, #FFF0A8 100%);
+      --lvl-5-bg: linear-gradient(135deg, #FFE8F5 0%, #E5D4FF 50%, #CCF7FF 100%);
+      --shadow-soft: 0 12px 30px rgba(217, 75, 114, 0.14);
+      --shadow-card: 0 8px 20px rgba(155, 93, 229, 0.12);
+      --btn-shadow: 0 5px 0 rgba(217, 75, 114, 0.28);
+      --radius-xl: 28px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+
+    [data-theme="scifi"] {
+      --bg-gradient: linear-gradient(135deg, #E8F1F8 0%, #DCE8F5 50%, #E5F6F8 100%);
+      --bg-pattern-1: rgba(0, 168, 232, 0.18);
+      --bg-pattern-2: rgba(46, 196, 182, 0.18);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: #B8D8F0;
+      --card-outline: #88C0E8;
+      --primary: #00A8E8;
+      --primary-strong: #007EA7;
+      --primary-deep: #005073;
+      --secondary: #1A2B4C;
+      --secondary-strong: #2B4570;
+      --accent: #2EC4B6;
+      --accent-strong: #159A8C;
+      --highlight: #FFD166;
+      --highlight-strong: #FF6B35;
+      --text-main: #1A2B4C;
+      --text-soft: #4A628A;
+      --header-badge-bg: linear-gradient(135deg, #007EA7, #1A2B4C);
+      --mascot-banner-bg: linear-gradient(135deg, #F0F8FF 0%, #E4F2FE 100%);
+      --mascot-banner-border: #66B8E6;
+      --mascot-avatar-bg: linear-gradient(135deg, #B8E4FF, #FFD166);
+      --question-box-bg: linear-gradient(135deg, #F5FAFF 0%, #EBF5FF 100%);
+      --question-box-border: #90CAF9;
+      --option-bg: #FFFFFF;
+      --option-border: #C5DCF0;
+      --option-hover-border: #00A8E8;
+      --option-index-bg: #E1F3FE;
+      --option-index-color: #006494;
+      --progress-track-bg: #D9E8F5;
+      --progress-track-border: #90CAF9;
+      --progress-fill: linear-gradient(90deg, #00A8E8, #2EC4B6, #FF6B35);
+      --lvl-1-bg: linear-gradient(135deg, #EBF8FF 0%, #CBEBFB 100%);
+      --lvl-2-bg: linear-gradient(135deg, #E8F5E9 0%, #C2ECD9 100%);
+      --lvl-3-bg: linear-gradient(135deg, #FFF8E1 0%, #FFE599 100%);
+      --lvl-4-bg: linear-gradient(135deg, #FFF0E8 0%, #FFD4C2 100%);
+      --lvl-5-bg: linear-gradient(135deg, #E0F4FF 0%, #D4E4FF 50%, #FFE8B8 100%);
+      --shadow-soft: 0 12px 28px rgba(26, 43, 76, 0.16);
+      --shadow-card: 0 8px 18px rgba(0, 126, 167, 0.14);
+      --btn-shadow: 0 5px 0 rgba(26, 43, 76, 0.32);
+      --radius-xl: 14px;
+      --radius-lg: 12px;
+      --radius-md: 10px;
+    }
+
+    [data-theme="woodland"] {
+      --bg-gradient: linear-gradient(135deg, #FAF6F0 0%, #EDF6F0 55%, #F7F2E7 100%);
+      --bg-pattern-1: rgba(82, 183, 136, 0.22);
+      --bg-pattern-2: rgba(244, 162, 97, 0.22);
+      --card-bg: rgba(255, 253, 249, 0.96);
+      --card-border: #E2D5C3;
+      --card-outline: #C8B6A0;
+      --primary: #52B788;
+      --primary-strong: #40916C;
+      --primary-deep: #2D6A4F;
+      --secondary: #8D6E63;
+      --secondary-strong: #6D4C41;
+      --accent: #8ECAE6;
+      --accent-strong: #219EBC;
+      --highlight: #F4A261;
+      --highlight-strong: #E76F51;
+      --text-main: #3B302A;
+      --text-soft: #6E5D53;
+      --header-badge-bg: linear-gradient(135deg, #52B788, #2D6A4F);
+      --mascot-banner-bg: linear-gradient(135deg, #F4FBF6 0%, #FDF8EE 100%);
+      --mascot-banner-border: #95D5B2;
+      --mascot-avatar-bg: linear-gradient(135deg, #D8F3DC, #FFE8C2);
+      --question-box-bg: linear-gradient(135deg, #FFFCF7 0%, #F3FAF5 100%);
+      --question-box-border: #B7E4C7;
+      --option-bg: #FFFFFF;
+      --option-border: #DFD5C8;
+      --option-hover-border: #52B788;
+      --option-index-bg: #E8F6EE;
+      --option-index-color: #2D6A4F;
+      --progress-track-bg: #EAE2D7;
+      --progress-track-border: #C8B6A0;
+      --progress-fill: linear-gradient(90deg, #52B788, #F4A261, #8ECAE6);
+      --lvl-1-bg: linear-gradient(135deg, #F0FAF4 0%, #D8F3DC 100%);
+      --lvl-2-bg: linear-gradient(135deg, #FFF9EB 0%, #FFE4B5 100%);
+      --lvl-3-bg: linear-gradient(135deg, #EEF8FC 0%, #CDEAF7 100%);
+      --lvl-4-bg: linear-gradient(135deg, #F8F1EC 0%, #E8D5C8 100%);
+      --lvl-5-bg: linear-gradient(135deg, #E8F7EE 0%, #FFF3D6 50%, #DCF0FA 100%);
+      --shadow-soft: 0 12px 28px rgba(109, 76, 65, 0.14);
+      --shadow-card: 0 8px 18px rgba(64, 145, 108, 0.12);
+      --btn-shadow: 0 5px 0 rgba(109, 76, 65, 0.28);
+      --radius-xl: 18px;
+      --radius-lg: 16px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Zen Maru Gothic', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 60px;
+      transition: background 0.35s ease, color 0.25s ease;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(var(--bg-pattern-1) 3px, transparent 3px),
+        radial-gradient(var(--bg-pattern-2) 3px, transparent 3px);
+      background-size: 44px 44px;
+      background-position: 0 0, 22px 22px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    [data-theme="scifi"] body::before,
+    body[data-theme="scifi"]::before {
+      background-image:
+        linear-gradient(to right, rgba(0, 168, 232, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 168, 232, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .floating-deco {
+      position: fixed;
+      font-size: 2rem;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatSlow 6s ease-in-out infinite alternate;
+    }
+    @keyframes floatSlow {
+      0% { transform: translateY(0px) rotate(0deg) scale(1); }
+      100% { transform: translateY(-16px) rotate(8deg) scale(1.08); }
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 18px 16px;
+    }
+
+    /* 頂部主導覽列 */
+    .top-header {
+      background: var(--card-bg);
+      border: 4px solid var(--card-border);
+      outline: 2px solid var(--card-outline);
+      border-radius: var(--radius-xl);
+      padding: 14px 22px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      overflow-anchor: none;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--header-badge-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .brand-text h1 {
+      font-size: 1.42rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text p {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 主題切換器膠囊列 */
+    .theme-switcher-bar {
+      display: inline-flex;
+      align-items: center;
+      background: var(--progress-track-bg);
+      border: 2px solid var(--card-outline);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .theme-pill-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 900;
+      padding: 6px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .theme-pill-btn:hover {
+      color: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+
+    .theme-pill-btn.active {
+      background: #FFFFFF;
+      color: var(--primary-deep);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 共用按鈕 */
+    .kawaii-btn {
+      border: none;
+      font-family: inherit;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: var(--btn-shadow);
+    }
+    [data-theme="scifi"] .kawaii-btn {
+      border-radius: 10px;
+    }
+    [data-theme="woodland"] .kawaii-btn {
+      border-radius: 14px;
+    }
+
+    .kawaii-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      filter: brightness(1.03);
+    }
+
+    .kawaii-btn:active {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-strong), var(--secondary-strong));
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-butter {
+      background: linear-gradient(135deg, var(--highlight), var(--highlight-strong));
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-reset {
+      background: #F3EEF6;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      box-shadow: 0 3px 0 #D8CCE0;
+      border: 2px solid #FFFFFF;
+    }
+
+    .player-badge-btn {
+      background: var(--option-index-bg);
+      color: var(--option-index-color);
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border: 2px solid var(--card-outline);
+      box-shadow: 0 3px 0 var(--card-outline);
+    }
+
+    .cross-game-link {
+      text-decoration: none;
+      background: linear-gradient(135deg, #FF9EBB, #9B5DE5);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.2s ease;
+    }
+    .cross-game-link:hover {
+      transform: translateY(-2px);
+    }
+
+    /* 小精靈／吉祥物應援對話框 */
+    .mascot-banner {
+      background: var(--mascot-banner-bg);
+      border: 3px dashed var(--mascot-banner-border);
+      border-radius: var(--radius-lg);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s ease;
+      overflow-anchor: none;
+    }
+
+    .mascot-avatar {
+      width: 66px;
+      height: 66px;
+      border-radius: var(--radius-md);
+      background: var(--mascot-avatar-bg);
+      border: 3px solid #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      flex-shrink: 0;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      animation: bounceGentle 2.4s infinite ease-in-out;
+    }
+
+    @keyframes bounceGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .mascot-speech {
+      flex: 1;
+    }
+
+    .mascot-name {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mascot-text {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* 主舞台區卡片 */
+    .stage-card {
+      background: var(--card-bg);
+      border: 4px solid var(--card-border);
+      outline: 2px solid var(--card-outline);
+      border-radius: var(--radius-xl);
+      padding: 26px 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .map-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .map-header h2 {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 6px;
+    }
+
+    .map-header p {
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      font-weight: 700;
+    }
+
+    /* 首頁三大主題風格視覺選擇器 */
+    .home-theme-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin: 16px auto;
+      max-width: 860px;
+    }
+
+    .theme-card-btn {
+      background: #FFFFFF;
+      border: 3px solid var(--option-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.22s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-card-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .theme-card-btn.active {
+      border-color: var(--primary-strong);
+      background: var(--question-box-bg);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    /* 挑戰者名字輸入列 */
+    .challenger-bar {
+      max-width: 600px;
+      margin: 14px auto 8px;
+      background: var(--question-box-bg);
+      border: 3px solid var(--card-outline);
+      border-radius: var(--radius-lg);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .challenger-label {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .challenger-input {
+      font-family: inherit;
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: var(--text-main);
+      background: #FFFFFF;
+      border: 2px solid var(--primary);
+      border-radius: 999px;
+      padding: 7px 16px;
+      width: 190px;
+      text-align: center;
+      outline: none;
+      user-select: text;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .challenger-input:focus {
+      border-color: var(--primary-strong);
+      box-shadow: 0 0 0 4px rgba(0, 168, 232, 0.18);
+    }
+
+    .overall-progress-bar {
+      max-width: 540px;
+      margin: 14px auto 0;
+      background: var(--progress-track-bg);
+      border-radius: 999px;
+      height: 24px;
+      padding: 3px;
+      position: relative;
+      border: 2px solid var(--progress-track-border);
+    }
+
+    .overall-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--progress-fill);
+      transition: width 0.5s ease;
+    }
+
+    .overall-progress-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.84rem;
+      font-weight: 900;
+      color: var(--text-main);
+      text-shadow: 0 1px 2px rgba(255,255,255,0.95);
+    }
+
+    /* ==========================================================================
+       互動水生生物棲位觀察池 (Interactive Aquatic Habitat Cross-Section)
+       ========================================================================== */
+    .habitat-showcase {
+      margin: 18px 0 22px;
+      background: linear-gradient(180deg, #E3F6FF 0%, #BFE8FF 38%, #80C9F2 40%, #489FD9 75%, #8D6E63 90%, #6D4C41 100%);
+      border: 4px solid var(--card-outline);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .habitat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+    }
+
+    .habitat-header h3 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+    }
+
+    .habitat-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .habitat-tab-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 3px solid transparent;
+      border-radius: 12px;
+      padding: 9px 10px;
+      font-family: inherit;
+      font-size: 0.94rem;
+      font-weight: 900;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+    .habitat-tab-btn:hover {
+      transform: translateY(-2px);
+      background: #FFFFFF;
+    }
+
+    .habitat-tab-btn.active {
+      border-color: var(--primary-strong);
+      background: #FFFDF2;
+      color: var(--primary-deep);
+      transform: scale(1.02);
+    }
+
+    .habitat-detail-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 14px;
+      padding: 14px 18px;
+      border: 2px solid #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .habitat-visual-badge {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      background: var(--question-box-bg);
+      border: 3px solid var(--card-outline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      flex-shrink: 0;
+    }
+
+    .habitat-detail-content {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .habitat-detail-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 4px;
+    }
+
+    .habitat-detail-desc {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    /* 五大關卡網格 */
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    .level-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 3px solid #FFFFFF;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 225px;
+    }
+
+    .level-card.unlocked {
+      cursor: pointer;
+    }
+
+    .level-card.unlocked:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .level-card.locked {
+      filter: grayscale(0.25);
+      opacity: 0.84;
+      cursor: not-allowed;
+    }
+
+    .level-1-bg { background: var(--lvl-1-bg); }
+    .level-2-bg { background: var(--lvl-2-bg); }
+    .level-3-bg { background: var(--lvl-3-bg); }
+    .level-4-bg { background: var(--lvl-4-bg); }
+    .level-5-bg { background: var(--lvl-5-bg); }
+
+    .level-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .level-icon {
+      font-size: 2.3rem;
+      width: 54px;
+      height: 54px;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .level-status-pill {
+      font-size: 0.85rem;
+      font-weight: 900;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .pill-cleared { color: #198754; border: 2px solid #80ED99; }
+    .pill-open { color: var(--primary-deep); border: 2px solid var(--primary); }
+    .pill-locked { color: #8A7990; border: 2px solid #D3C5D8; }
+
+    .level-title {
+      font-size: 1.28rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .level-desc {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .level-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 2px dashed rgba(74, 59, 78, 0.14);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    /* ==========================================================================
+       測驗進行畫面 (Quiz Screen) + 作答後不跳頂端、免手動下拉優化
+       ========================================================================== */
+    .quiz-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 3px dashed var(--card-outline);
+    }
+
+    .quiz-level-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--option-index-bg);
+      color: var(--option-index-color);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1rem;
+      border: 2px solid var(--card-outline);
+    }
+
+    .scoreboard {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .score-pill {
+      background: #FFFDF7;
+      border: 2px solid var(--card-outline);
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 0.94rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .progress-section {
+      margin-bottom: 16px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .quiz-progress-track {
+      height: 16px;
+      background: var(--progress-track-bg);
+      border-radius: 999px;
+      padding: 3px;
+      border: 2px solid var(--progress-track-border);
+    }
+
+    .quiz-progress-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--progress-fill);
+      transition: width 0.35s ease;
+    }
+
+    .question-box {
+      background: var(--question-box-bg);
+      border: 3px solid var(--question-box-border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      position: relative;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lesson-badge {
+      background: var(--secondary);
+      color: #FFFFFF;
+      font-size: 0.86rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    [data-theme="kawaii"] .lesson-badge {
+      color: #5C2B8B;
+    }
+
+    .hint-btn {
+      background: #FFF5BA;
+      border: 2px solid #F7D774;
+      color: #876415;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .hint-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .question-text {
+      font-size: 1.32rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.55;
+      letter-spacing: 0.3px;
+    }
+
+    .hint-popup {
+      margin-top: 10px;
+      background: #FFFBE6;
+      border: 2px dashed #F4A261;
+      border-radius: 14px;
+      padding: 9px 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #87581D;
+      display: none;
+    }
+
+    /* 選項按鈕區 */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+      transition: all 0.2s ease;
+    }
+
+    @media (max-width: 680px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 作答後將選項縮小，讓下方科學解析小卡直接進入畫面中央 */
+    .options-grid.answered-compact {
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options-grid.answered-compact .option-btn {
+      padding: 9px 14px;
+      min-height: 46px;
+      font-size: 1.02rem;
+    }
+
+    .options-grid.answered-compact .option-index {
+      width: 28px;
+      height: 28px;
+      font-size: 0.9rem;
+    }
+
+    .option-btn {
+      background: var(--option-bg);
+      border: 3px solid var(--option-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 5px 0 var(--option-border);
+      transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.16s ease, background 0.16s ease;
+      line-height: 1.4;
+      min-height: 64px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      border-color: var(--option-hover-border);
+      background: var(--question-box-bg);
+    }
+
+    .option-index {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--option-index-bg);
+      color: var(--option-index-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .option-btn.correct {
+      background: #E8FBF2 !important;
+      border-color: #2EC4B6 !important;
+      box-shadow: 0 5px 0 #80ED99 !important;
+      color: #16694A !important;
+    }
+
+    .option-btn.correct .option-index {
+      background: #2EC4B6;
+      color: #FFFFFF;
+    }
+
+    .option-btn.wrong {
+      background: #FFF0F3 !important;
+      border-color: #FF5D8F !important;
+      box-shadow: 0 5px 0 #FFB3C6 !important;
+      color: #A4133C !important;
+    }
+
+    .option-btn.wrong .option-index {
+      background: #FF5D8F;
+      color: #FFFFFF;
+    }
+
+    /* 測驗模式緊湊版面 */
+    body.in-quiz .top-header {
+      padding: 9px 18px;
+      margin-bottom: 10px;
+    }
+    body.in-quiz .mascot-banner {
+      padding: 9px 16px;
+      margin-bottom: 10px;
+    }
+    body.in-quiz .mascot-avatar {
+      width: 48px;
+      height: 48px;
+      font-size: 1.75rem;
+    }
+    body.in-quiz .mascot-text {
+      font-size: 1rem;
+    }
+    body.in-quiz .stage-card {
+      padding: 16px 20px;
+    }
+
+    /* 即時解答回饋與自然科學圖鑑小卡 */
+    .feedback-panel {
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-top: 8px;
+      display: none;
+      animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow-anchor: none;
+      scroll-margin-top: 16px;
+      scroll-margin-bottom: 20px;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.95) translateY(8px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .feedback-panel.is-correct {
+      background: linear-gradient(135deg, #EAFFF6 0%, #F4FFFA 100%);
+      border: 3px solid #72EFDD;
+    }
+
+    .feedback-panel.is-wrong {
+      background: linear-gradient(135deg, #FFF0F5 0%, #FFF9FB 100%);
+      border: 3px solid #FF9EBB;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .feedback-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .science-study-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      border: 2px solid var(--card-outline);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .science-card-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed var(--progress-track-bg);
+    }
+
+    .science-card-name {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+    }
+
+    .science-card-tag {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--option-index-color);
+      background: var(--option-index-bg);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .science-card-activity {
+      margin-left: auto;
+      font-size: 0.84rem;
+      font-weight: 900;
+      color: var(--text-soft);
+      background: var(--progress-track-bg);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .science-detail-row {
+      font-size: 1rem;
+      line-height: 1.55;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .detail-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-right: 6px;
+    }
+
+    .tag-meaning { background: #E2C2FF; color: #5A288D; }
+    .tag-example { background: #B5EAD7; color: #16694A; }
+    .tag-syn { background: #FFF5BA; color: #87581D; }
+
+    /* 結算與錯題複習畫面 */
+    .result-box {
+      text-align: center;
+      padding: 12px 6px;
+    }
+
+    .result-icon {
+      font-size: 4.2rem;
+      margin-bottom: 8px;
+    }
+
+    .result-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 8px;
+    }
+
+    .result-subtitle {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .score-big-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--question-box-bg);
+      border: 3px solid var(--card-outline);
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 22px;
+    }
+
+    .review-list {
+      text-align: left;
+      max-width: 780px;
+      margin: 0 auto 24px;
+      background: var(--question-box-bg);
+      border: 3px solid var(--card-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+
+    .review-list h3 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 12px;
+    }
+
+    .review-item {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border-left: 6px solid var(--primary-strong);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    }
+
+    .review-q {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .review-ans {
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: #198754;
+      margin-bottom: 6px;
+    }
+
+    .review-wrong-ans {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #D94B72;
+      margin-bottom: 4px;
+    }
+
+    /* 榮譽證書 */
+    .certificate-frame {
+      background: var(--question-box-bg);
+      border: 8px double var(--primary-strong);
+      border-radius: var(--radius-xl);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .cert-ribbon {
+      display: inline-block;
+      background: var(--header-badge-bg);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 6px 22px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .cert-title {
+      font-size: 2.15rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 10px;
+    }
+
+    .cert-name-input-wrap {
+      margin: 14px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cert-name-input {
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      border: 3px dashed var(--primary-strong);
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 8px 18px;
+      text-align: center;
+      width: 240px;
+      outline: none;
+      user-select: text;
+    }
+
+    .cert-body {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.8;
+      color: var(--text-main);
+      max-width: 620px;
+      margin: 14px auto 22px;
+    }
+
+    .cert-badges-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .cert-stamp {
+      background: #FFFFFF;
+      border: 2px solid var(--card-outline);
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: var(--primary-deep);
+    }
+
+    /* 科學圖鑑彈窗 (Science Encyclopedia Modal) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(35, 30, 45, 0.55);
+      backdrop-filter: blur(5px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #FFFFFF;
+      border: 4px solid var(--card-outline);
+      border-radius: var(--radius-xl);
+      max-width: 900px;
+      width: 100%;
+      max-height: 86vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 16px 22px;
+      background: var(--mascot-banner-bg);
+      border-bottom: 3px solid var(--card-outline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .modal-body {
+      padding: 18px 22px;
+      overflow-y: auto;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .encyc-card {
+      background: var(--question-box-bg);
+      border: 2px solid var(--card-outline);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body data-theme="kawaii">
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- 背景漂浮裝飾圖示 -->
+  <div class="floating-deco" id="deco-1" style="top: 8%; left: 4%;">🫧</div>
+  <div class="floating-deco" id="deco-2" style="top: 16%; right: 5%; animation-delay: 1.2s;">🪷</div>
+  <div class="floating-deco" id="deco-3" style="bottom: 14%; left: 6%; animation-delay: 2.3s;">🐠</div>
+  <div class="floating-deco" id="deco-4" style="bottom: 10%; right: 4%; animation-delay: 0.7s;">🦀</div>
+
+  <div class="app-container">
+    <!-- 頂部導覽列 -->
+    <header class="top-header">
+      <div class="brand-title" onclick="showMapScreen()" title="回到首頁關卡地圖">
+        <div class="brand-badge" id="brand-badge-icon">🔬</div>
+        <div class="brand-text">
+          <h1 id="brand-heading">水生生物與環境・科學大冒險</h1>
+          <p>國小四年級自然（活動1～活動3）｜180 題大題庫・每關隨機抽 10 題</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- 主題切換器 -->
+        <div class="theme-switcher-bar" role="group" aria-label="主題風格切換器">
+          <button class="theme-pill-btn" id="theme-btn-kawaii" onclick="switchTheme('kawaii')">💖 人魚甜心</button>
+          <button class="theme-pill-btn" id="theme-btn-scifi" onclick="switchTheme('scifi')">🚀 深海潛艦</button>
+          <button class="theme-pill-btn" id="theme-btn-woodland" onclick="switchTheme('woodland')">🍀 溪流探險</button>
+        </div>
+
+        <button class="kawaii-btn btn-accent" style="padding: 8px 14px; font-size: 0.9rem;" onclick="openEncyclopedia(0)">
+          📘 科學圖鑑 (36卡)
+        </button>
+        <a class="cross-game-link" href="index.html" title="切換到國語成語闖關遊戲">
+          📖 玩國語成語闖關
+        </a>
+        <button class="kawaii-btn player-badge-btn" onclick="focusPlayerNameInput()">
+          <span id="header-player-icon">🧑‍🔬</span> <span id="header-player-name">小小科學家</span> ✎
+        </button>
+        <button class="kawaii-btn btn-reset" onclick="confirmResetProgress()">🔄 重置</button>
+      </div>
+    </header>
+
+    <!-- 應援吉祥物對話橫幅 -->
+    <section class="mascot-banner">
+      <div class="mascot-avatar" id="mascot-avatar">🦦</div>
+      <div class="mascot-speech">
+        <div class="mascot-name" id="mascot-name">🫧 應援吉祥物：粉紅水獺博士</div>
+        <div class="mascot-text" id="mascot-text">
+          歡迎來到水生生物與環境實驗室！先點擊下方的「互動水生棲位觀察池」複習重點，再挑戰五個等級的科學關卡吧！
+        </div>
+      </div>
+    </section>
+
+    <!-- 遊戲主舞台 -->
+    <main class="stage-card" id="main-stage"></main>
+  </div>
+
+  <!-- 36 張自然科學知識圖鑑彈窗 -->
+  <div class="modal-backdrop" id="encyc-modal" onclick="if(event.target===this) closeEncyclopedia()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="font-size:1.25rem; font-weight:900; color:var(--primary-deep);">
+          🔬 水生生物與環境・36張核心科學圖鑑
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="theme-pill-btn active" id="filter-act-0" onclick="renderEncyclopediaCards(0)">全部 (36)</button>
+          <button class="theme-pill-btn" id="filter-act-1" onclick="renderEncyclopediaCards(1)">活動1：水域環境 (12)</button>
+          <button class="theme-pill-btn" id="filter-act-2" onclick="renderEncyclopediaCards(2)">活動2：動植物構造 (14)</button>
+          <button class="theme-pill-btn" id="filter-act-3" onclick="renderEncyclopediaCards(3)">活動3：保育與資源 (10)</button>
+          <button class="kawaii-btn btn-reset" onclick="closeEncyclopedia()">✖ 關閉</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="cards-grid" id="encyc-cards-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入自然題庫資料 (36張科學卡 + 180道題目) -->
+  <script src="science_game_data.js"></script>
+  <script>
+    const STORAGE_KEY = 'grade4_science_aquatic_quiz_v1';
+    const QUESTIONS_PER_ROUND = 10;
+
+    // 互動水生生物棲位觀察箱資料
+    const HABITAT_ZONES = [
+      {
+        key: 'emergent',
+        tabLabel: '🪷 挺水性植物',
+        icon: '🪷',
+        title: '挺水性水生植物（代表：荷花、香蒲）',
+        desc: '【生長位置】根長在「水底泥土裡」，莖直立支撐，葉和花高高「挺出水面」！<br>【特殊構造】把荷花的葉柄和地下莖（蓮藕）橫切開，裡面有許多「中空的管道」能儲存並輸送空氣；荷葉表面不易沾水，水滴上去會形成圓水珠！'
+      },
+      {
+        key: 'floating_leaf',
+        tabLabel: '🌺 浮葉性植物',
+        icon: '🌺',
+        title: '浮葉性水生植物（代表：睡蓮、臺灣萍蓬草）',
+        desc: '【生長位置】根長在「水底泥土裡」，葉柄柔軟會隨水位高低伸展或彎曲，讓葉片保持「平貼在水面上」，花會露出水面。<br>【常考比較】睡蓮是「浮葉性」（葉貼水面），荷花是「挺水性」（葉挺出水面），兩者根都在泥土裡！'
+      },
+      {
+        key: 'free_floating',
+        tabLabel: '🌿 漂浮性植物',
+        icon: '🌿',
+        title: '漂浮性水生植物（代表：布袋蓮、大萍、浮萍）',
+        desc: '【生長位置】唯一「根漂浮在水中（不長在泥土裡）」、葉漂浮在水面，整株隨水流四處移動（適合靜止或緩慢水域，不適合湍急溪流）。<br>【特殊構造】布袋蓮有「膨大葉柄」儲氣（切開在水中擠壓會冒小氣泡）；大萍葉面布滿「細毛」不沾水！'
+      },
+      {
+        key: 'submerged',
+        tabLabel: '🌱 沉水性植物',
+        icon: '🌱',
+        title: '沉水性水生植物（代表：水蘊草）',
+        desc: '【生長位置】根長在「水底泥土裡」，整株莖和葉完全「沉在水中」，但仍然需要陽光照射才能生存！<br>【特殊構造】莖、葉呈細長線形且非常「柔軟」，能隨水流彎曲擺動減少衝擊；一旦離開水面就會彎曲下垂。'
+      },
+      {
+        key: 'animals_gill',
+        tabLabel: '🐠 用鰓呼吸動物',
+        icon: '🦀',
+        title: '用「鰓」在水中呼吸的動物（魚、蝦、螺、蟹、蝌蚪）',
+        desc: '【運動構造】①<b>魚</b>：用「魚鰭」游水與保持平衡（停住不動時魚鰭仍會微微擺動）、魚鱗保護身體；②<b>蝦</b>：有殼，用「胸足和腹足」步行與游水；③<b>螺</b>：有硬殼，沒有腳，用「腹足」爬行；④<b>蟹</b>：有硬殼，「一對螯（2隻）＋八隻腳」橫著走；⑤<b>蝌蚪</b>：用「尾巴」游水。'
+      },
+      {
+        key: 'animals_lung',
+        tabLabel: '🐸 用肺呼吸兩棲',
+        icon: '🐸',
+        title: '用「肺」呼吸、可短暫離水上岸的動物（蛙、龜）',
+        desc: '【呼吸與運動】①<b>蛙（青蛙）</b>：小時候是蝌蚪（用鰓呼吸、尾巴游水），長大後用「肺（及皮膚）」呼吸，沒有硬殼，後腳有「蹼」可在水中游水，也能在陸地跳躍；②<b>龜（烏龜）</b>：有硬背甲，用「肺」呼吸（需伸出水面換氣），用四肢爬行與游水。'
+      }
+    ];
+
+    // 三大主題設定
+    const THEMES = {
+      kawaii: {
+        key: 'kawaii',
+        label: '夢幻人魚水族風',
+        brandIcon: '💖',
+        brandHeading: '水生生物與環境・甜心科學冒險',
+        mascotName: '🫧 應援吉祥物：粉紅水獺博士',
+        mascotAvatar: '🦦',
+        mascotHappy: '🧜‍♀️',
+        mascotCheer: '🐰',
+        mascotVictory: '👑',
+        decos: ['🫧', '🪷', '💖', '🐚'],
+        playerIcon: '🎀',
+        scoreStatusIcon: '💖',
+        scorePointIcon: '✨',
+        progressIcon: '🪄',
+        hintIcon: '🐚',
+        levelIcons: ['🌊', '🪷', '🐠', '💖', '👑'],
+        levelBadges: [
+          '甜心水域觀察員',
+          '蓮花魔法小仙子',
+          '水中生物好朋友',
+          '人魚環保小衛士',
+          '水生生態魔法小公主／甜心科學家'
+        ],
+        certTitle: '👑 水生生態魔法小公主／甜心科學家 榮譽證書 👑'
+      },
+      scifi: {
+        key: 'scifi',
+        label: '深海潛艦勇者風',
+        brandIcon: '🚀',
+        brandHeading: '水生生物與環境・深海潛艦任務',
+        mascotName: '⚡ 應援吉祥物：潛艦柴犬艦長',
+        mascotAvatar: '🐕‍🦺',
+        mascotHappy: '🤖',
+        mascotCheer: '🛸',
+        mascotVictory: '🏆',
+        decos: ['⚡', '🚀', '🛡️', '🌊'],
+        playerIcon: '⚡',
+        scoreStatusIcon: '🛡️',
+        scorePointIcon: '⚡',
+        progressIcon: '🚀',
+        hintIcon: '📡',
+        levelIcons: ['🌊', '🔬', '🦈', '🛡️', '🏆'],
+        levelBadges: [
+          '深海聲納偵察兵',
+          '水生植物分析官',
+          '水下生物領航員',
+          '海洋防衛指揮官',
+          '深海科學大勇者／傳奇艦長'
+        ],
+        certTitle: '🏆 深海科學大勇者／傳奇艦長 榮譽勳章證書 🏆'
+      },
+      woodland: {
+        key: 'woodland',
+        label: '溪流森林探險風',
+        brandIcon: '🍀',
+        brandHeading: '水生生物與環境・溪流生態探險',
+        mascotName: '🔍 應援吉祥物：青蛙自然博士',
+        mascotAvatar: '🐸',
+        mascotHappy: '🦉',
+        mascotCheer: '🦊',
+        mascotVictory: '🏕️',
+        decos: ['🍀', '🪷', '🧭', '🔍'],
+        playerIcon: '🧭',
+        scoreStatusIcon: '🍀',
+        scorePointIcon: '🌰',
+        progressIcon: '🔍',
+        hintIcon: '🧭',
+        levelIcons: ['🏞️', '🪷', '🦀', '🌲', '🎓'],
+        levelBadges: [
+          '溪流踏查小隊員',
+          '濕地植物搜查官',
+          '生態池動物觀察家',
+          '山海保育巡守員',
+          '水域生態探險王／自然小博士'
+        ],
+        certTitle: '🎓 水域生態探險王／自然小博士 榮譽證書 🎓'
+      }
+    };
+
+    let progress = loadProgress();
+    let currentSession = null;
+    let activeHabitatKey = 'emergent';
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return {
+            unlockedLevel: parsed.unlockedLevel || 1,
+            clearedLevels: Array.isArray(parsed.clearedLevels) ? parsed.clearedLevels : [],
+            bestScores: parsed.bestScores || {},
+            playerName: parsed.playerName || '小小科學家',
+            theme: THEMES[parsed.theme] ? parsed.theme : 'kawaii'
+          };
+        }
+      } catch (e) {
+        console.warn('無法讀取進度，使用預設進度', e);
+      }
+      return {
+        unlockedLevel: 1,
+        clearedLevels: [],
+        bestScores: {},
+        playerName: '小小科學家',
+        theme: 'kawaii'
+      };
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {
+        console.warn('無法寫入 localStorage', e);
+      }
+    }
+
+    function getTheme() {
+      return THEMES[progress.theme] || THEMES.kawaii;
+    }
+
+    function applyThemeUI() {
+      const t = getTheme();
+      document.documentElement.setAttribute('data-theme', t.key);
+      document.body.setAttribute('data-theme', t.key);
+
+      ['kawaii', 'scifi', 'woodland'].forEach(k => {
+        const btn = document.getElementById(`theme-btn-${k}`);
+        if (btn) btn.classList.toggle('active', k === t.key);
+      });
+
+      const badgeIcon = document.getElementById('brand-badge-icon');
+      const heading = document.getElementById('brand-heading');
+      const playerIcon = document.getElementById('header-player-icon');
+      const mascotName = document.getElementById('mascot-name');
+      if (badgeIcon) badgeIcon.textContent = t.brandIcon;
+      if (heading) heading.textContent = t.brandHeading;
+      if (playerIcon) playerIcon.textContent = t.playerIcon;
+      if (mascotName) mascotName.textContent = t.mascotName;
+
+      t.decos.forEach((d, idx) => {
+        const el = document.getElementById(`deco-${idx + 1}`);
+        if (el) el.textContent = d;
+      });
+    }
+
+    function switchTheme(themeKey) {
+      if (!THEMES[themeKey]) return;
+      progress.theme = themeKey;
+      saveProgress();
+      applyThemeUI();
+      playCorrectSound();
+
+      const t = getTheme();
+      setMascot(
+        t.mascotAvatar,
+        `已切換為「<b>${t.label}</b>」！挑戰者 <b>${progress.playerName}</b>，一起拿滿分摘下【<b>${t.levelBadges[4]}</b>】稱號吧！${t.scorePointIcon}`
+      );
+
+      if (currentSession) {
+        renderQuestionScreen();
+      } else {
+        showMapScreen();
+      }
+    }
+
+    function updatePlayerName(newName) {
+      const trimmed = (newName || '').trim();
+      progress.playerName = trimmed || '小小科學家';
+      saveProgress();
+      syncHeaderName();
+    }
+
+    function syncHeaderName() {
+      const el = document.getElementById('header-player-name');
+      if (el) el.textContent = progress.playerName;
+    }
+
+    function focusPlayerNameInput() {
+      const mapInput = document.getElementById('map-player-name');
+      const certInput = document.getElementById('cert-player-name');
+      if (mapInput) {
+        mapInput.focus();
+        mapInput.select();
+      } else if (certInput) {
+        certInput.focus();
+        certInput.select();
+      } else {
+        const entered = window.prompt('請輸入挑戰者的名字：', progress.playerName);
+        if (entered !== null) {
+          updatePlayerName(entered);
+          if (currentSession) renderQuestionScreen();
+        }
+      }
+    }
+
+    function confirmInlineName() {
+      const mapInput = document.getElementById('map-player-name');
+      if (mapInput) {
+        updatePlayerName(mapInput.value);
+        const t = getTheme();
+        playCorrectSound();
+        setMascot(t.mascotHappy, `太棒了！已經將挑戰者名字設定為「<b>${progress.playerName}</b>」！準備好就選擇關卡出發吧！${t.scorePointIcon}`);
+        showMapScreen();
+      }
+    }
+
+    function confirmResetProgress() {
+      if (window.confirm('確定要重置所有自然科闖關進度嗎？（將會回到 Level 1 重新開始挑戰喔！）')) {
+        const keepName = progress.playerName;
+        const keepTheme = progress.theme;
+        progress = { unlockedLevel: 1, clearedLevels: [], bestScores: {}, playerName: keepName, theme: keepTheme };
+        saveProgress();
+        stopConfetti();
+        const t = getTheme();
+        setMascot(t.mascotAvatar, `進度已經重置囉！<b>${progress.playerName}</b>，讓我們從 Level 1 重新展開水生生物科學冒險吧！${t.scorePointIcon}`);
+        showMapScreen();
+      }
+    }
+
+    // 音效合成 (Web Audio API)
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      return audioCtx;
+    }
+
+    function playCorrectSound() {
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.07);
+          gain.gain.setValueAtTime(0.12, now + i * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.22);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + i * 0.07);
+          osc.stop(now + i * 0.07 + 0.24);
+        });
+      } catch (e) {}
+    }
+
+    function playWrongSound() {
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const notes = [330, 277.18];
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + i * 0.14);
+          gain.gain.setValueAtTime(0.09, now + i * 0.14);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.14 + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + i * 0.14);
+          osc.stop(now + i * 0.14 + 0.26);
+        });
+      } catch (e) {}
+    }
+
+    function playFanfareSound() {
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+        const times = [0, 0.1, 0.2, 0.32, 0.48, 0.62];
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + times[i]);
+          gain.gain.setValueAtTime(0.15, now + times[i]);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + times[i] + 0.3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + times[i]);
+          osc.stop(now + times[i] + 0.32);
+        });
+      } catch (e) {}
+    }
+
+    function setMascot(avatarEmoji, htmlText) {
+      document.getElementById('mascot-avatar').textContent = avatarEmoji;
+      document.getElementById('mascot-text').innerHTML = htmlText;
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getCardById(cardId) {
+      return window.SCIENCE_GAME_DATA.cards.find(item => item.id === cardId) || window.SCIENCE_GAME_DATA.cards[0];
+    }
+
+    // 切換互動水生生物棲位觀察箱
+    function selectHabitatZone(zoneKey) {
+      activeHabitatKey = zoneKey;
+      const zone = HABITAT_ZONES.find(z => z.key === zoneKey) || HABITAT_ZONES[0];
+      HABITAT_ZONES.forEach(z => {
+        const btn = document.getElementById(`hab-btn-${z.key}`);
+        if (btn) btn.classList.toggle('active', z.key === zoneKey);
+      });
+      const box = document.getElementById('habitat-detail-box');
+      if (box) {
+        box.innerHTML = `
+          <div class="habitat-visual-badge">${zone.icon}</div>
+          <div class="habitat-detail-content">
+            <div class="habitat-detail-title">${zone.title}</div>
+            <div class="habitat-detail-desc">${zone.desc}</div>
+          </div>
+        `;
+      }
+    }
+
+    // 科學圖鑑彈窗開關與篩選
+    function openEncyclopedia(activityFilter) {
+      document.getElementById('encyc-modal').style.display = 'flex';
+      renderEncyclopediaCards(activityFilter || 0);
+    }
+
+    function closeEncyclopedia() {
+      document.getElementById('encyc-modal').style.display = 'none';
+    }
+
+    function renderEncyclopediaCards(actNum) {
+      [0, 1, 2, 3].forEach(n => {
+        const btn = document.getElementById(`filter-act-${n}`);
+        if (btn) btn.classList.toggle('active', n === actNum);
+      });
+      const list = actNum === 0
+        ? window.SCIENCE_GAME_DATA.cards
+        : window.SCIENCE_GAME_DATA.cards.filter(c => c.activity === actNum);
+
+      const container = document.getElementById('encyc-cards-container');
+      container.innerHTML = list.map(c => `
+        <div class="encyc-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:900; font-size:1.08rem; color:var(--primary-deep);">#${c.id} ${c.title}</span>
+            <span style="font-size:0.78rem; font-weight:900; background:var(--option-index-bg); color:var(--option-index-color); padding:2px 8px; border-radius:999px;">${c.tag}</span>
+          </div>
+          <div style="font-size:0.8rem; font-weight:900; color:var(--text-soft); margin-bottom:6px;">📘 ${c.activityTitle}</div>
+          <div style="font-size:0.92rem; font-weight:700; line-height:1.5; margin-bottom:6px;"><b>原理：</b>${c.summary}</div>
+          <div style="font-size:0.88rem; font-weight:700; line-height:1.45; color:#16694A; margin-bottom:6px;"><b>觀察：</b>${c.experiment}</div>
+          <div style="font-size:0.86rem; font-weight:700; line-height:1.45; color:#9A5B13; background:#FFF8DC; padding:6px 10px; border-radius:8px;">💡 ${c.tip}</div>
+        </div>
+      `).join('');
+    }
+
+    // ====== 畫面 1：首頁關卡地圖 ======
+    function showMapScreen() {
+      currentSession = null;
+      document.body.classList.remove('in-quiz');
+      stopConfetti();
+      const stage = document.getElementById('main-stage');
+      const t = getTheme();
+      const clearedCount = progress.clearedLevels.length;
+      const percent = Math.round((clearedCount / 5) * 100);
+
+      let cardsHtml = '';
+      window.SCIENCE_GAME_DATA.levels.forEach((lvl, idx) => {
+        const isUnlocked = lvl.level <= progress.unlockedLevel;
+        const isCleared = progress.clearedLevels.includes(lvl.level);
+        const bestScore = progress.bestScores[lvl.level] || 0;
+        const themeIcon = t.levelIcons[idx] || lvl.icon;
+        const themeBadge = t.levelBadges[idx] || lvl.badge;
+
+        let statusPill = '';
+        if (isCleared) {
+          statusPill = `<span class="level-status-pill pill-cleared">${t.scorePointIcon} 已完美通關</span>`;
+        } else if (isUnlocked) {
+          statusPill = `<span class="level-status-pill pill-open">🔓 開放挑戰中</span>`;
+        } else {
+          statusPill = `<span class="level-status-pill pill-locked">🔒 尚未解鎖</span>`;
+        }
+
+        cardsHtml += `
+          <div class="level-card level-${lvl.level}-bg ${isUnlocked ? 'unlocked' : 'locked'}"
+               onclick="${isUnlocked ? `startLevel(${lvl.level})` : `lockedLevelTip(${lvl.level})`}">
+            <div>
+              <div class="level-top">
+                <div class="level-icon">${isUnlocked ? themeIcon : '🔒'}</div>
+                ${statusPill}
+              </div>
+              <div class="level-title">${lvl.name}</div>
+              <div class="level-desc">${lvl.subtitle}</div>
+              <div style="font-size: 0.85rem; font-weight: 900; color: var(--primary-deep); background: rgba(255,255,255,0.85); display: inline-block; padding: 3px 10px; border-radius: 999px; margin-bottom: 6px;">
+                🎲 題庫 ${lvl.questions.length} 題｜隨機抽 10 題
+              </div>
+              <div style="font-size: 0.84rem; font-weight: 900; color: var(--text-soft);">
+                稱號：${themeBadge}
+              </div>
+            </div>
+            <div class="level-footer">
+              <span>🎯 過關條件：10 / 10 全對</span>
+              <span>${isCleared ? `${t.scoreStatusIcon} 100分` : (bestScore > 0 ? `最高 ${bestScore * 10}分` : '尚未挑戰')}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      const habitatTabsHtml = HABITAT_ZONES.map(z => `
+        <button class="habitat-tab-btn ${z.key === activeHabitatKey ? 'active' : ''}"
+                id="hab-btn-${z.key}"
+                onclick="selectHabitatZone('${z.key}')">
+          ${z.tabLabel}
+        </button>
+      `).join('');
+
+      const activeZone = HABITAT_ZONES.find(z => z.key === activeHabitatKey) || HABITAT_ZONES[0];
+
+      const certBanner = progress.clearedLevels.includes(5) ? `
+        <div style="margin-top: 24px; text-align: center; background: var(--mascot-banner-bg); padding: 18px; border-radius: var(--radius-lg); border: 3px dashed var(--primary-strong);">
+          <p style="font-size: 1.15rem; font-weight: 900; color: var(--primary-deep); margin-bottom: 10px;">
+            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部五個自然科學關卡的 100% 完美挑戰！
+          </p>
+          <button class="kawaii-btn btn-primary" onclick="showCertificateScreen()">
+            🏆 查看專屬「${t.levelBadges[4]}」榮譽證書
+          </button>
+        </div>
+      ` : '';
+
+      stage.innerHTML = `
+        <div class="map-header">
+          <h2>${t.brandIcon} 水生生物與環境・主題與關卡選擇 ${t.brandIcon}</h2>
+          <p>100% 依據四年級自然「水生生物與環境（活動1～活動3）」題庫設計！每關 36 題（共 180 題），隨機抽 10 題全對即可晉級！</p>
+
+          <!-- 首頁三大主題風格切換卡片 -->
+          <div class="home-theme-selector">
+            <button class="theme-card-btn ${t.key === 'kawaii' ? 'active' : ''}" onclick="switchTheme('kawaii')">
+              <div class="theme-card-icon" style="background:#FFE0EB;">💖</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#D94B72;">夢幻人魚水族風</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#8A6F85;">粉紅水獺・甜心科學家</div>
+              </div>
+            </button>
+            <button class="theme-card-btn ${t.key === 'scifi' ? 'active' : ''}" onclick="switchTheme('scifi')">
+              <div class="theme-card-icon" style="background:#D8F0FF;">🚀</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#005F86;">深海潛艦勇者風</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#4A628A;">潛艦柴犬・深海大勇者</div>
+              </div>
+            </button>
+            <button class="theme-card-btn ${t.key === 'woodland' ? 'active' : ''}" onclick="switchTheme('woodland')">
+              <div class="theme-card-icon" style="background:#D8F3DC;">🍀</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#2D6A4F;">溪流森林探險風</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#6E5D53;">青蛙博士・自然小博士</div>
+              </div>
+            </button>
+          </div>
+
+          <!-- 挑戰者名字輸入區 -->
+          <div class="challenger-bar">
+            <label class="challenger-label" for="map-player-name">${t.playerIcon} 挑戰者名字：</label>
+            <input type="text" id="map-player-name" class="challenger-input"
+                   value="${progress.playerName}"
+                   placeholder="輸入你的名字..."
+                   maxlength="16"
+                   oninput="updatePlayerName(this.value)" />
+            <button class="kawaii-btn btn-accent" style="padding: 7px 15px; font-size: 0.92rem;" onclick="confirmInlineName()">
+              ${t.scorePointIcon} 確認名字
+            </button>
+          </div>
+
+          <div class="overall-progress-bar">
+            <div class="overall-progress-fill" style="width: ${percent}%;"></div>
+            <div class="overall-progress-label">${t.scorePointIcon} ${progress.playerName} 的自然總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}</div>
+          </div>
+        </div>
+
+        <!-- 互動水生生物棲位觀察池 -->
+        <div class="habitat-showcase">
+          <div class="habitat-header">
+            <h3>🔬 考前秒懂！水生生物棲位與構造互動觀察箱（點擊下方標籤切換）</h3>
+            <button class="kawaii-btn btn-butter" style="padding: 5px 12px; font-size: 0.85rem;" onclick="openEncyclopedia(0)">
+              📖 查看完整 36 張圖鑑卡
+            </button>
+          </div>
+          <div class="habitat-tabs">
+            ${habitatTabsHtml}
+          </div>
+          <div class="habitat-detail-box" id="habitat-detail-box">
+            <div class="habitat-visual-badge">${activeZone.icon}</div>
+            <div class="habitat-detail-content">
+              <div class="habitat-detail-title">${activeZone.title}</div>
+              <div class="habitat-detail-desc">${activeZone.desc}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="levels-grid">
+          ${cardsHtml}
+        </div>
+        ${certBanner}
+      `;
+      syncHeaderName();
+    }
+
+    function lockedLevelTip(levelNum) {
+      playWrongSound();
+      const t = getTheme();
+      setMascot(t.mascotCheer, `報告 <b>${progress.playerName}</b>！<b>Level ${levelNum}</b> 目前還是上鎖狀態 🔒～請先把 <b>Level ${levelNum - 1}</b> 的 10 題全部答對（100%），就能解鎖囉！${t.scoreStatusIcon}`);
+    }
+
+    // ====== 畫面 2：開始關卡測驗 ======
+    function startLevel(levelNum) {
+      const levelObj = window.SCIENCE_GAME_DATA.levels.find(l => l.level === levelNum);
+      if (!levelObj) return;
+      const t = getTheme();
+      document.body.classList.add('in-quiz');
+
+      const shuffledPool = shuffleArray(levelObj.questions).slice(0, QUESTIONS_PER_ROUND);
+      const preparedQuestions = shuffledPool.map(q => ({
+        ...q,
+        shuffledOptions: shuffleArray(q.options)
+      }));
+
+      currentSession = {
+        level: levelNum,
+        levelObj,
+        questions: preparedQuestions,
+        currentIndex: 0,
+        correctCount: 0,
+        wrongRecords: [],
+        answered: false
+      };
+
+      setMascot(
+        t.mascotAvatar,
+        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已從本關 <b>${levelObj.questions.length} 道自然題庫</b> 中隨機抽出 <b>10 道題目</b>，全部答對就能晉級喔！${t.hintIcon}`
+      );
+      renderQuestionScreen();
+      const stage = document.getElementById('main-stage');
+      if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderQuestionScreen() {
+      const stage = document.getElementById('main-stage');
+      const s = currentSession;
+      const t = getTheme();
+      const q = s.questions[s.currentIndex];
+      const card = getCardById(q.cardId);
+      const qNum = s.currentIndex + 1;
+      const totalQ = s.questions.length;
+      const progressPct = Math.round((qNum / totalQ) * 100);
+      const levelThemeIcon = t.levelIcons[s.level - 1] || s.levelObj.icon;
+
+      const optionLabels = ['A', 'B', 'C', 'D'];
+      const optionsHtml = q.shuffledOptions.map((opt, idx) => `
+        <button class="option-btn" id="opt-btn-${idx}" onclick="submitAnswer(${idx})">
+          <span class="option-index">${optionLabels[idx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      const hasMistake = s.wrongRecords.length > 0;
+
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <button class="kawaii-btn btn-reset" onclick="showMapScreen()">⬅ 返回地圖</button>
+            <div class="quiz-level-tag">${levelThemeIcon} ${s.levelObj.name}</div>
+          </div>
+          <div class="scoreboard">
+            <div class="score-pill">${t.playerIcon} 挑戰者：${progress.playerName}</div>
+            <div class="score-pill" id="pill-status">${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}</div>
+            <div class="score-pill" id="pill-score">${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}</div>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-info">
+            <span>${t.progressIcon} 當前關卡進度：第 ${qNum} / ${totalQ} 題</span>
+            <span>${progressPct}%</span>
+          </div>
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-bar" style="width: ${progressPct}%;"></div>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-meta">
+            <span class="lesson-badge">🔬 單元範圍：${card.activityTitle}（${card.tag}）</span>
+            <button class="hint-btn" onclick="toggleHint()">${t.hintIcon} 科學提示</button>
+          </div>
+          <div class="question-text">${q.prompt}</div>
+          <div class="hint-popup" id="hint-box">💡 提示：${q.hint}</div>
+        </div>
+
+        <div class="options-grid" id="options-grid">
+          ${optionsHtml}
+        </div>
+
+        <div class="feedback-panel" id="feedback-panel"></div>
+      `;
+    }
+
+    function toggleHint() {
+      const box = document.getElementById('hint-box');
+      if (box) {
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function submitAnswer(selectedIndex) {
+      const s = currentSession;
+      if (!s || s.answered) return;
+      s.answered = true;
+
+      const t = getTheme();
+      const q = s.questions[s.currentIndex];
+      const chosenOption = q.shuffledOptions[selectedIndex];
+      const isCorrect = chosenOption === q.answer;
+      const card = getCardById(q.cardId);
+
+      // 緊湊化選項高度，讓下方答案與解析小卡直接進入視野中央
+      const optGrid = document.getElementById('options-grid');
+      if (optGrid) optGrid.classList.add('answered-compact');
+
+      q.shuffledOptions.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        btn.disabled = true;
+        if (opt === q.answer) {
+          btn.classList.add('correct');
+        } else if (idx === selectedIndex && !isCorrect) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        s.correctCount++;
+        playCorrectSound();
+        setMascot(t.mascotHappy, `太棒了 <b>${progress.playerName}</b>！答對囉！${t.scorePointIcon}「<b>${card.title}</b>」的科學原理你掌握得超清楚！${t.scoreStatusIcon}`);
+      } else {
+        s.wrongRecords.push({
+          question: q.prompt,
+          yourAnswer: chosenOption,
+          correctAnswer: q.answer,
+          card
+        });
+        playWrongSound();
+        setMascot(t.mascotCheer, `別氣餒 <b>${progress.playerName}</b>！正確答案是「<b>${q.answer}</b>」，快看看下方的科學圖鑑小卡把「<b>${card.title}</b>」記起來吧！💪`);
+      }
+
+      const totalQ = s.questions.length;
+      const hasMistake = s.wrongRecords.length > 0;
+      const pillStatus = document.getElementById('pill-status');
+      const pillScore = document.getElementById('pill-score');
+      if (pillStatus) pillStatus.innerHTML = `${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}`;
+      if (pillScore) pillScore.innerHTML = `${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}`;
+
+      const panel = document.getElementById('feedback-panel');
+      panel.className = `feedback-panel ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+      panel.style.display = 'block';
+
+      const isLast = s.currentIndex === s.questions.length - 1;
+
+      panel.innerHTML = `
+        <div class="feedback-header">
+          <div class="feedback-title" style="color: ${isCorrect ? '#16694A' : '#C9385A'};">
+            ${isCorrect ? `${t.scorePointIcon} 答對了！科學觀念超正確！` : `💦 答錯囉！正確答案是：「${q.answer}」`}
+          </div>
+          <button class="kawaii-btn ${isCorrect ? 'btn-accent' : 'btn-primary'}" id="next-q-btn" onclick="nextQuestion()">
+            ${isLast ? '🏁 查看闖關結算' : '下一題 ➡'}
+          </button>
+        </div>
+
+        <div class="science-study-card">
+          <div class="science-card-top">
+            <span class="science-card-name">${t.scorePointIcon} ${card.title}</span>
+            <span class="science-card-tag">${card.tag}</span>
+            <span class="science-card-activity">${card.activityTitle}</span>
+          </div>
+          <div class="science-detail-row">
+            <span class="detail-tag tag-meaning">科學原理</span>
+            ${card.summary}
+          </div>
+          <div class="science-detail-row">
+            <span class="detail-tag tag-example">實驗觀察</span>
+            ${card.experiment}
+          </div>
+          <div class="science-detail-row" style="margin-bottom:0;">
+            <span class="detail-tag tag-syn">必考提醒</span>
+            ${card.tip}
+          </div>
+        </div>
+      `;
+
+      // 自動將解答與科學解析小卡平滑置中於畫面，免手動往下滑
+      requestAnimationFrame(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    function nextQuestion() {
+      const s = currentSession;
+      if (!s) return;
+      if (s.currentIndex < s.questions.length - 1) {
+        s.currentIndex++;
+        s.answered = false;
+        renderQuestionScreen();
+        const stage = document.getElementById('main-stage');
+        if (stage) {
+          stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        finishLevel();
+      }
+    }
+
+    // ====== 畫面 3：關卡結算畫面 ======
+    function finishLevel() {
+      document.body.classList.remove('in-quiz');
+      const stage = document.getElementById('main-stage');
+      const s = currentSession;
+      const t = getTheme();
+      const total = s.questions.length;
+      const isPerfect = s.correctCount === total;
+      const themeBadge = t.levelBadges[s.level - 1] || s.levelObj.badge;
+
+      const prevBest = progress.bestScores[s.level] || 0;
+      if (s.correctCount > prevBest) {
+        progress.bestScores[s.level] = s.correctCount;
+      }
+
+      if (isPerfect) {
+        playFanfareSound();
+        if (!progress.clearedLevels.includes(s.level)) {
+          progress.clearedLevels.push(s.level);
+        }
+        if (s.level < 5 && progress.unlockedLevel < s.level + 1) {
+          progress.unlockedLevel = s.level + 1;
+        }
+        saveProgress();
+
+        if (s.level === 5) {
+          startConfetti();
+          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把五個等級的自然科學難關全部 100% 破解了！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+          showCertificateScreen();
+          return;
+        }
+
+        startConfetti();
+        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> 10 題全部答對（100分）！成功解鎖 <b>Level ${s.level + 1}</b> 囉！${t.scorePointIcon}`);
+
+        stage.innerHTML = `
+          <div class="result-box">
+            <div class="result-icon">🏆</div>
+            <div class="result-title">${t.progressIcon} 恭喜 ${progress.playerName} 100% 完美過關！ ${t.progressIcon}</div>
+            <div class="result-subtitle">
+              你在「${s.levelObj.name}」答對了全部 ${total} 道題目！<br>
+              獲得本關科學榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} 並成功解鎖下一關！
+            </div>
+            <div class="score-big-badge">
+              <span>💯 得分：100 分（${s.correctCount} / ${total} 題全對）</span>
+            </div>
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); startLevel(${s.level + 1})">
+                ${t.progressIcon} 立即挑戰 Level ${s.level + 1} ➡
+              </button>
+              <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">
+                ${t.brandIcon} 返回關卡地圖
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        saveProgress();
+        setMascot(t.mascotCheer, `<b>${progress.playerName}</b> 這次答對了 <b>${s.correctCount} / ${total} 題</b>，表現已經很棒囉！把下面複習清單的錯題看懂，再挑戰一次拿 100% 就能解鎖下一關！💪`);
+
+        const reviewHtml = s.wrongRecords.map((item, idx) => `
+          <div class="review-item">
+            <div class="review-q">${idx + 1}. ${item.question}</div>
+            <div class="review-wrong-ans">❌ 你的選擇：${item.yourAnswer}</div>
+            <div class="review-ans">⭕ 正確答案：${item.correctAnswer}</div>
+            <div style="font-size:0.95rem; color:var(--text-main); font-weight:700; margin-top:6px; background:var(--progress-track-bg); padding:8px 12px; border-radius:10px;">
+              🔬 <b>${item.card.title}（${item.card.activityTitle}）</b>：${item.card.summary}<br>
+              💡 提醒：${item.card.tip}
+            </div>
+          </div>
+        `).join('');
+
+        stage.innerHTML = `
+          <div class="result-box">
+            <div class="result-icon">${t.levelIcons[0]}</div>
+            <div class="result-title">${t.scorePointIcon} 差一點點就滿分囉！加油！ ${t.scorePointIcon}</div>
+            <div class="result-subtitle">
+              本關需要「<b>10 題全部答對 (100%)</b>」才能解鎖下一級喔！<br>
+              先看看下方的錯題科學筆記，準備好就重新隨機抽題再挑戰一次吧！${t.scoreStatusIcon}
+            </div>
+            <div class="score-big-badge">
+              <span>${t.scorePointIcon} 本次成績：${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題）</span>
+            </div>
+
+            <div class="review-list">
+              <h3>📝 錯題科學實驗筆記（共 ${s.wrongRecords.length} 題）</h3>
+              ${reviewHtml}
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="startLevel(${s.level})">
+                🔄 重新隨機抽 10 題・再挑戰一次！
+              </button>
+              <button class="kawaii-btn btn-butter" onclick="showMapScreen()">
+                ${t.brandIcon} 返回關卡地圖
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ====== 畫面 4：Level 5 全破榮譽證書 ======
+    function showCertificateScreen() {
+      currentSession = null;
+      document.body.classList.remove('in-quiz');
+      startConfetti();
+      const stage = document.getElementById('main-stage');
+      const t = getTheme();
+      const today = new Date();
+      const dateStr = `${today.getFullYear()} 年 ${today.getMonth() + 1} 月 ${today.getDate()} 日`;
+
+      const stampsHtml = t.levelBadges.map((b, i) => `
+        <div class="cert-stamp">Level ${i + 1} ${b}</div>
+      `).join('');
+
+      stage.innerHTML = `
+        <div class="certificate-frame">
+          <div class="cert-ribbon">${t.scorePointIcon} ${t.brandHeading}・最高榮譽殿堂 ${t.scorePointIcon}</div>
+          <div class="cert-title">${t.certTitle}</div>
+          <p style="font-weight:700; color:var(--text-soft); font-size:0.95rem;">（可在下方修改挑戰者名字，或點擊右上角切換不同主題風格的證書稱號喔！）</p>
+
+          <div class="cert-name-input-wrap">
+            <span style="font-weight:900; font-size:1.2rem;">茲證明挑戰者：</span>
+            <input type="text" class="cert-name-input" id="cert-player-name"
+                   value="${progress.playerName}"
+                   oninput="updatePlayerName(this.value)" />
+          </div>
+
+          <div class="cert-body">
+            在「國小四年級自然科：水生生物與環境（活動1～活動3，共 180 題大題庫）」中，<br>
+            以 <b>100% 全對</b> 的完美表現在五大難度關卡中過關斬將，<br>
+            正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[4]}</b>】之最高稱號！<br>
+            不僅精通水生動植物的奇妙構造，更具備守護水域生態的科學素養，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
+          </div>
+
+          <div class="cert-badges-row">
+            ${stampsHtml}
+          </div>
+
+          <div style="font-weight:900; color:var(--text-soft); margin-bottom:22px;">
+            📅 頒發日期：${dateStr}
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+            <button class="kawaii-btn btn-primary" onclick="window.print()">🖨️ 列印榮譽證書</button>
+            <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">${t.brandIcon} 返回關卡地圖</button>
+          </div>
+        </div>
+      `;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 彩帶特效 (Confetti)
+    let confettiAnimId = null;
+    function startConfetti() {
+      stopConfetti();
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#FFB7C5', '#E2C2FF', '#B5EAD7', '#FFF5BA', '#00A8E8', '#52B788', '#FFD166'];
+      const pieces = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: 8 + Math.random() * 8,
+        h: 10 + Math.random() * 10,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vy: 2 + Math.random() * 3.5,
+        vx: -1.5 + Math.random() * 3,
+        angle: Math.random() * Math.PI * 2,
+        vAngle: -0.08 + Math.random() * 0.16
+      }));
+
+      function frame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.angle += p.vAngle;
+          if (p.y > canvas.height + 20) {
+            p.y = -20;
+            p.x = Math.random() * canvas.width;
+          }
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        confettiAnimId = requestAnimationFrame(frame);
+      }
+      frame();
+    }
+
+    function stopConfetti() {
+      if (confettiAnimId) {
+        cancelAnimationFrame(confettiAnimId);
+        confettiAnimId = null;
+      }
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas && confettiAnimId) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    });
+
+    // 初始化啟動
+    window.addEventListener('DOMContentLoaded', () => {
+      applyThemeUI();
+      const t = getTheme();
+      setMascot(
+        t.mascotAvatar,
+        `嗨，<b>${progress.playerName}</b>！歡迎來到「<b>水生生物與環境</b>」自然科學闖關實驗室！${t.scorePointIcon}`
+      );
+      showMapScreen();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,2436 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="kawaii">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ 1~6課成語闖關大挑戰 ✨ 國小四年級測驗遊戲</title>
+  <!-- 引入 Google Fonts 圓潤清晰繁體中文字體 Zen Maru Gothic 與 Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       1. 主題一：夢幻甜心風 (Kawaii Pastel — 預設風格)
+       ========================================================================== */
+    :root,
+    [data-theme="kawaii"] {
+      --bg-base: #FFF8FB;
+      --bg-pattern:
+        radial-gradient(circle at 12% 18%, rgba(255, 183, 197, 0.38) 0%, transparent 28%),
+        radial-gradient(circle at 86% 15%, rgba(226, 194, 255, 0.42) 0%, transparent 30%),
+        radial-gradient(circle at 80% 82%, rgba(181, 234, 215, 0.42) 0%, transparent 32%),
+        radial-gradient(circle at 18% 85%, rgba(255, 245, 186, 0.55) 0%, transparent 30%),
+        radial-gradient(#FFD6E4 2px, transparent 2px);
+      --bg-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 32px 32px;
+
+      --primary: #FFB7C5;
+      --primary-strong: #FF8DA1;
+      --primary-deep: #D94B72;
+      --secondary: #E2C2FF;
+      --secondary-strong: #B689E8;
+      --accent: #B5EAD7;
+      --accent-strong: #46B88E;
+      --highlight: #FFF5BA;
+      --highlight-strong: #E8C547;
+
+      --text-main: #5A4256;
+      --text-soft: #8A6F85;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-border: #FFB7C5;
+      --card-inner-bg: linear-gradient(180deg, #FFFDF9 0%, #FFF5F8 100%);
+      --card-inner-border: #FFCAD8;
+
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --border-width: 4px;
+
+      --shadow-main: 0 10px 0 rgba(235, 175, 195, 0.45), 0 14px 28px rgba(145, 95, 125, 0.12);
+      --shadow-card: 0 8px 0 rgba(210, 155, 185, 0.4), 0 12px 24px rgba(140, 90, 120, 0.12);
+      --shadow-option: 0 6px 0 #F4C2D2;
+
+      --mascot-banner-bg: linear-gradient(135deg, rgba(255, 245, 186, 0.92), rgba(255, 218, 193, 0.92), rgba(226, 194, 255, 0.92));
+      --progress-track-bg: #FFF0F5;
+      --progress-fill: linear-gradient(90deg, #FF9EBB, #CE9EFF, #7CE0C3);
+
+      --lvl1-bg: linear-gradient(145deg, #FFF0F5, #FFD6E2);
+      --lvl1-border: #FFB7C5;
+      --lvl2-bg: linear-gradient(145deg, #FFF9E6, #FFECB3);
+      --lvl2-border: #FFE082;
+      --lvl3-bg: linear-gradient(145deg, #ECFFF8, #C8F4E4);
+      --lvl3-border: #9BE3C8;
+      --lvl4-bg: linear-gradient(145deg, #F5EBFF, #E2C2FF);
+      --lvl4-border: #CE9EFF;
+      --lvl5-bg: linear-gradient(145deg, #FFEBF7, #FFC4E1, #E5C4FF);
+      --lvl5-border: #FF94C2;
+    }
+
+    /* ==========================================================================
+       2. 主題二：星際勇者風 (Sci-Fi & Cyber Arcade — 男生帥氣風格)
+       ========================================================================== */
+    [data-theme="scifi"] {
+      --bg-base: #1A2B4C;
+      --bg-pattern:
+        radial-gradient(circle at 15% 20%, rgba(0, 168, 232, 0.28) 0%, transparent 35%),
+        radial-gradient(circle at 85% 18%, rgba(255, 107, 53, 0.22) 0%, transparent 32%),
+        radial-gradient(circle at 75% 85%, rgba(46, 196, 182, 0.25) 0%, transparent 35%),
+        linear-gradient(rgba(0, 168, 232, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 168, 232, 0.12) 1px, transparent 1px);
+      --bg-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+
+      --primary: #00A8E8;
+      --primary-strong: #007EA7;
+      --primary-deep: #005F86;
+      --secondary: #FF6B35;
+      --secondary-strong: #E8531E;
+      --accent: #2EC4B6;
+      --accent-strong: #1B9AAA;
+      --highlight: #FFD166;
+      --highlight-strong: #F4A261;
+
+      --text-main: #1A2B4C;
+      --text-soft: #4A628A;
+      --card-bg: #F0F4F8;
+      --card-border: #00A8E8;
+      --card-inner-bg: linear-gradient(180deg, #FFFFFF 0%, #E6F2FA 100%);
+      --card-inner-border: #72C8F0;
+
+      --radius-lg: 12px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --border-width: 3.5px;
+
+      --shadow-main: 0 8px 0 #0D1930, 0 0 22px rgba(0, 168, 232, 0.45);
+      --shadow-card: 0 7px 0 #132544, 0 8px 18px rgba(0, 0, 0, 0.25);
+      --shadow-option: 0 5px 0 #90B8D8;
+
+      --mascot-banner-bg: linear-gradient(135deg, #E3F4FC, #D8EEFE, #FFF3D6);
+      --progress-track-bg: #D5E5F2;
+      --progress-fill: linear-gradient(90deg, #00A8E8, #2EC4B6, #FFD166);
+
+      --lvl1-bg: linear-gradient(145deg, #E6F7FF, #BAE7FF);
+      --lvl1-border: #00A8E8;
+      --lvl2-bg: linear-gradient(145deg, #E6FFFB, #B5F5EC);
+      --lvl2-border: #2EC4B6;
+      --lvl3-bg: linear-gradient(145deg, #FFFBE6, #FFE58F);
+      --lvl3-border: #F5B82E;
+      --lvl4-bg: linear-gradient(145deg, #FFF2E8, #FFD8BF);
+      --lvl4-border: #FF6B35;
+      --lvl5-bg: linear-gradient(145deg, #E0F2FE, #BAE6FD, #FDE68A);
+      --lvl5-border: #0284C7;
+    }
+
+    /* ==========================================================================
+       3. 主題三：森林探險家 (Woodland Adventure — 自然清新中性風格)
+       ========================================================================== */
+    [data-theme="woodland"] {
+      --bg-base: #FAF6F0;
+      --bg-pattern:
+        radial-gradient(circle at 14% 16%, rgba(82, 183, 136, 0.22) 0%, transparent 30%),
+        radial-gradient(circle at 86% 20%, rgba(244, 162, 97, 0.22) 0%, transparent 30%),
+        radial-gradient(circle at 80% 82%, rgba(142, 202, 230, 0.25) 0%, transparent 32%),
+        radial-gradient(circle at 20% 85%, rgba(141, 110, 99, 0.16) 0%, transparent 28%),
+        radial-gradient(#D8CFC2 1.8px, transparent 1.8px);
+      --bg-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 30px 30px;
+
+      --primary: #52B788;
+      --primary-strong: #40916C;
+      --primary-deep: #2D6A4F;
+      --secondary: #F4A261;
+      --secondary-strong: #E76F51;
+      --accent: #8ECAE6;
+      --accent-strong: #219EBC;
+      --highlight: #E9C46A;
+      --highlight-strong: #8D6E63;
+
+      --text-main: #3E352F;
+      --text-soft: #6E5D53;
+      --card-bg: #FFFDF9;
+      --card-border: #8D6E63;
+      --card-inner-bg: linear-gradient(180deg, #FFFFFF 0%, #F7F2E9 100%);
+      --card-inner-border: #C4B299;
+
+      --radius-lg: 16px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --border-width: 3.5px;
+
+      --shadow-main: 0 9px 0 rgba(141, 110, 99, 0.35), 0 14px 26px rgba(90, 70, 55, 0.12);
+      --shadow-card: 0 7px 0 rgba(141, 110, 99, 0.32), 0 10px 20px rgba(90, 70, 55, 0.1);
+      --shadow-option: 0 5px 0 #C7B6A2;
+
+      --mascot-banner-bg: linear-gradient(135deg, #EDF7F2, #FDF4E7, #EBF5FA);
+      --progress-track-bg: #EFE9DF;
+      --progress-fill: linear-gradient(90deg, #52B788, #F4A261, #8ECAE6);
+
+      --lvl1-bg: linear-gradient(145deg, #F0FAF4, #D8F3DC);
+      --lvl1-border: #52B788;
+      --lvl2-bg: linear-gradient(145deg, #FFF8EB, #FDE4CF);
+      --lvl2-border: #F4A261;
+      --lvl3-bg: linear-gradient(145deg, #EEF8FC, #D0EBF7);
+      --lvl3-border: #8ECAE6;
+      --lvl4-bg: linear-gradient(145deg, #F6F0EC, #E6D7CE);
+      --lvl4-border: #8D6E63;
+      --lvl5-bg: linear-gradient(145deg, #E8F6EF, #FCECD2, #D8F3DC);
+      --lvl5-border: #40916C;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Zen Maru Gothic', 'Noto Sans TC', 'Microsoft JhengHei UI', sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      background-color: var(--bg-base);
+      background-image: var(--bg-pattern);
+      background-size: var(--bg-size);
+      overflow-x: hidden;
+      padding-bottom: 50px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* 飄浮背景裝飾 */
+    .floating-decor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      font-size: 2.2rem;
+      opacity: 0.6;
+      animation: floatUpDown 4s ease-in-out infinite;
+    }
+    .decor-1 { top: 6%; left: 3%; animation-delay: 0s; }
+    .decor-2 { top: 14%; right: 4%; animation-delay: 1.2s; }
+    .decor-3 { bottom: 12%; left: 4%; animation-delay: 0.7s; }
+    .decor-4 { bottom: 16%; right: 5%; animation-delay: 1.8s; }
+
+    @keyframes floatUpDown {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(6deg); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounceClick {
+      0% { transform: scale(1); }
+      40% { transform: scale(0.94); }
+      80% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px;
+    }
+
+    /* 頂部狀態與導覽列 */
+    .top-header {
+      background: var(--card-bg);
+      border: var(--border-width) solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-main);
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      transition: all 0.25s ease;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.85rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      border: 3px solid #FFF;
+    }
+
+    .brand-text h1 {
+      font-size: 1.48rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text p {
+      font-size: 0.92rem;
+      color: var(--text-soft);
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 頂部主題快速切換器 */
+    .theme-Select-wrap {
+      display: inline-flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 2.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      gap: 4px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    }
+
+    .theme-chip {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 900;
+      padding: 6px 11px;
+      border-radius: calc(var(--radius-md) - 4px);
+      border: none;
+      background: transparent;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .theme-chip:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-chip.active {
+      background: var(--primary-deep);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    /* 按鈕通用樣式 */
+    .kawaii-btn {
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 900;
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      border: 2.5px solid #FFF;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.18s ease;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+      color: var(--text-main);
+      background: var(--highlight);
+    }
+
+    .kawaii-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      filter: brightness(1.03);
+    }
+
+    .kawaii-btn:active {
+      transform: translateY(2px) scale(0.97);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      color: #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="kawaii"] .btn-primary {
+      color: #6B233B;
+      text-shadow: none;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary), var(--secondary-strong));
+      color: #FFFFFF;
+    }
+    [data-theme="kawaii"] .btn-secondary {
+      color: #4D2C7A;
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #FFFFFF;
+    }
+    [data-theme="kawaii"] .btn-accent {
+      color: #164F3C;
+    }
+
+    .btn-butter {
+      background: linear-gradient(135deg, var(--highlight), var(--highlight-strong));
+      color: #4A3508;
+    }
+
+    .btn-reset {
+      background: #FFFFFF;
+      color: var(--primary-deep);
+      border: 2px solid var(--card-border);
+      font-size: 0.9rem;
+      padding: 8px 13px;
+    }
+
+    /* 吉祥物對話框 */
+    .mascot-banner {
+      background: var(--mascot-banner-bg);
+      border: var(--border-width) solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-main);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      animation: popIn 0.4s ease;
+    }
+
+    .mascot-avatar {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      border-radius: var(--radius-md);
+      background: #FFF;
+      border: 3.5px solid var(--primary-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.35rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      animation: floatUpDown 3s ease-in-out infinite;
+    }
+
+    .mascot-bubble {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      border: 2px dashed var(--primary-strong);
+    }
+
+    .mascot-name {
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mascot-text {
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    /* 主內容卡片 */
+    .main-card {
+      background: var(--card-bg);
+      border: var(--border-width) solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-main);
+      padding: 26px 24px;
+      animation: popIn 0.35s ease;
+    }
+
+    /* 首頁主題大卡片切換器 */
+    .home-theme-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 16px auto 18px;
+      max-width: 780px;
+    }
+
+    .theme-card-btn {
+      font-family: inherit;
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      border: 3px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      transition: all 0.2s ease;
+      background: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .theme-card-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .theme-card-btn.active {
+      border-color: var(--primary-deep);
+      box-shadow: 0 5px 0 var(--primary-strong);
+      background: #FFFDF9;
+    }
+
+    .theme-card-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* 首頁關卡地圖 */
+    .map-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .map-header h2 {
+      font-size: 1.7rem;
+      color: var(--primary-deep);
+      margin-bottom: 6px;
+      font-weight: 900;
+    }
+
+    .map-header p {
+      font-size: 1.04rem;
+      color: var(--text-soft);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    /* 挑戰者名字輸入欄 */
+    .challenger-bar {
+      background: var(--card-inner-bg);
+      border: 3px solid var(--card-inner-border);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      margin: 14px auto;
+      max-width: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .challenger-label {
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .challenger-input {
+      font-family: inherit;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text-main);
+      background: #FFFFFF;
+      border: 2.5px solid var(--primary-strong);
+      border-radius: var(--radius-sm);
+      padding: 6px 16px;
+      width: 200px;
+      text-align: center;
+      outline: none;
+    }
+
+    .overall-progress-bar {
+      max-width: 520px;
+      margin: 14px auto 0;
+      background: var(--progress-track-bg);
+      border-radius: 999px;
+      height: 26px;
+      padding: 3px;
+      border: 2.5px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overall-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--progress-fill);
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .overall-progress-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .level-card {
+      border-radius: var(--radius-lg);
+      padding: 20px 18px;
+      border: 3.5px solid #FFF;
+      position: relative;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .level-card.unlocked {
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+    }
+
+    .level-card.unlocked:hover {
+      transform: translateY(-6px) scale(1.015);
+    }
+
+    .level-card.locked {
+      background: linear-gradient(135deg, #ECE9F0, #DFDCE5) !important;
+      border-color: #C8C2D1 !important;
+      opacity: 0.84;
+      cursor: not-allowed;
+      box-shadow: 0 5px 0 #B8B2C2;
+    }
+
+    .level-1-bg { background: var(--lvl1-bg); border-color: var(--lvl1-border); }
+    .level-2-bg { background: var(--lvl2-bg); border-color: var(--lvl2-border); }
+    .level-3-bg { background: var(--lvl3-bg); border-color: var(--lvl3-border); }
+    .level-4-bg { background: var(--lvl4-bg); border-color: var(--lvl4-border); }
+    .level-5-bg { background: var(--lvl5-bg); border-color: var(--lvl5-border); }
+
+    .level-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .level-icon {
+      font-size: 2.35rem;
+      width: 56px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+    }
+
+    .level-status-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.92);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pill-cleared { color: #1B7A58; border: 2px solid #46B88E; }
+    .pill-open { color: var(--primary-deep); border: 2px solid var(--primary-strong); }
+    .pill-locked { color: #7B7385; border: 2px solid #BDB6C6; }
+
+    .level-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 5px;
+      color: var(--text-main);
+    }
+
+    .level-desc {
+      font-size: 0.98rem;
+      color: var(--text-soft);
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .level-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 2px dashed rgba(100, 90, 110, 0.2);
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    /* 測驗進行畫面（單頁免捲動緊湊優化） */
+    .top-header, .mascot-banner {
+      overflow-anchor: none;
+    }
+
+    body.in-quiz {
+      padding-bottom: 24px;
+    }
+
+    body.in-quiz .app-container {
+      padding-top: 10px;
+      padding-bottom: 14px;
+    }
+
+    body.in-quiz .top-header {
+      padding: 8px 16px;
+      margin-bottom: 10px;
+    }
+
+    body.in-quiz .brand-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 1.4rem;
+    }
+
+    body.in-quiz .brand-text h1 {
+      font-size: 1.2rem;
+    }
+
+    body.in-quiz .brand-text p {
+      display: none;
+    }
+
+    body.in-quiz .mascot-banner {
+      padding: 8px 14px;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    body.in-quiz .mascot-avatar {
+      width: 46px;
+      height: 46px;
+      font-size: 1.7rem;
+    }
+
+    body.in-quiz .mascot-bubble {
+      padding: 8px 14px;
+    }
+
+    body.in-quiz .mascot-name {
+      display: none;
+    }
+
+    body.in-quiz .mascot-text {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    body.in-quiz .main-card {
+      padding: 16px 20px;
+    }
+
+    .quiz-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 2.5px dashed var(--card-inner-border);
+    }
+
+    .quiz-level-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 1.06rem;
+      border: 2px solid #FFF;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+    [data-theme="kawaii"] .quiz-level-tag {
+      color: #542846;
+    }
+
+    .scoreboard {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .score-pill {
+      background: #FFFFFF;
+      border: 2.5px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      font-weight: 900;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-section {
+      margin-bottom: 12px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+      color: var(--primary-deep);
+    }
+
+    .quiz-progress-track {
+      width: 100%;
+      height: 18px;
+      background: var(--progress-track-bg);
+      border: 2.5px solid var(--card-border);
+      border-radius: 999px;
+      padding: 2px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-bar {
+      height: 100%;
+      background: var(--progress-fill);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .question-box {
+      background: var(--card-inner-bg);
+      border: 3px solid var(--card-inner-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lesson-badge {
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+    [data-theme="kawaii"] .lesson-badge {
+      background: var(--secondary);
+      color: #4D2778;
+    }
+
+    .hint-btn {
+      background: var(--highlight);
+      border: 2px solid var(--highlight-strong);
+      color: #5C4308;
+      border-radius: var(--radius-sm);
+      padding: 4px 12px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.15s ease;
+    }
+
+    .hint-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .question-text {
+      font-size: 1.32rem;
+      font-weight: 900;
+      line-height: 1.55;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+
+    .hint-popup {
+      margin-top: 10px;
+      background: #FFFBE0;
+      border: 2px dashed #D9A726;
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #6B4C08;
+      display: none;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .options-grid.answered-compact {
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options-grid.answered-compact .option-btn {
+      padding: 9px 14px;
+      font-size: 1.08rem;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .options-grid.answered-compact .option-btn:not(.correct):not(.wrong) {
+      opacity: 0.55;
+    }
+
+    .options-grid.answered-compact .option-index {
+      width: 30px;
+      height: 30px;
+      font-size: 0.92rem;
+    }
+
+    .option-btn {
+      font-family: inherit;
+      background: #FFFFFF;
+      border: 3px solid var(--card-inner-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      font-size: 1.18rem;
+      font-weight: 900;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-option);
+      transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.16s, border-color 0.16s, padding 0.2s ease;
+      line-height: 1.45;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-4px) scale(1.015);
+      border-color: var(--primary-strong);
+    }
+
+    .option-btn:active:not(:disabled) {
+      animation: bounceClick 0.25s ease;
+    }
+
+    .option-index {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: var(--radius-sm);
+      background: var(--progress-track-bg);
+      color: var(--primary-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.08rem;
+      font-weight: 900;
+    }
+
+    .option-btn.correct {
+      background: #E8FBF3 !important;
+      border-color: #2EC4B6 !important;
+      box-shadow: 0 5px 0 #74D8C8 !important;
+      color: #13543E !important;
+    }
+
+    .option-btn.correct .option-index {
+      background: #2EC4B6;
+      color: #FFF;
+    }
+
+    .option-btn.wrong {
+      background: #FFF0F3 !important;
+      border-color: #F06A86 !important;
+      box-shadow: 0 5px 0 #F5A8B8 !important;
+      color: #8C2339 !important;
+    }
+
+    .option-btn.wrong .option-index {
+      background: #F06A86;
+      color: #FFF;
+    }
+
+    /* 答題後即時回饋與成語教學小卡 */
+    .feedback-panel {
+      display: none;
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-top: 10px;
+      animation: popIn 0.28s ease;
+      border: 3.5px solid;
+      overflow-anchor: none;
+    }
+
+    .feedback-panel.is-correct {
+      background: linear-gradient(145deg, #F0FFF9, #DCFAEE);
+      border-color: #46B88E;
+    }
+
+    .feedback-panel.is-wrong {
+      background: linear-gradient(145deg, #FFF5F7, #FFE4EB);
+      border-color: #F06A86;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .feedback-title {
+      font-size: 1.28rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .idiom-study-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      border: 2.5px solid var(--card-inner-border);
+      margin-bottom: 4px;
+    }
+
+    .idiom-card-top {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed var(--card-inner-border);
+    }
+
+    .idiom-card-name {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+    }
+
+    .idiom-card-zhuyin {
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: var(--text-main);
+      background: var(--progress-track-bg);
+      padding: 3px 12px;
+      border-radius: 999px;
+    }
+
+    .idiom-card-lesson {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: var(--text-soft);
+      margin-left: auto;
+    }
+
+    .idiom-detail-row {
+      font-size: 1.1rem;
+      line-height: 1.65;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .detail-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 900;
+      margin-right: 6px;
+    }
+
+    .tag-meaning { background: #FFE5EE; color: #C43C66; }
+    .tag-example { background: #E3F9F0; color: #207A5B; }
+    .tag-syn { background: #FFF4C7; color: #8A640F; }
+
+    /* 結算與錯題複習清單 */
+    .result-box {
+      text-align: center;
+      padding: 12px 6px;
+    }
+
+    .result-icon {
+      font-size: 4.2rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: floatUpDown 2.6s ease-in-out infinite;
+    }
+
+    .result-title {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 8px;
+    }
+
+    .result-subtitle {
+      font-size: 1.14rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .score-big-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--card-inner-bg);
+      border: 4px solid var(--card-border);
+      padding: 15px 30px;
+      border-radius: 999px;
+      font-size: 1.45rem;
+      font-weight: 900;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-list {
+      text-align: left;
+      background: var(--card-inner-bg);
+      border: 3px solid var(--card-inner-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin: 18px 0 24px;
+    }
+
+    .review-list h3 {
+      font-size: 1.25rem;
+      color: var(--primary-deep);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .review-item {
+      background: #FFFFFF;
+      border: 2px solid var(--card-inner-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .review-q {
+      font-weight: 900;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .review-ans {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1B7A58;
+      margin-bottom: 4px;
+    }
+
+    .review-wrong-ans {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #D64567;
+      margin-bottom: 6px;
+    }
+
+    /* 全破榮譽證書 */
+    .certificate-frame {
+      background: var(--card-inner-bg);
+      border: 8px double var(--primary-strong);
+      border-radius: var(--radius-lg);
+      padding: 32px 26px;
+      max-width: 700px;
+      margin: 0 auto 26px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+      position: relative;
+      text-align: center;
+    }
+
+    .cert-ribbon {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary-strong), var(--secondary-strong), var(--primary-strong));
+      color: #FFF;
+      padding: 8px 26px;
+      border-radius: 999px;
+      font-size: 1.08rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .cert-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--primary-deep);
+      margin-bottom: 12px;
+    }
+
+    .cert-name-input-wrap {
+      margin: 14px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cert-name-input {
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 900;
+      text-align: center;
+      color: var(--text-main);
+      background: #FFF;
+      border: 3px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 6px 16px;
+      width: 220px;
+      outline: none;
+    }
+
+    .cert-body {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.75;
+      color: var(--text-main);
+      margin: 16px 0 22px;
+    }
+
+    .cert-stamps {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .cert-stamp {
+      background: #FFF;
+      border: 2.5px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: var(--primary-deep);
+    }
+
+    /* 成語圖鑑與名字設定 Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 25, 38, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border: 4px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      max-width: 880px;
+      width: 100%;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      animation: popIn 0.3s ease;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 16px 22px;
+      background: var(--mascot-banner-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--card-border);
+    }
+
+    .modal-header h2 {
+      font-size: 1.4rem;
+      color: var(--primary-deep);
+      font-weight: 900;
+    }
+
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .filter-tab {
+      font-family: inherit;
+      padding: 7px 15px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--card-inner-border);
+      background: #FFF;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .filter-tab.active {
+      background: var(--primary-deep);
+      color: #FFF;
+      border-color: var(--primary-deep);
+    }
+
+    .dict-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 14px;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    @media (max-width: 680px) {
+      .brand-text h1 { font-size: 1.22rem; }
+      .question-text { font-size: 1.24rem; }
+      .option-btn { font-size: 1.12rem; padding: 14px 16px; }
+      .dict-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景漂浮主題裝飾（隨主題動態切換） -->
+  <div class="floating-decor decor-1" id="decor-1">💖</div>
+  <div class="floating-decor decor-2" id="decor-2">✨</div>
+  <div class="floating-decor decor-3" id="decor-3">🎀</div>
+  <div class="floating-decor decor-4" id="decor-4">🪄</div>
+
+  <!-- 彩帶慶祝畫布 -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- 頂部導覽與主題切換列 -->
+    <header class="top-header">
+      <div class="brand-title" onclick="showMapScreen()">
+        <div class="brand-badge" id="brand-icon">👑</div>
+        <div class="brand-text">
+          <h1 id="brand-heading">1～6課成語魔法學園</h1>
+          <p id="brand-subheading">國小四年級上學期 ✨ 趣味闖關大挑戰</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- 右上角一鍵主題切換器 -->
+        <div class="theme-Select-wrap" title="切換主題風格">
+          <button class="theme-chip" id="chip-kawaii" onclick="switchTheme('kawaii')">💖 夢幻甜心</button>
+          <button class="theme-chip" id="chip-scifi" onclick="switchTheme('scifi')">🚀 星際勇者</button>
+          <button class="theme-chip" id="chip-woodland" onclick="switchTheme('woodland')">🍀 森林探險</button>
+        </div>
+
+        <button class="kawaii-btn btn-primary" id="header-player-btn" onclick="openNameModal()">
+          <span id="header-player-icon">👧</span> 挑戰者：<span id="header-player-name">真真</span> ✏️
+        </button>
+        <button class="kawaii-btn btn-secondary" onclick="openDictionaryModal()">
+          📖 成語圖鑑 (36)
+        </button>
+        <a class="kawaii-btn btn-accent" href="science.html" style="text-decoration:none;">
+          🔬 玩自然水生生物闖關
+        </a>
+        <button class="kawaii-btn btn-butter" id="sound-toggle-btn" onclick="toggleSound()">
+          🔊 音效：開
+        </button>
+        <button class="kawaii-btn btn-reset" onclick="confirmResetProgress()">
+          🔄 重置
+        </button>
+      </div>
+    </header>
+
+    <!-- 應援吉祥物對話框（隨主題同步切換） -->
+    <section class="mascot-banner">
+      <div class="mascot-avatar" id="mascot-emoji">🐰</div>
+      <div class="mascot-bubble">
+        <div class="mascot-name">
+          <span id="mascot-title">🎀 魔法小精靈・蜜桃兔兔</span>
+          <span id="mascot-tagline" style="font-size:0.84rem; opacity:0.85;">💖 陪伴你一起闖關</span>
+        </div>
+        <div class="mascot-text" id="mascot-message">
+          歡迎來到成語闖關大挑戰！每一關只要「10 題全部答對（100%）」就能解鎖下一級喔！
+        </div>
+      </div>
+    </section>
+
+    <!-- 主內容區 -->
+    <main class="main-card" id="main-stage">
+      <!-- 由 JavaScript 動態渲染 -->
+    </main>
+  </div>
+
+  <!-- 1~6課成語圖鑑 Modal -->
+  <div class="modal-backdrop" id="dict-modal" onclick="if(event.target===this) closeDictionaryModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📖 國小四年級上（1～6課）36 則成語圖鑑</h2>
+        <button class="kawaii-btn btn-primary" onclick="closeDictionaryModal()">✖ 關閉</button>
+      </div>
+      <div class="modal-body">
+        <div class="filter-tabs" id="dict-tabs"></div>
+        <div class="dict-grid" id="dict-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 挑戰者名字設定 Modal -->
+  <div class="modal-backdrop" id="name-modal" onclick="if(event.target===this) closeNameModal()">
+    <div class="modal-content" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2 id="name-modal-title">✨ 輸入挑戰者名字 ✨</h2>
+        <button class="kawaii-btn btn-primary" onclick="closeNameModal()">✖</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 28px 24px;">
+        <div style="font-size: 3.4rem; margin-bottom: 10px;" id="name-modal-icon">👑</div>
+        <p style="font-size: 1.08rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px;">
+          請輸入你的名字或暱稱，<br>應援夥伴會在闖關時為你加油，全破榮譽證書也會印上你的名字喔！
+        </p>
+        <input type="text" id="modal-name-input" class="challenger-input"
+               style="width: 85%; max-width: 280px; font-size: 1.3rem; padding: 10px 20px; margin-bottom: 18px;"
+               placeholder="請輸入挑戰者名字..." maxlength="16"
+               onkeydown="if(event.key==='Enter') saveNameFromModal()" />
+        <div style="display: flex; justify-content: center; gap: 12px;">
+          <button class="kawaii-btn btn-accent" style="font-size: 1.1rem; padding: 12px 28px;" onclick="saveNameFromModal()">
+            ✅ 確定儲存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入 1~6 課 180 題完整題庫資料 -->
+  <script src="game_data.js"></script>
+  <script>
+    // ====== 三大主題完整設定表 ======
+    const THEME_CONFIGS = {
+      kawaii: {
+        key: 'kawaii',
+        label: '夢幻甜心風',
+        subLabel: '少女可愛馬卡龍粉彩',
+        brandIcon: '👑',
+        brandHeading: '1～6課成語魔法學園',
+        brandSubheading: '國小四年級上學期 ✨ 夢幻甜心闖關測驗',
+        decors: ['💖', '✨', '🎀', '🪄'],
+        playerIcon: '👧',
+        mascotAvatar: '🐰',
+        mascotHappy: '🥳',
+        mascotCheer: '🥺',
+        mascotVictory: '👑',
+        mascotTitle: '🎀 魔法小精靈・蜜桃兔兔',
+        mascotTagline: '💖 揮動小魔法棒陪你闖關',
+        welcomeMsg: (name) => `嗨嗨 <b>${name}</b>！歡迎來到成語魔法學園 💖 每一關只要「10 題全部答對（100%）」就能解鎖下一級，朝向【<b>成語魔法小公主／甜心小達人</b>】邁進吧！✨`,
+        scoreStatusIcon: '💖',
+        scorePointIcon: '✨',
+        progressIcon: '🎀',
+        hintIcon: '🪄',
+        levelIcons: ['🌸', '🎀', '🪄', '💖', '👑'],
+        levelBadges: [
+          '🌸 甜心小萌新',
+          '🎀 釋義小甜心',
+          '🪄 造句小精靈',
+          '💖 語文小仙子',
+          '👑 成語魔法小公主／甜心小達人'
+        ],
+        certTitle: '👑 成語魔法小公主／甜心小達人 榮譽證書 👑',
+        certPrincipal: '🐰 成語魔法學園 校長 蜜桃兔兔 敬頒',
+        confettiColors: ['#FFB7C5', '#E2C2FF', '#B5EAD7', '#FFF5BA', '#FFDAC1', '#FF8DA1']
+      },
+      scifi: {
+        key: 'scifi',
+        label: '星際勇者風',
+        subLabel: '帥氣科技機甲與電玩風',
+        brandIcon: '🚀',
+        brandHeading: '1～6課星際成語艦隊',
+        brandSubheading: '國小四年級上學期 ⚡ 星際勇者闖關基地',
+        decors: ['⚡', '🚀', '🛡️', '⚔️'],
+        playerIcon: '🧑‍🚀',
+        mascotAvatar: '🐕‍🦺',
+        mascotHappy: '🤖',
+        mascotCheer: '🛸',
+        mascotVictory: '🏆',
+        mascotTitle: '⚡ 太空柴犬隊長・阿波羅號',
+        mascotTagline: '🛡️ 啟動護盾與雷射光陪你破關',
+        welcomeMsg: (name) => `呼叫指揮官 <b>${name}</b>！🚀 歡迎登陸星際成語艦隊！每關達成「10 題全對（100% 能量）」即可突破防線，奪下【<b>星際成語大勇者／傳奇指揮官</b>】最高榮耀！🏆`,
+        scoreStatusIcon: '🛡️',
+        scorePointIcon: '⚡',
+        progressIcon: '🚀',
+        hintIcon: '⚔️',
+        levelIcons: ['⚡', '🛡️', '🚀', '⚔️', '🏆'],
+        levelBadges: [
+          '⚡ 新星見習生',
+          '🛡️ 星際護衛隊',
+          '🚀 光速領航員',
+          '⚔️ 機甲破譯官',
+          '🏆 星際成語大勇者／傳奇指揮官'
+        ],
+        certTitle: '🏆 星際成語大勇者／傳奇指揮官 榮譽勳章 🏆',
+        certPrincipal: '🐕‍🦺 星際成語艦隊 總司令 柴犬隊長阿波羅 授勳',
+        confettiColors: ['#00A8E8', '#FF6B35', '#2EC4B6', '#FFD166', '#38BDF8', '#F97316']
+      },
+      woodland: {
+        key: 'woodland',
+        label: '森林探險家',
+        subLabel: '自然清新大地與露營風',
+        brandIcon: '🧭',
+        brandHeading: '1～6課森林成語探險隊',
+        brandSubheading: '國小四年級上學期 🍀 自然叢林尋寶挑戰',
+        decors: ['🌰', '🍀', '🧭', '⛺'],
+        playerIcon: '🤠',
+        mascotAvatar: '🦉',
+        mascotHappy: '🦊',
+        mascotCheer: '🐿️',
+        mascotVictory: '⛺',
+        mascotTitle: '🍀 博學貓頭鷹博士・奧利',
+        mascotTagline: '🧭 帶著指南針與放大鏡陪你尋寶',
+        welcomeMsg: (name) => `早安探險家 <b>${name}</b>！🍀 歡迎加入森林成語探險隊！每座營地只要「10 題全部答對（100%）」就能點亮露營燈 ⛺，獲得【<b>森林成語探險王／博學小博士</b>】稱號！🔍`,
+        scoreStatusIcon: '🍀',
+        scorePointIcon: '🌰',
+        progressIcon: '🧭',
+        hintIcon: '🔍',
+        levelIcons: ['🌰', '🍀', '🧭', '🔍', '⛺'],
+        levelBadges: [
+          '🌰 橡果小隊員',
+          '🍀 綠林尋寶家',
+          '🧭 指南針達人',
+          '🔍 叢林觀察家',
+          '⛺ 森林成語探險王／博學小博士'
+        ],
+        certTitle: '⛺ 森林成語探險王／博學小博士 榮譽證書 ⛺',
+        certPrincipal: '🦉 森林成語探險學院 院長 貓頭鷹博士奧利 敬頒',
+        confettiColors: ['#52B788', '#F4A261', '#8ECAE6', '#E9C46A', '#8D6E63', '#2A9D8F']
+      }
+    };
+
+    // ====== 狀態管理與 LocalStorage ======
+    const STORAGE_KEY = 'kawaii_idiom_game_v1';
+    const QUESTIONS_PER_ROUND = 10;
+
+    let progress = loadProgress();
+    let soundEnabled = true;
+    let currentSession = null;
+
+    function loadProgress() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return {
+            unlockedLevel: parsed.unlockedLevel || 1,
+            clearedLevels: parsed.clearedLevels || [],
+            bestScores: parsed.bestScores || {},
+            totalStars: parsed.totalStars || 0,
+            playerName: parsed.playerName || '真真',
+            theme: THEME_CONFIGS[parsed.theme] ? parsed.theme : 'kawaii'
+          };
+        }
+      } catch (e) {
+        console.warn('讀取進度失敗:', e);
+      }
+      return {
+        unlockedLevel: 1,
+        clearedLevels: [],
+        bestScores: {},
+        totalStars: 0,
+        playerName: '真真',
+        theme: 'kawaii'
+      };
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {
+        console.warn('儲存進度失敗:', e);
+      }
+    }
+
+    function getTheme() {
+      return THEME_CONFIGS[progress.theme] || THEME_CONFIGS.kawaii;
+    }
+
+    // ====== 一鍵切換主題風格 ======
+    function switchTheme(themeKey) {
+      if (!THEME_CONFIGS[themeKey]) return;
+      progress.theme = themeKey;
+      saveProgress();
+      applyThemeUI();
+      playCorrectSound();
+
+      const t = getTheme();
+      setMascot(t.mascotAvatar, t.welcomeMsg(progress.playerName));
+
+      // 重新渲染當前所在的畫面以同步所有圖示與稱號
+      if (currentSession && document.querySelector('.quiz-topbar')) {
+        renderQuestionScreen();
+      } else if (document.querySelector('.certificate-frame')) {
+        showCertificateScreen();
+      } else {
+        showMapScreen();
+      }
+    }
+
+    function applyThemeUI() {
+      const t = getTheme();
+      document.documentElement.setAttribute('data-theme', t.key);
+
+      // 更新漂浮背景圖示
+      t.decors.forEach((icon, i) => {
+        const el = document.getElementById(`decor-${i + 1}`);
+        if (el) el.textContent = icon;
+      });
+
+      // 更新頂部品牌與吉祥物標題
+      document.getElementById('brand-icon').textContent = t.brandIcon;
+      document.getElementById('brand-heading').textContent = t.brandHeading;
+      document.getElementById('brand-subheading').textContent = t.brandSubheading;
+      document.getElementById('header-player-icon').textContent = t.playerIcon;
+      document.getElementById('header-player-name').textContent = progress.playerName;
+      document.getElementById('mascot-emoji').textContent = t.mascotAvatar;
+      document.getElementById('mascot-title').textContent = t.mascotTitle;
+      document.getElementById('mascot-tagline').textContent = t.mascotTagline;
+
+      // 更新右上角主題切換按鈕高亮狀態
+      ['kawaii', 'scifi', 'woodland'].forEach(k => {
+        const chip = document.getElementById(`chip-${k}`);
+        if (chip) {
+          chip.classList.toggle('active', k === t.key);
+        }
+      });
+    }
+
+    function confirmResetProgress() {
+      if (confirm('確定要將闖關進度重置回 Level 1 嗎？\n（你的挑戰者名字與目前選擇的主題風格會保留喔！）')) {
+        progress = {
+          unlockedLevel: 1,
+          clearedLevels: [],
+          bestScores: {},
+          totalStars: 0,
+          playerName: progress.playerName || '真真',
+          theme: progress.theme || 'kawaii'
+        };
+        saveProgress();
+        stopConfetti();
+        const t = getTheme();
+        setMascot(t.mascotAvatar, t.welcomeMsg(progress.playerName));
+        showMapScreen();
+      }
+    }
+
+    // ====== 音效合成器 (Web Audio API) ======
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freqs, type = 'sine', duration = 0.14) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        freqs.forEach((f, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(f, ctx.currentTime + idx * duration);
+          gain.gain.setValueAtTime(0.14, ctx.currentTime + idx * duration);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (idx + 1) * duration + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + idx * duration);
+          osc.stop(ctx.currentTime + (idx + 1) * duration + 0.06);
+        });
+      } catch (e) {}
+    }
+
+    function playCorrectSound() {
+      playTone([523.25, 659.25, 783.99, 1046.5], 'triangle', 0.11);
+    }
+
+    function playWrongSound() {
+      playTone([349.23, 311.13], 'sine', 0.18);
+    }
+
+    function playFanfareSound() {
+      playTone([523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5], 'triangle', 0.13);
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('sound-toggle-btn');
+      btn.textContent = soundEnabled ? '🔊 音效：開' : '🔇 音效：關';
+    }
+
+    function setMascot(emoji, text) {
+      document.getElementById('mascot-emoji').textContent = emoji;
+      document.getElementById('mascot-message').innerHTML = text;
+    }
+
+    // ====== 工具函式 ======
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getIdiomById(idiomId) {
+      return window.GAME_DATA.idioms.find(item => item.id === idiomId) || window.GAME_DATA.idioms[0];
+    }
+
+    // ====== 畫面 1：首頁關卡地圖 ======
+    function showMapScreen() {
+      currentSession = null;
+      document.body.classList.remove('in-quiz');
+      stopConfetti();
+      const stage = document.getElementById('main-stage');
+      const t = getTheme();
+      const clearedCount = progress.clearedLevels.length;
+      const percent = Math.round((clearedCount / 5) * 100);
+
+      let cardsHtml = '';
+      window.GAME_DATA.levels.forEach((lvl, idx) => {
+        const isUnlocked = lvl.level <= progress.unlockedLevel;
+        const isCleared = progress.clearedLevels.includes(lvl.level);
+        const bestScore = progress.bestScores[lvl.level] || 0;
+        const themeIcon = t.levelIcons[idx] || lvl.icon;
+        const themeBadge = t.levelBadges[idx] || lvl.badge;
+
+        let statusPill = '';
+        if (isCleared) {
+          statusPill = `<span class="level-status-pill pill-cleared">${t.scorePointIcon} 已完美通關</span>`;
+        } else if (isUnlocked) {
+          statusPill = `<span class="level-status-pill pill-open">🔓 開放挑戰中</span>`;
+        } else {
+          statusPill = `<span class="level-status-pill pill-locked">🔒 尚未解鎖</span>`;
+        }
+
+        cardsHtml += `
+          <div class="level-card level-${lvl.level}-bg ${isUnlocked ? 'unlocked' : 'locked'}"
+               onclick="${isUnlocked ? `startLevel(${lvl.level})` : `lockedLevelTip(${lvl.level})`}">
+            <div>
+              <div class="level-top">
+                <div class="level-icon">${isUnlocked ? themeIcon : '🔒'}</div>
+                ${statusPill}
+              </div>
+              <div class="level-title">${lvl.name}</div>
+              <div class="level-desc">${lvl.subtitle}</div>
+              <div style="font-size: 0.85rem; font-weight: 900; color: var(--primary-deep); background: rgba(255,255,255,0.82); display: inline-block; padding: 3px 10px; border-radius: 999px; margin-bottom: 6px;">
+                🎲 題庫 ${lvl.questions.length} 題｜隨機抽 10 題
+              </div>
+              <div style="font-size: 0.84rem; font-weight: 900; color: var(--text-soft);">
+                稱號：${themeBadge}
+              </div>
+            </div>
+            <div class="level-footer">
+              <span>🎯 過關條件：10 / 10 全對</span>
+              <span>${isCleared ? `${t.scoreStatusIcon} 100分` : (bestScore > 0 ? `最高 ${bestScore * 10}分` : '尚未挑戰')}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      const certBanner = progress.clearedLevels.includes(5) ? `
+        <div style="margin-top: 24px; text-align: center; background: var(--mascot-banner-bg); padding: 18px; border-radius: var(--radius-lg); border: 3px dashed var(--primary-strong);">
+          <p style="font-size: 1.15rem; font-weight: 900; color: var(--primary-deep); margin-bottom: 10px;">
+            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部五個關卡的 100% 完美挑戰！
+          </p>
+          <button class="kawaii-btn btn-primary" onclick="showCertificateScreen()">
+            🏆 查看專屬「${t.levelBadges[4]}」榮譽證書
+          </button>
+        </div>
+      ` : '';
+
+      stage.innerHTML = `
+        <div class="map-header">
+          <h2>${t.brandIcon} 選擇主題風格與挑戰關卡 ${t.brandIcon}</h2>
+          <p>每關題庫皆有 36 題（五關共 180 題），每次挑戰隨機抽 10 題！必須「10 題全對 (100%)」才能解鎖下一關喔！</p>
+
+          <!-- 首頁三大主題風格切換卡片 -->
+          <div class="home-theme-selector">
+            <button class="theme-card-btn ${t.key === 'kawaii' ? 'active' : ''}" onclick="switchTheme('kawaii')">
+              <div class="theme-card-icon" style="background:#FFE0EB;">💖</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#D94B72;">夢幻甜心風</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#8A6F85;">粉紅小兔・成語小公主</div>
+              </div>
+            </button>
+            <button class="theme-card-btn ${t.key === 'scifi' ? 'active' : ''}" onclick="switchTheme('scifi')">
+              <div class="theme-card-icon" style="background:#D8F0FF;">🚀</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#005F86;">星際勇者風</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#4A628A;">柴犬隊長・星際大勇者</div>
+              </div>
+            </button>
+            <button class="theme-card-btn ${t.key === 'woodland' ? 'active' : ''}" onclick="switchTheme('woodland')">
+              <div class="theme-card-icon" style="background:#D8F3DC;">🍀</div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#2D6A4F;">森林探險家</div>
+                <div style="font-size:0.84rem; font-weight:700; color:#6E5D53;">貓頭鷹博士・探險小博士</div>
+              </div>
+            </button>
+          </div>
+
+          <!-- 挑戰者名字輸入區 -->
+          <div class="challenger-bar">
+            <label class="challenger-label" for="map-player-name">${t.playerIcon} 挑戰者名字：</label>
+            <input type="text" id="map-player-name" class="challenger-input"
+                   value="${progress.playerName}"
+                   placeholder="輸入你的名字..."
+                   maxlength="16"
+                   oninput="updatePlayerName(this.value)" />
+            <button class="kawaii-btn btn-accent" style="padding: 7px 15px; font-size: 0.92rem;" onclick="confirmInlineName()">
+              ${t.scorePointIcon} 確認名字
+            </button>
+          </div>
+
+          <div class="overall-progress-bar">
+            <div class="overall-progress-fill" style="width: ${percent}%;"></div>
+            <div class="overall-progress-label">${t.scorePointIcon} ${progress.playerName} 的總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}</div>
+          </div>
+        </div>
+        <div class="levels-grid">
+          ${cardsHtml}
+        </div>
+        ${certBanner}
+      `;
+      syncHeaderName();
+    }
+
+    function lockedLevelTip(levelNum) {
+      playWrongSound();
+      const t = getTheme();
+      setMascot(t.mascotCheer, `報告 <b>${progress.playerName}</b>！<b>Level ${levelNum}</b> 目前還是上鎖狀態 🔒～請先把 <b>Level ${levelNum - 1}</b> 的 10 題全部答對（100%），就能解鎖囉！${t.scoreStatusIcon}`);
+    }
+
+    // ====== 畫面 2：開始關卡測驗 ======
+    function startLevel(levelNum) {
+      const levelObj = window.GAME_DATA.levels.find(l => l.level === levelNum);
+      if (!levelObj) return;
+      const t = getTheme();
+      document.body.classList.add('in-quiz');
+
+      // 從該關卡題庫 (36題) 隨機洗牌抽出 10 題，並將每題的 4 個選項也隨機洗牌
+      const shuffledPool = shuffleArray(levelObj.questions).slice(0, QUESTIONS_PER_ROUND);
+      const preparedQuestions = shuffledPool.map(q => ({
+        ...q,
+        shuffledOptions: shuffleArray(q.options)
+      }));
+
+      currentSession = {
+        level: levelNum,
+        levelObj,
+        questions: preparedQuestions,
+        currentIndex: 0,
+        correctCount: 0,
+        wrongRecords: [],
+        answered: false
+      };
+
+      setMascot(
+        t.mascotAvatar,
+        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已從本關 <b>${levelObj.questions.length} 道題庫</b> 中隨機抽出 <b>10 道題目</b>，全部答對就能晉級喔！${t.hintIcon}`
+      );
+      renderQuestionScreen();
+      const stage = document.getElementById('main-stage');
+      if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderQuestionScreen() {
+      const stage = document.getElementById('main-stage');
+      const s = currentSession;
+      const t = getTheme();
+      const q = s.questions[s.currentIndex];
+      const idiom = getIdiomById(q.idiomId);
+      const qNum = s.currentIndex + 1;
+      const totalQ = s.questions.length;
+      const progressPct = Math.round((qNum / totalQ) * 100);
+      const levelThemeIcon = t.levelIcons[s.level - 1] || s.levelObj.icon;
+
+      const optionLabels = ['A', 'B', 'C', 'D'];
+      const optionsHtml = q.shuffledOptions.map((opt, idx) => `
+        <button class="option-btn" id="opt-btn-${idx}" onclick="submitAnswer(${idx})">
+          <span class="option-index">${optionLabels[idx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      const hasMistake = s.wrongRecords.length > 0;
+
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <button class="kawaii-btn btn-reset" onclick="showMapScreen()">⬅ 返回地圖</button>
+            <div class="quiz-level-tag">${levelThemeIcon} ${s.levelObj.name}</div>
+          </div>
+          <div class="scoreboard">
+            <div class="score-pill">${t.playerIcon} 挑戰者：${progress.playerName}</div>
+            <div class="score-pill" id="pill-status">${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}</div>
+            <div class="score-pill" id="pill-score">${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}</div>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-info">
+            <span>${t.progressIcon} 當前關卡進度：第 ${qNum} / ${totalQ} 題</span>
+            <span>${progressPct}%</span>
+          </div>
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-bar" style="width: ${progressPct}%;"></div>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-meta">
+            <span class="lesson-badge">📘 出處範圍：${idiom.lessonTitle}</span>
+            <button class="hint-btn" onclick="toggleHint()">${t.hintIcon} 錦囊提示</button>
+          </div>
+          <div class="question-text">${q.prompt}</div>
+          <div class="hint-popup" id="hint-box">💡 提示：${q.hint}</div>
+        </div>
+
+        <div class="options-grid" id="options-grid">
+          ${optionsHtml}
+        </div>
+
+        <div class="feedback-panel" id="feedback-panel"></div>
+      `;
+    }
+
+    function toggleHint() {
+      const box = document.getElementById('hint-box');
+      if (box) {
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function submitAnswer(selectedIndex) {
+      const s = currentSession;
+      if (!s || s.answered) return;
+      s.answered = true;
+
+      const t = getTheme();
+      const q = s.questions[s.currentIndex];
+      const chosenOption = q.shuffledOptions[selectedIndex];
+      const isCorrect = chosenOption === q.answer;
+      const idiom = getIdiomById(q.idiomId);
+
+      // 將選項區切換為緊湊模式，讓下方的答案解析卡直接呈現在視野中央
+      const optGrid = document.getElementById('options-grid');
+      if (optGrid) optGrid.classList.add('answered-compact');
+
+      q.shuffledOptions.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        btn.disabled = true;
+        if (opt === q.answer) {
+          btn.classList.add('correct');
+        } else if (idx === selectedIndex && !isCorrect) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        s.correctCount++;
+        playCorrectSound();
+        setMascot(t.mascotHappy, `太棒了 <b>${progress.playerName}</b>！答對囉！${t.scorePointIcon}「<b>${idiom.idiom}</b>」的意思和用法你掌握得超棒！${t.scoreStatusIcon}`);
+      } else {
+        s.wrongRecords.push({
+          question: q.prompt,
+          yourAnswer: chosenOption,
+          correctAnswer: q.answer,
+          idiom
+        });
+        playWrongSound();
+        setMascot(t.mascotCheer, `別氣餒 <b>${progress.playerName}</b>！正確答案是「<b>${q.answer}</b>」，快看看下方的成語圖鑑小卡把「<b>${idiom.idiom}</b>」記起來吧！💪`);
+      }
+
+      // 即時更新計分板
+      const totalQ = s.questions.length;
+      const hasMistake = s.wrongRecords.length > 0;
+      const pillStatus = document.getElementById('pill-status');
+      const pillScore = document.getElementById('pill-score');
+      if (pillStatus) pillStatus.innerHTML = `${t.scoreStatusIcon} 完美狀態：${hasMistake ? '需再挑戰' : '100% 保持中'}`;
+      if (pillScore) pillScore.innerHTML = `${t.scorePointIcon} 答對：${s.correctCount} / ${totalQ}`;
+
+      const panel = document.getElementById('feedback-panel');
+      panel.className = `feedback-panel ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+      panel.style.display = 'block';
+
+      const isLast = s.currentIndex === s.questions.length - 1;
+      const synText = idiom.synonyms && idiom.synonyms.length ? `相似詞：${idiom.synonyms.join('、')}` : '';
+      const antText = idiom.antonyms && idiom.antonyms.length ? `相反詞：${idiom.antonyms.join('、')}` : '';
+      const extraWords = [synText, antText].filter(Boolean).join(' ｜ ');
+
+      panel.innerHTML = `
+        <div class="feedback-header">
+          <div class="feedback-title" style="color: ${isCorrect ? '#16694A' : '#C9385A'};">
+            ${isCorrect ? `${t.scorePointIcon} 答對了！表現超棒！` : `💦 答錯囉！正確答案是：「${q.answer}」`}
+          </div>
+          <button class="kawaii-btn ${isCorrect ? 'btn-accent' : 'btn-primary'}" id="next-q-btn" onclick="nextQuestion()">
+            ${isLast ? '🏁 查看闖關結算' : '下一題 ➡'}
+          </button>
+        </div>
+
+        <div class="idiom-study-card">
+          <div class="idiom-card-top">
+            <span class="idiom-card-name">${t.scorePointIcon} ${idiom.idiom}</span>
+            <span class="idiom-card-zhuyin">${idiom.zhuyin}</span>
+            <span class="idiom-card-lesson">${idiom.lessonTitle}</span>
+          </div>
+          <div class="idiom-detail-row">
+            <span class="detail-tag tag-meaning">解釋</span>
+            ${idiom.meaning}
+          </div>
+          <div class="idiom-detail-row">
+            <span class="detail-tag tag-example">例句</span>
+            ${idiom.example}
+          </div>
+          ${extraWords ? `
+          <div class="idiom-detail-row" style="margin-bottom:0;">
+            <span class="detail-tag tag-syn">語詞辨析</span>
+            ${extraWords}
+          </div>` : ''}
+        </div>
+      `;
+
+      // 自動將解答與成語解析小卡平滑置中於畫面，不拉回頂端、免手動往下滑
+      requestAnimationFrame(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    function nextQuestion() {
+      const s = currentSession;
+      if (!s) return;
+      if (s.currentIndex < s.questions.length - 1) {
+        s.currentIndex++;
+        s.answered = false;
+        renderQuestionScreen();
+        // 切換下一題時只對齊測驗主卡片頂部，不拉到網頁最頂端
+        const stage = document.getElementById('main-stage');
+        if (stage) {
+          stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        finishLevel();
+      }
+    }
+
+    // ====== 畫面 3：關卡結算畫面 ======
+    function finishLevel() {
+      document.body.classList.remove('in-quiz');
+      const stage = document.getElementById('main-stage');
+      const s = currentSession;
+      const t = getTheme();
+      const total = s.questions.length;
+      const isPerfect = s.correctCount === total;
+      const themeBadge = t.levelBadges[s.level - 1] || s.levelObj.badge;
+
+      const prevBest = progress.bestScores[s.level] || 0;
+      if (s.correctCount > prevBest) {
+        progress.bestScores[s.level] = s.correctCount;
+      }
+
+      if (isPerfect) {
+        playFanfareSound();
+        if (!progress.clearedLevels.includes(s.level)) {
+          progress.clearedLevels.push(s.level);
+        }
+        if (s.level < 5 && progress.unlockedLevel < s.level + 1) {
+          progress.unlockedLevel = s.level + 1;
+        }
+        saveProgress();
+
+        if (s.level === 5) {
+          startConfetti();
+          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把五個等級的成語難關全部 100% 破解了！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+          showCertificateScreen();
+          return;
+        }
+
+        startConfetti();
+        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> 10 題全部答對（100分）！成功解鎖 <b>Level ${s.level + 1}</b> 囉！${t.scorePointIcon}`);
+
+        stage.innerHTML = `
+          <div class="result-box">
+            <div class="result-icon">🏆</div>
+            <div class="result-title">${t.progressIcon} 恭喜 ${progress.playerName} 100% 完美過關！ ${t.progressIcon}</div>
+            <div class="result-subtitle">
+              你在「${s.levelObj.name}」答對了全部 ${total} 道題目！<br>
+              獲得本關榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} 並成功解鎖下一關！
+            </div>
+            <div class="score-big-badge">
+              <span>💯 得分：100 分（${s.correctCount} / ${total} 題全對）</span>
+            </div>
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); startLevel(${s.level + 1})">
+                ${t.progressIcon} 立即挑戰 Level ${s.level + 1} ➡
+              </button>
+              <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">
+                ${t.brandIcon} 返回關卡地圖
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        saveProgress();
+        setMascot(t.mascotCheer, `<b>${progress.playerName}</b> 這次答對了 <b>${s.correctCount} / ${total} 題</b>，已經很棒了喔！只要把下面複習清單的錯題看懂，再挑戰一次拿 100% 就能解鎖下一關！💪`);
+
+        const reviewHtml = s.wrongRecords.map((item, idx) => `
+          <div class="review-item">
+            <div class="review-q">${idx + 1}. ${item.question}</div>
+            <div class="review-wrong-ans">❌ 你的選擇：${item.yourAnswer}</div>
+            <div class="review-ans">⭕ 正確答案：${item.correctAnswer}</div>
+            <div style="font-size:0.96rem; color:var(--text-main); font-weight:700; margin-top:6px; background:var(--progress-track-bg); padding:8px 12px; border-radius:10px;">
+              📘 <b>${item.idiom.idiom}（${item.idiom.zhuyin}）</b>：${item.idiom.meaning}<br>
+              💬 例句：${item.idiom.example}
+            </div>
+          </div>
+        `).join('');
+
+        stage.innerHTML = `
+          <div class="result-box">
+            <div class="result-icon">${t.levelIcons[0]}</div>
+            <div class="result-title">${t.scorePointIcon} 差一點點就滿分囉！加油！ ${t.scorePointIcon}</div>
+            <div class="result-subtitle">
+              本關需要「<b>10 題全部答對 (100%)</b>」才能解鎖下一級喔！<br>
+              先看看下方的錯題複習小卡，準備好就重新洗牌再挑戰一次吧！${t.scoreStatusIcon}
+            </div>
+            <div class="score-big-badge">
+              <span>${t.scorePointIcon} 本次成績：${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題）</span>
+            </div>
+
+            <div class="review-list">
+              <h3>📝 錯題溫習筆記（共 ${s.wrongRecords.length} 題）</h3>
+              ${reviewHtml}
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+              <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="startLevel(${s.level})">
+                🔄 重新隨機抽 10 題・再挑戰一次！
+              </button>
+              <button class="kawaii-btn btn-butter" onclick="showMapScreen()">
+                ${t.brandIcon} 返回關卡地圖
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ====== 畫面 4：Level 5 全破榮譽證書（稱號隨主題同步切換） ======
+    function showCertificateScreen() {
+      currentSession = null;
+      document.body.classList.remove('in-quiz');
+      startConfetti();
+      const stage = document.getElementById('main-stage');
+      const t = getTheme();
+      const today = new Date();
+      const dateStr = `${today.getFullYear()} 年 ${today.getMonth() + 1} 月 ${today.getDate()} 日`;
+
+      const stampsHtml = t.levelBadges.map((b, i) => `
+        <div class="cert-stamp">Level ${i + 1} ${b}</div>
+      `).join('');
+
+      stage.innerHTML = `
+        <div class="certificate-frame">
+          <div class="cert-ribbon">${t.scorePointIcon} ${t.brandHeading}・最高榮譽殿堂 ${t.scorePointIcon}</div>
+          <div class="cert-title">${t.certTitle}</div>
+          <p style="font-weight:700; color:var(--text-soft); font-size:0.95rem;">（可在下方修改挑戰者名字，或點擊右上角切換不同主題風格的證書稱號喔！）</p>
+
+          <div class="cert-name-input-wrap">
+            <span style="font-weight:900; font-size:1.2rem;">茲證明挑戰者：</span>
+            <input type="text" class="cert-name-input" id="cert-player-name"
+                   value="${progress.playerName}"
+                   oninput="updatePlayerName(this.value)" />
+          </div>
+
+          <div class="cert-body">
+            在「國小四年級第一課至第六課成語闖關測驗（180 題大題庫）」中，<br>
+            以 <b>100% 全對</b> 的完美表現在五大難度關卡中過關斬將，<br>
+            正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[4]}</b>】之最高稱號！<br>
+            展現了<b>精衛填海</b>的堅定毅力與<b>登峰造極</b>的語文實力，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
+          </div>
+
+          <div class="cert-stamps">
+            ${stampsHtml}
+          </div>
+
+          <div style="margin-top: 22px; font-weight: 900; color: var(--text-soft); font-size: 0.98rem;">
+            📅 頒發日期：${dateStr} ｜ ${t.certPrincipal}
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <button class="kawaii-btn btn-primary" onclick="window.print()">
+            🖨️ 列印／儲存專屬榮譽證書
+          </button>
+          <button class="kawaii-btn btn-accent" onclick="stopConfetti(); showMapScreen()">
+            ${t.brandIcon} 返回關卡地圖
+          </button>
+        </div>
+      `;
+    }
+
+    function updatePlayerName(val) {
+      progress.playerName = val.trim() || '真真';
+      saveProgress();
+      syncHeaderName();
+      const t = getTheme();
+      const mapLabel = document.querySelector('.overall-progress-label');
+      if (mapLabel) {
+        const clearedCount = progress.clearedLevels.length;
+        const percent = Math.round((clearedCount / 5) * 100);
+        mapLabel.textContent = `${t.scorePointIcon} ${progress.playerName} 的總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}`;
+      }
+    }
+
+    function syncHeaderName() {
+      const headerEl = document.getElementById('header-player-name');
+      if (headerEl) headerEl.textContent = progress.playerName;
+    }
+
+    function confirmInlineName() {
+      const inputEl = document.getElementById('map-player-name');
+      const t = getTheme();
+      if (inputEl) {
+        updatePlayerName(inputEl.value);
+        playCorrectSound();
+        setMascot(t.mascotHappy, t.welcomeMsg(progress.playerName));
+      }
+    }
+
+    function openNameModal() {
+      const modal = document.getElementById('name-modal');
+      const input = document.getElementById('modal-name-input');
+      const t = getTheme();
+      document.getElementById('name-modal-icon').textContent = t.brandIcon;
+      if (modal && input) {
+        input.value = progress.playerName;
+        modal.style.display = 'flex';
+        setTimeout(() => input.select(), 50);
+      }
+    }
+
+    function closeNameModal() {
+      const modal = document.getElementById('name-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function saveNameFromModal() {
+      const input = document.getElementById('modal-name-input');
+      const t = getTheme();
+      if (input) {
+        updatePlayerName(input.value);
+        const mapInput = document.getElementById('map-player-name');
+        if (mapInput) mapInput.value = progress.playerName;
+        const certInput = document.getElementById('cert-player-name');
+        if (certInput) certInput.value = progress.playerName;
+        playCorrectSound();
+        setMascot(t.mascotHappy, t.welcomeMsg(progress.playerName));
+      }
+      closeNameModal();
+      if (currentSession && document.querySelector('.quiz-topbar')) {
+        renderQuestionScreen();
+      }
+    }
+
+    // ====== 成語圖鑑 Modal ======
+    let currentDictLesson = 0;
+    function openDictionaryModal() {
+      document.getElementById('dict-modal').style.display = 'flex';
+      renderDictionary(0);
+    }
+
+    function closeDictionaryModal() {
+      document.getElementById('dict-modal').style.display = 'none';
+    }
+
+    function renderDictionary(lessonFilter) {
+      currentDictLesson = lessonFilter;
+      const tabsEl = document.getElementById('dict-tabs');
+      const listEl = document.getElementById('dict-list');
+      const t = getTheme();
+
+      let tabsHtml = `<button class="filter-tab ${lessonFilter === 0 ? 'active' : ''}" onclick="renderDictionary(0)">${t.scorePointIcon} 全部 (36則)</button>`;
+      window.GAME_DATA.lessons.forEach(l => {
+        tabsHtml += `<button class="filter-tab ${lessonFilter === l.lesson ? 'active' : ''}" onclick="renderDictionary(${l.lesson})">${l.title}</button>`;
+      });
+      tabsEl.innerHTML = tabsHtml;
+
+      const filtered = lessonFilter === 0
+        ? window.GAME_DATA.idioms
+        : window.GAME_DATA.idioms.filter(i => i.lesson === lessonFilter);
+
+      listEl.innerHTML = filtered.map(item => `
+        <div class="idiom-study-card" style="margin-bottom:0;">
+          <div class="idiom-card-top">
+            <span class="idiom-card-name">${item.idiom}</span>
+            <span class="idiom-card-zhuyin">${item.zhuyin}</span>
+            <span class="idiom-card-lesson">第${item.lesson}課</span>
+          </div>
+          <div class="idiom-detail-row">
+            <span class="detail-tag tag-meaning">解釋</span>${item.meaning}
+          </div>
+          <div class="idiom-detail-row">
+            <span class="detail-tag tag-example">例句</span>${item.example}
+          </div>
+          <div class="idiom-detail-row" style="margin-bottom:0; font-size:0.95rem;">
+            <span class="detail-tag tag-syn">近反義</span>
+            相似：${item.synonyms.join('、') || '無'} ｜ 相反：${item.antonyms.join('、') || '無'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ====== 彩帶飄落 Confetti 特效（色彩隨主題同步） ======
+    let confettiAnimId = null;
+    let confettiParticles = [];
+
+    function startConfetti() {
+      stopConfetti();
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = getTheme().confettiColors;
+      confettiParticles = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: 9 + Math.random() * 8,
+        h: 6 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vy: 2.2 + Math.random() * 3.2,
+        vx: -1.5 + Math.random() * 3,
+        angle: Math.random() * Math.PI * 2,
+        vAngle: -0.08 + Math.random() * 0.16
+      }));
+
+      function renderFrame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettiParticles.forEach(p => {
+          p.y += p.vy;
+          p.x += p.vx;
+          p.angle += p.vAngle;
+          if (p.y > canvas.height + 20) {
+            p.y = -20;
+            p.x = Math.random() * canvas.width;
+          }
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        confettiAnimId = requestAnimationFrame(renderFrame);
+      }
+      renderFrame();
+    }
+
+    function stopConfetti() {
+      if (confettiAnimId) {
+        cancelAnimationFrame(confettiAnimId);
+        confettiAnimId = null;
+      }
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    });
+
+    // 初始化啟動
+    window.addEventListener('DOMContentLoaded', () => {
+      applyThemeUI();
+      const t = getTheme();
+      setMascot(t.mascotAvatar, t.welcomeMsg(progress.playerName));
+      showMapScreen();
+    });
+  </script>
+</body>
+</html>
