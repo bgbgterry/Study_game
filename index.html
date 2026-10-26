@@ -1545,7 +1545,7 @@
     </div>
   </div>
 
-  <!-- 載入 1~6 課 180 題完整題庫資料 -->
+  <!-- 載入 1~6 課 210 題完整題庫資料 -->
   <script src="game_data.js"></script>
   <script>
     // ====== 三大主題完整設定表 ======
@@ -2133,7 +2133,7 @@
       stage.innerHTML = `
         <div class="map-header">
           <h2>${t.brandIcon} 選擇主題風格與挑戰關卡 ${t.brandIcon}</h2>
-          <p>每關題庫皆有 36 題（五關共 180 題），每次挑戰隨機抽 10 題！只要「答對 ${PASS_SCORE} 題以上 (80分)」就能解鎖下一關（也支援點選「⚡ 強制過關」）！</p>
+          <p>每關題庫皆有 42 題（五關共 210 題），每次挑戰隨機抽 10 題！只要「答對 ${PASS_SCORE} 題以上 (80分)」就能解鎖下一關（也支援點選「⚡ 強制過關」）！</p>
 
           <!-- 首頁三大主題風格切換卡片 -->
           <div class="home-theme-selector">
@@ -2270,7 +2270,7 @@
       const t = getTheme();
       document.body.classList.add('in-quiz');
 
-      // 從該關卡題庫 (36題) 隨機洗牌抽出 10 題，並將每題的 4 個選項也隨機洗牌
+      // 從該關卡題庫 (42題) 隨機洗牌抽出 10 題，並將每題的 4 個選項也隨機洗牌
       const shuffledPool = shuffleArray(levelObj.questions).slice(0, QUESTIONS_PER_ROUND);
       const preparedQuestions = shuffledPool.map(q => ({
         ...q,
@@ -2690,7 +2690,7 @@
           </div>
 
           <div class="cert-body">
-            在「國小四年級第一課至第六課成語闖關測驗（180 題大題庫）」中，<br>
+            在「國小四年級第一課至第六課成語闖關測驗（210 題大題庫）」中，<br>
             以優異表現在五大難度關卡中過關斬將、完成所有挑戰，<br>
             正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[4]}</b>】之最高稱號！<br>
             展現了<b>精衛填海</b>的堅定毅力與<b>登峰造極</b>的語文實力，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
