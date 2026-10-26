@@ -47,8 +47,7 @@ if ($status) {
 }
 
 Write-Host "`n3. 正在上傳至 GitHub (bgbgterry/Study_game)..." -ForegroundColor Yellow
-Write-Host "   （提示：若跳出 GitHub 授權視窗，請點選「Sign in with your browser」進行授權）" -ForegroundColor DarkGray
-
+git pull origin main --rebase 2>$null
 git push origin main
 
 if ($LASTEXITCODE -eq 0) {
