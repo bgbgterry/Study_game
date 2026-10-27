@@ -1766,7 +1766,8 @@
           bestScores: parsed.bestScores || {},
           totalStars: parsed.totalStars || 0,
           playerName: currentName,
-          theme: THEME_CONFIGS[cookieTheme || parsed.theme] ? (cookieTheme || parsed.theme) : 'kawaii'
+          theme: THEME_CONFIGS[cookieTheme || parsed.theme] ? (cookieTheme || parsed.theme) : 'kawaii',
+          correctCounts: (parsed && typeof parsed.correctCounts === 'object' && parsed.correctCounts !== null) ? parsed.correctCounts : {}
         };
       }
 
@@ -1776,7 +1777,8 @@
         bestScores: {},
         totalStars: 0,
         playerName: currentName,
-        theme: THEME_CONFIGS[cookieTheme] ? cookieTheme : 'kawaii'
+        theme: THEME_CONFIGS[cookieTheme] ? cookieTheme : 'kawaii',
+        correctCounts: {}
       };
     }
 
@@ -1895,6 +1897,67 @@
       }
       const mapCountEl = document.getElementById('map-mistakes-count');
       if (mapCountEl) mapCountEl.textContent = mistakes.length;
+    }
+
+    // ====== 智能題目自適應抽樣（答對後出現機率自動下降，優先出新題與錯題） ======
+    function getQuestionKey(q) {
+      return q.id || q.prompt;
+    }
+
+    function recordQuestionCorrect(q) {
+      if (!progress.correctCounts) progress.correctCounts = {};
+      const key = getQuestionKey(q);
+      progress.correctCounts[key] = (progress.correctCounts[key] || 0) + 1;
+      saveProgress();
+    }
+
+    function recordQuestionWrong(q) {
+      if (!progress.correctCounts) progress.correctCounts = {};
+      const key = getQuestionKey(q);
+      // 答錯時扣減 1 次答對次數（不低於 0），讓失誤題目能即時回到出題池重新加強
+      if (progress.correctCounts[key] && progress.correctCounts[key] > 0) {
+        progress.correctCounts[key]--;
+        saveProgress();
+      }
+    }
+
+    function getQuestionSelectionWeight(q) {
+      const qKey = getQuestionKey(q);
+      const mistakes = loadMistakes();
+      const isMistake = mistakes.some(m => (m.id && m.id === q.id) || m.prompt === q.prompt);
+
+      // 錯題筆記中的題目擁有最高優先權（權重 180）
+      if (isMistake) return 180;
+
+      const c = (progress.correctCounts && progress.correctCounts[qKey]) || 0;
+      if (c === 0) {
+        // 從未答對過的全新題目（基準權重 100，優先登場）
+        return 100;
+      } else if (c === 1) {
+        // 答對過 1 次（權重 20，出現機率下降 80%）
+        return 20;
+      } else if (c === 2) {
+        // 答對過 2 次（權重 6，出現機率下降 94%）
+        return 6;
+      } else {
+        // 答對過 3 次以上（已熟練掌握，權重 1.5，極低機率出現）
+        return 1.5;
+      }
+    }
+
+    // A-Res 加權無放回抽樣演算法，確保單輪 10 題完全不重複且依權重優先抽新題
+    function selectAdaptiveQuestions(pool, count) {
+      if (!pool || pool.length <= count) {
+        return shuffleArray(pool || []);
+      }
+      const weighted = pool.map(q => {
+        const w = getQuestionSelectionWeight(q);
+        const r = Math.max(Math.random(), 0.00001);
+        const score = Math.pow(r, 1 / w);
+        return { q, score };
+      });
+      weighted.sort((a, b) => b.score - a.score);
+      return weighted.slice(0, count).map(item => item.q);
     }
 
     function switchPlayer(name) {
@@ -2134,6 +2197,9 @@
         <div class="map-header">
           <h2>${t.brandIcon} 選擇主題風格與挑戰關卡 ${t.brandIcon}</h2>
           <p>每關題庫皆有 42 題（五關共 210 題），每次挑戰隨機抽 10 題！只要「答對 ${PASS_SCORE} 題以上 (80分)」就能解鎖下一關（也支援點選「⚡ 強制過關」）！</p>
+          <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(82, 183, 136, 0.14); border:1px solid rgba(82, 183, 136, 0.35); border-radius:20px; font-size:0.86rem; font-weight:800; color:var(--text); margin: 6px auto 14px auto;">
+            <span>✨ 智能防重複出題系統已啟動：答對過的題目出現機率自動下降，優先為你挑選新題與易錯弱點！</span>
+          </div>
 
           <!-- 首頁三大主題風格切換卡片 -->
           <div class="home-theme-selector">
@@ -2270,9 +2336,9 @@
       const t = getTheme();
       document.body.classList.add('in-quiz');
 
-      // 從該關卡題庫 (42題) 隨機洗牌抽出 10 題，並將每題的 4 個選項也隨機洗牌
-      const shuffledPool = shuffleArray(levelObj.questions).slice(0, QUESTIONS_PER_ROUND);
-      const preparedQuestions = shuffledPool.map(q => ({
+      // 採用智能自適應加權抽樣：答對過的題目出現機率自動下降，優先抽取未做過的新題與常錯弱點
+      const selectedPool = selectAdaptiveQuestions(levelObj.questions, QUESTIONS_PER_ROUND);
+      const preparedQuestions = selectedPool.map(q => ({
         ...q,
         shuffledOptions: shuffleArray(q.options)
       }));
@@ -2403,11 +2469,13 @@
       if (isCorrect) {
         s.correctCount++;
         playCorrectSound();
+        recordQuestionCorrect(q);
         if (s.isMistakeQuiz) {
           resolveMistake(q.prompt);
         }
         setMascot(t.mascotHappy, `太棒了 <b>${progress.playerName}</b>！答對囉！${s.isMistakeQuiz ? '已成功克服一題弱點！' : ''}${t.scorePointIcon}「<b>${idiom.idiom}</b>」掌握得超棒！${t.scoreStatusIcon}`);
       } else {
+        recordQuestionWrong(q);
         recordMistake(q, chosenOption, idiom);
         s.wrongRecords.push({
           question: q.prompt,
