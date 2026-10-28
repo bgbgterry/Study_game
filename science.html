@@ -2985,15 +2985,14 @@
 
       const multiBannerHtml = isMulti ? `
         <div class="multi-question-banner">
-          <span>☑️ 【勾選題・多重選項】本題共有 <b>${q.answers.length} 個</b> 正確答案，請點擊勾選所有正確選項後，按下方「確認送出勾選答案」！</span>
-          <span style="background:#FFF; color:#B45309; padding:3px 10px; border-radius:999px; font-size:0.84rem; border:1.5px solid #F59E0B;">應選 ${q.answers.length} 項</span>
+          <span>☑️ 【勾選題・多重選項】請點擊勾選所有正確的選項（可複選），完成後按下方「確認送出勾選答案」！</span>
         </div>
       ` : '';
 
       const multiSubmitHtml = isMulti ? `
         <div class="multi-submit-bar" id="multi-submit-bar">
           <button class="kawaii-btn btn-primary" id="multi-submit-btn" onclick="submitMultiAnswer()" style="font-size:1.12rem; padding:12px 32px;">
-            ✅ 確認送出勾選答案（已勾選 <span id="multi-selected-count">${q.selectedIndices.length}</span> / ${q.answers.length} 項）
+            ✅ 確認送出勾選答案（已勾選 <span id="multi-selected-count">${q.selectedIndices.length}</span> 項）
           </button>
         </div>
       ` : '';
