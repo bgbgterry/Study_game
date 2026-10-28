@@ -53,6 +53,9 @@
       --lvl-3-bg: linear-gradient(135deg, #EAFFF6 0%, #C9F5E3 100%);
       --lvl-4-bg: linear-gradient(135deg, #FFFCE6 0%, #FFF0A8 100%);
       --lvl-5-bg: linear-gradient(135deg, #FFE8F5 0%, #E5D4FF 50%, #CCF7FF 100%);
+      --lvl-6-bg: linear-gradient(135deg, #FFF3E6 0%, #FFD8B8 100%);
+      --lvl-7-bg: linear-gradient(135deg, #E8FFF0 0%, #B8F2D0 100%);
+      --lvl-8-bg: linear-gradient(135deg, #FFF0F8 0%, #FFE0B2 50%, #D8F3FF 100%);
       --shadow-soft: 0 12px 30px rgba(217, 75, 114, 0.14);
       --shadow-card: 0 8px 20px rgba(155, 93, 229, 0.12);
       --btn-shadow: 0 5px 0 rgba(217, 75, 114, 0.28);
@@ -98,6 +101,9 @@
       --lvl-3-bg: linear-gradient(135deg, #FFF8E1 0%, #FFE599 100%);
       --lvl-4-bg: linear-gradient(135deg, #FFF0E8 0%, #FFD4C2 100%);
       --lvl-5-bg: linear-gradient(135deg, #E0F4FF 0%, #D4E4FF 50%, #FFE8B8 100%);
+      --lvl-6-bg: linear-gradient(135deg, #F3EFEA 0%, #D7CCC8 100%);
+      --lvl-7-bg: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+      --lvl-8-bg: linear-gradient(135deg, #FFF8E1 0%, #B3E5FC 50%, #D1C4E9 100%);
       --shadow-soft: 0 12px 28px rgba(26, 43, 76, 0.16);
       --shadow-card: 0 8px 18px rgba(0, 126, 167, 0.14);
       --btn-shadow: 0 5px 0 rgba(26, 43, 76, 0.32);
@@ -143,6 +149,9 @@
       --lvl-3-bg: linear-gradient(135deg, #EEF8FC 0%, #CDEAF7 100%);
       --lvl-4-bg: linear-gradient(135deg, #F8F1EC 0%, #E8D5C8 100%);
       --lvl-5-bg: linear-gradient(135deg, #E8F7EE 0%, #FFF3D6 50%, #DCF0FA 100%);
+      --lvl-6-bg: linear-gradient(135deg, #FDF6EC 0%, #EED6B5 100%);
+      --lvl-7-bg: linear-gradient(135deg, #EBF8F2 0%, #C2EBD9 100%);
+      --lvl-8-bg: linear-gradient(135deg, #FFF8E7 0%, #D8F3DC 50%, #CFE8FA 100%);
       --shadow-soft: 0 12px 28px rgba(109, 76, 65, 0.14);
       --shadow-card: 0 8px 18px rgba(64, 145, 108, 0.12);
       --btn-shadow: 0 5px 0 rgba(109, 76, 65, 0.28);
@@ -756,6 +765,9 @@
     .level-3-bg { background: var(--lvl-3-bg); }
     .level-4-bg { background: var(--lvl-4-bg); }
     .level-5-bg { background: var(--lvl-5-bg); }
+    .level-6-bg { background: var(--lvl-6-bg); }
+    .level-7-bg { background: var(--lvl-7-bg); }
+    .level-8-bg { background: var(--lvl-8-bg); }
 
     .level-top {
       display: flex;
@@ -1051,6 +1063,63 @@
     .option-btn.wrong .option-index {
       background: #FF5D8F;
       color: #FFFFFF;
+    }
+
+    /* 勾選題（複選題）專屬樣式 */
+    .multi-question-banner {
+      background: linear-gradient(135deg, #FFF8E1 0%, #FFE8CC 100%);
+      border: 2.5px solid #F59E0B;
+      border-radius: 14px;
+      padding: 9px 14px;
+      margin-bottom: 12px;
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: #92400E;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(245, 158, 11, 0.14);
+    }
+
+    .option-checkbox {
+      font-size: 1.32rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .option-btn.selected {
+      background: #FFFBEB !important;
+      border-color: #F59E0B !important;
+      box-shadow: 0 5px 0 #FCD34D !important;
+      color: #78350F !important;
+      transform: translateY(-2px);
+    }
+
+    .option-btn.selected .option-index {
+      background: #F59E0B;
+      color: #FFFFFF;
+    }
+
+    .option-btn.missed {
+      background: #FFF8E6 !important;
+      border: 3px dashed #F59E0B !important;
+      box-shadow: 0 4px 0 #FDE68A !important;
+      color: #92400E !important;
+    }
+
+    .option-btn.missed .option-index {
+      background: #F59E0B;
+      color: #FFFFFF;
+    }
+
+    .multi-submit-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 6px 0 14px;
     }
 
     /* 測驗模式緊湊版面 */
@@ -1483,8 +1552,8 @@
       <div class="brand-title" onclick="showMapScreen()" title="回到首頁關卡地圖">
         <div class="brand-badge" id="brand-badge-icon">🔬</div>
         <div class="brand-text">
-          <h1 id="brand-heading">水生生物與環境・科學大冒險</h1>
-          <p>國小四年級自然（活動1～活動3）｜180 題大題庫・每關隨機抽 10 題</p>
+          <h1 id="brand-heading">第一～二課：地表與水生生物・科學大冒險</h1>
+          <p>國小四年級自然（第一～二課）｜8 大關卡・336 題大題庫（含勾選題）</p>
         </div>
       </div>
 
@@ -1497,7 +1566,7 @@
         </div>
 
         <button class="kawaii-btn btn-accent" style="padding: 8px 14px; font-size: 0.9rem;" onclick="openEncyclopedia(0)">
-          📘 科學圖鑑 (36卡)
+          📘 科學圖鑑 (48卡)
         </button>
         <button class="kawaii-btn btn-butter" id="header-mistakes-btn" style="padding: 8px 14px; font-size: 0.9rem;" onclick="openMistakesModal()" title="查看自然錯題筆記本">
           📝 錯題筆記 <span id="header-mistakes-count" class="mistake-badge-pill" style="padding:2px 7px; font-size:0.8rem; margin-left:3px; display:none;">0</span>
@@ -1527,15 +1596,16 @@
     <main class="stage-card" id="main-stage"></main>
   </div>
 
-  <!-- 36 張自然科學知識圖鑑彈窗 -->
+  <!-- 48 張自然科學知識圖鑑彈窗 -->
   <div class="modal-backdrop" id="encyc-modal" onclick="if(event.target===this) closeEncyclopedia()">
     <div class="modal-card">
       <div class="modal-header">
         <div style="font-size:1.25rem; font-weight:900; color:var(--primary-deep);">
-          🔬 水生生物與環境・36張核心科學圖鑑
+          🔬 第一～二課：地表環境與水生生物・48張核心科學圖鑑
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button class="theme-pill-btn active" id="filter-act-0" onclick="renderEncyclopediaCards(0)">全部 (36)</button>
+          <button class="theme-pill-btn active" id="filter-act-0" onclick="renderEncyclopediaCards(0)">全部 (48)</button>
+          <button class="theme-pill-btn" id="filter-act-4" onclick="renderEncyclopediaCards(4)">第一課：地表與岩石沙土 (12)</button>
           <button class="theme-pill-btn" id="filter-act-1" onclick="renderEncyclopediaCards(1)">活動1：水域環境 (12)</button>
           <button class="theme-pill-btn" id="filter-act-2" onclick="renderEncyclopediaCards(2)">活動2：動植物構造 (14)</button>
           <button class="theme-pill-btn" id="filter-act-3" onclick="renderEncyclopediaCards(3)">活動3：保育與資源 (10)</button>
@@ -1726,6 +1796,20 @@
         icon: '🐸',
         title: '用「肺」呼吸、可短暫離水上岸的動物（蛙、龜）',
         desc: '【呼吸與運動】①<b>蛙（青蛙）</b>：小時候是蝌蚪（用鰓呼吸、尾巴游水），長大後用「肺（及皮膚）」呼吸，沒有硬殼，後腳有「蹼」可在水中游水，也能在陸地跳躍；②<b>龜（烏龜）</b>：有硬背甲，用「肺」呼吸（需伸出水面換氣），用四肢爬行與游水。'
+      },
+      {
+        key: 'earth_rock',
+        tabLabel: '⛰️ 岩石與風化觀察',
+        icon: '⛰️',
+        title: '第一課重點：岩石、沙、土壤的顆粒與風化演變',
+        desc: '【顆粒大小】<b>岩石 ＞ 沙 ＞ 土壤</b>！數十億年前地表只有堅硬岩石，經日晒、風吹、雨淋、流水衝擊崩解成<b>沙</b>，再與生物遺體形成的<b>腐殖質</b>混合成<b>土壤</b>。<br>【觀察工具】觀察前先查氣象預報；用<b>五官與放大鏡</b>觀察（將放大鏡接近目標再前後移動至清楚，不可看太陽），不能直接用手挖土，要用<b>鏟子</b>！'
+      },
+      {
+        key: 'earth_soil',
+        tabLabel: '🌱 土壤與大地資源',
+        icon: '🌱',
+        title: '第一課重點：土壤生物、岩石用途與土壤永續保護',
+        desc: '【土壤生物】蚯蚓、螞蟻、馬陸、雞母蟲、西瓜蟲（鼠婦）住在土壤裡；蝴蝶、蜜蜂不在土中。<br>【資源與保育】岩石可做<b>建築材料、工藝品、提煉金屬</b>；土壤可<b>種植農作物</b>（但不能提煉金屬）。透過<b>有機堆肥、減少化學農藥與垃圾、種樹保持水土</b>可保護土壤！'
       }
     ];
 
@@ -1735,7 +1819,7 @@
         key: 'kawaii',
         label: '夢幻人魚水族風',
         brandIcon: '💖',
-        brandHeading: '水生生物與環境・甜心科學冒險',
+        brandHeading: '第一～二課：地表與水生生物・甜心科學冒險',
         mascotName: '🫧 應援吉祥物：粉紅水獺博士',
         mascotAvatar: '🦦',
         mascotHappy: '🧜‍♀️',
@@ -1747,21 +1831,24 @@
         scorePointIcon: '✨',
         progressIcon: '🪄',
         hintIcon: '🐚',
-        levelIcons: ['🌊', '🪷', '🐠', '💖', '👑'],
+        levelIcons: ['🌊', '🪷', '🐠', '💖', '👑', '⛰️', '🌱', '💎'],
         levelBadges: [
           '甜心水域觀察員',
           '蓮花魔法小仙子',
           '水中生物好朋友',
           '人魚環保小衛士',
-          '水生生態魔法小公主／甜心科學家'
+          '水生生態小公主',
+          '寶石岩石鑑賞家',
+          '花仙子大地園丁',
+          '自然科學全能魔法小女王'
         ],
-        certTitle: '👑 水生生態魔法小公主／甜心科學家 榮譽證書 👑'
+        certTitle: '👑 自然科學全能魔法小女王／甜心科學家 榮譽證書 👑'
       },
       scifi: {
         key: 'scifi',
         label: '深海潛艦勇者風',
         brandIcon: '🚀',
-        brandHeading: '水生生物與環境・深海潛艦任務',
+        brandHeading: '第一～二課：地表與水生生物・深海潛艦任務',
         mascotName: '⚡ 應援吉祥物：潛艦柴犬艦長',
         mascotAvatar: '🐕‍🦺',
         mascotHappy: '🤖',
@@ -1773,21 +1860,24 @@
         scorePointIcon: '⚡',
         progressIcon: '🚀',
         hintIcon: '📡',
-        levelIcons: ['🌊', '🔬', '🦈', '🛡️', '🏆'],
+        levelIcons: ['🌊', '🔬', '🦈', '🛡️', '🏆', '🪨', '🛰️', '🌌'],
         levelBadges: [
           '深海聲納偵察兵',
           '水生植物分析官',
           '水下生物領航員',
           '海洋防衛指揮官',
-          '深海科學大勇者／傳奇艦長'
+          '深海科學大勇者',
+          '地表地質探勘官',
+          '大地資源工程師',
+          '星際海陸科學傳奇總司令'
         ],
-        certTitle: '🏆 深海科學大勇者／傳奇艦長 榮譽勳章證書 🏆'
+        certTitle: '🏆 星際海陸科學傳奇總司令 榮譽勳章證書 🏆'
       },
       woodland: {
         key: 'woodland',
         label: '溪流森林探險風',
         brandIcon: '🍀',
-        brandHeading: '水生生物與環境・溪流生態探險',
+        brandHeading: '第一～二課：地表與水生生物・溪流生態探險',
         mascotName: '🔍 應援吉祥物：青蛙自然博士',
         mascotAvatar: '🐸',
         mascotHappy: '🦉',
@@ -1799,15 +1889,18 @@
         scorePointIcon: '🌰',
         progressIcon: '🔍',
         hintIcon: '🧭',
-        levelIcons: ['🏞️', '🪷', '🦀', '🌲', '🎓'],
+        levelIcons: ['🏞️', '🪷', '🦀', '🌲', '🎓', '⛰️', '🌾', '🏅'],
         levelBadges: [
           '溪流踏查小隊員',
           '濕地植物搜查官',
           '生態池動物觀察家',
           '山海保育巡守員',
-          '水域生態探險王／自然小博士'
+          '水域生態探險王',
+          '岩石土壤地質學家',
+          '大地森林守護長',
+          '海陸自然科學大宗師'
         ],
-        certTitle: '🎓 水域生態探險王／自然小博士 榮譽證書 🎓'
+        certTitle: '🎓 海陸自然科學大宗師／自然小博士 榮譽證書 🎓'
       }
     };
 
@@ -1902,7 +1995,7 @@
 
     function recordMistake(q, chosenOption, card) {
       const mistakes = loadMistakes();
-      const qId = q.cardId ? `${q.cardId}_${q.answer}` : q.prompt;
+      const qId = q.id || (q.cardId ? `${q.cardId}_${q.answer}` : q.prompt);
       const existingIndex = mistakes.findIndex(m => m.id === qId || m.prompt === q.prompt);
 
       if (existingIndex >= 0) {
@@ -1910,12 +2003,16 @@
         mistakes[existingIndex].lastWrongAnswer = chosenOption;
         mistakes[existingIndex].lastWrongAt = Date.now();
         mistakes[existingIndex].options = q.shuffledOptions || q.options;
+        mistakes[existingIndex].isMulti = Boolean(q.isMulti);
+        mistakes[existingIndex].answers = Array.isArray(q.answers) ? q.answers : null;
       } else {
         mistakes.unshift({
           id: qId,
           prompt: q.prompt,
           options: q.shuffledOptions || q.options,
           answer: q.answer,
+          isMulti: Boolean(q.isMulti),
+          answers: Array.isArray(q.answers) ? q.answers : null,
           hint: q.hint || '',
           cardId: q.cardId,
           level: currentSession ? currentSession.level : 1,
@@ -2099,7 +2196,7 @@
       const t = getTheme();
       setMascot(
         t.mascotAvatar,
-        `已切換為「<b>${t.label}</b>」！挑戰者 <b>${progress.playerName}</b>，一起拿滿分摘下【<b>${t.levelBadges[4]}</b>】稱號吧！${t.scorePointIcon}`
+        `已切換為「<b>${t.label}</b>」！挑戰者 <b>${progress.playerName}</b>，一起拿滿分摘下【<b>${t.levelBadges[7]}</b>】稱號吧！${t.scorePointIcon}`
       );
 
       if (currentSession) {
@@ -2259,7 +2356,7 @@
           <button class="habitat-tab-btn ${filter === 'frequent' ? 'active' : ''}" style="padding:6px 14px; font-size:0.9rem;" onclick="renderMistakesModalContent('frequent')">
             🔥 常錯精選 (${frequentMistakes.length})
           </button>
-          ${[1, 2, 3, 4, 5].map(lvl => {
+          ${[1, 2, 3, 4, 5, 6, 7, 8].map(lvl => {
             const count = mistakes.filter(m => m.level === lvl).length;
             return `<button class="habitat-tab-btn ${filter === 'level_' + lvl ? 'active' : ''}" style="padding:6px 14px; font-size:0.9rem;" onclick="renderMistakesModalContent('level_${lvl}')">
               ${t.levelIcons[lvl - 1] || '⭐'} Level ${lvl} (${count})
@@ -2274,16 +2371,19 @@
               <div style="font-size:3.5rem; margin-bottom:10px;">🎉</div>
               <div style="font-size:1.3rem; font-weight:900; color:var(--primary-deep); margin-bottom:6px;">目前沒有此分類的自然錯題紀錄喔！</div>
               <p style="font-size:0.95rem; font-weight:700; color:var(--text-soft);">
-                ${filter === 'frequent' ? '太厲害了！沒有連續答錯2次以上的自然題目，科學觀念非常紮實！' : '繼續保持！闖關時若有選錯的水生生物題目會自動為你收錄在這裡隨時溫習喔！'}
+                ${filter === 'frequent' ? '太厲害了！沒有連續答錯2次以上的自然題目，科學觀念非常紮實！' : '繼續保持！闖關時若有選錯的自然科學題目會自動為你收錄在這裡隨時溫習喔！'}
               </p>
             </div>
           ` : filtered.map((m, idx) => {
             const isFreq = (m.wrongCount || 1) >= 2;
+            const isMultiM = Boolean(m.isMulti && Array.isArray(m.answers));
+            const wrongPickedList = String(m.lastWrongAnswer || '').split('、').map(s => s.trim()).filter(Boolean);
             return `
               <div class="mistake-card ${isFreq ? 'frequent' : ''}">
                 <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                   <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <span class="lesson-badge">${m.level ? `Level ${m.level}` : ''} ${m.activityTitle || ''}</span>
+                    ${isMultiM ? `<span class="mistake-badge-pill" style="background:#D97706;">☑️ 勾選複選題</span>` : ''}
                     ${isFreq ? `
                       <span class="mistake-badge-pill" style="background:#E63946;">
                         🔥 常錯題目（累計答錯 ${m.wrongCount} 次）
@@ -2306,8 +2406,8 @@
 
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:6px; margin-bottom:10px;">
                   ${(m.options || []).map(opt => {
-                    const isCorrect = opt === m.answer;
-                    const wasWrongChoice = opt === m.lastWrongAnswer;
+                    const isCorrect = isMultiM ? m.answers.includes(opt) : (opt === m.answer);
+                    const wasWrongChoice = isMultiM ? wrongPickedList.includes(opt) : (opt === m.lastWrongAnswer);
                     let bg = '#FFFFFF';
                     let border = 'var(--card-outline)';
                     let color = 'var(--text-main)';
@@ -2357,10 +2457,14 @@
 
       const selected = shuffleArray(pool).slice(0, QUESTIONS_PER_ROUND);
       const preparedQuestions = selected.map(m => ({
+        id: m.id,
         cardId: m.cardId,
         prompt: m.prompt,
         answer: m.answer,
-        hint: m.hint || '這是你之前答錯過的自然題目，想想水生生物的構造特性喔！',
+        isMulti: Boolean(m.isMulti && Array.isArray(m.answers)),
+        answers: Array.isArray(m.answers) ? m.answers : null,
+        selectedIndices: [],
+        hint: m.hint || '這是你之前答錯過的自然題目，仔細回想第一～二課的科學觀念喔！',
         shuffledOptions: shuffleArray(m.options || [m.answer]),
         originalMistakeId: m.id
       }));
@@ -2529,7 +2633,7 @@
     }
 
     function renderEncyclopediaCards(actNum) {
-      [0, 1, 2, 3].forEach(n => {
+      [0, 4, 1, 2, 3].forEach(n => {
         const btn = document.getElementById(`filter-act-${n}`);
         if (btn) btn.classList.toggle('active', n === actNum);
       });
@@ -2559,8 +2663,9 @@
       stopConfetti();
       const stage = document.getElementById('main-stage');
       const t = getTheme();
+      const totalLevels = window.SCIENCE_GAME_DATA.levels.length;
       const clearedCount = progress.clearedLevels.length;
-      const percent = Math.round((clearedCount / 5) * 100);
+      const percent = Math.round((clearedCount / totalLevels) * 100);
 
       let cardsHtml = '';
       window.SCIENCE_GAME_DATA.levels.forEach((lvl, idx) => {
@@ -2569,6 +2674,7 @@
         const bestScore = progress.bestScores[lvl.level] || 0;
         const themeIcon = t.levelIcons[idx] || lvl.icon;
         const themeBadge = t.levelBadges[idx] || lvl.badge;
+        const multiCount = lvl.questions.filter(q => q.isMulti).length;
 
         let statusPill = '';
         if (isCleared) {
@@ -2592,8 +2698,8 @@
               </div>
               <div class="level-title">${lvl.name}</div>
               <div class="level-desc">${lvl.subtitle}</div>
-              <div style="font-size: 0.85rem; font-weight: 900; color: var(--primary-deep); background: rgba(255,255,255,0.85); display: inline-block; padding: 3px 10px; border-radius: 999px; margin-bottom: 6px;">
-                🎲 題庫 ${lvl.questions.length} 題｜隨機抽 10 題
+              <div style="font-size: 0.84rem; font-weight: 900; color: var(--primary-deep); background: rgba(255,255,255,0.88); display: inline-block; padding: 3px 10px; border-radius: 999px; margin-bottom: 6px;">
+                🎲 題庫 ${lvl.questions.length} 題（含☑️勾選題 ${multiCount} 題）｜抽 10 題
               </div>
               <div style="font-size: 0.84rem; font-weight: 900; color: var(--text-soft);">
                 稱號：${themeBadge}
@@ -2617,23 +2723,23 @@
 
       const activeZone = HABITAT_ZONES.find(z => z.key === activeHabitatKey) || HABITAT_ZONES[0];
 
-      const certBanner = progress.clearedLevels.includes(5) ? `
+      const certBanner = progress.clearedLevels.includes(totalLevels) ? `
         <div style="margin-top: 24px; text-align: center; background: var(--mascot-banner-bg); padding: 18px; border-radius: var(--radius-lg); border: 3px dashed var(--primary-strong);">
           <p style="font-size: 1.15rem; font-weight: 900; color: var(--primary-deep); margin-bottom: 10px;">
-            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部五個自然科學關卡的挑戰！
+            ${t.mascotVictory} 恭喜 ${progress.playerName} 已經完成全部八個自然科學關卡的挑戰！
           </p>
           <button class="kawaii-btn btn-primary" onclick="showCertificateScreen()">
-            🏆 查看專屬「${t.levelBadges[4]}」榮譽證書
+            🏆 查看專屬「${t.levelBadges[totalLevels - 1]}」榮譽證書
           </button>
         </div>
       ` : '';
 
       stage.innerHTML = `
         <div class="map-header">
-          <h2>${t.brandIcon} 水生生物與環境・主題與關卡選擇 ${t.brandIcon}</h2>
-          <p>100% 依據四年級自然「水生生物與環境（活動1～活動3）」題庫設計！每關 36 題（共 180 題），隨機抽 10 題只要「答對 ${PASS_SCORE} 題以上 (80分)」即可晉級（亦支援點選「⚡ 強制過關」）！</p>
+          <h2>${t.brandIcon} 第一～二課：地表環境與水生生物・八大關卡選擇 ${t.brandIcon}</h2>
+          <p>100% 依據四年級自然「第一課：地表環境與岩石沙土」及「第二課：水生生物與環境」題庫設計！共 8 大關卡、每關 42 題（共 336 題，皆包含☑️勾選複選題），隨機抽 10 題只要「答對 ${PASS_SCORE} 題以上 (80分)」即可晉級！</p>
           <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(82, 183, 136, 0.14); border:1px solid rgba(82, 183, 136, 0.35); border-radius:20px; font-size:0.86rem; font-weight:800; color:var(--text); margin: 6px auto 14px auto;">
-            <span>✨ 智能防重複出題系統已啟動：答對過的題目出現機率自動下降，優先為你挑選新題與易錯弱點！</span>
+            <span>✨ 智能防重複出題＋☑️多重勾選題型已啟動：答對過的題目出現機率自動下降，每回皆含勾選複選題與單選題！</span>
           </div>
 
           <!-- 首頁三大主題風格切換卡片 -->
@@ -2691,7 +2797,7 @@
 
           <div class="overall-progress-bar">
             <div class="overall-progress-fill" style="width: ${percent}%;"></div>
-            <div class="overall-progress-label">${t.scorePointIcon} ${progress.playerName} 的自然總通關進度：${clearedCount} / 5 關 (${percent}%) ${t.scorePointIcon}</div>
+            <div class="overall-progress-label">${t.scorePointIcon} ${progress.playerName} 的自然總通關進度：${clearedCount} / ${totalLevels} 關 (${percent}%) ${t.scorePointIcon}</div>
           </div>
 
           <!-- 自然錯題溫習筆記本快捷橫條 -->
@@ -2721,12 +2827,12 @@
           </div>
         </div>
 
-        <!-- 互動水生生物棲位觀察池 -->
+        <!-- 互動水生生物與地表環境觀察池 -->
         <div class="habitat-showcase">
           <div class="habitat-header">
-            <h3>🔬 考前秒懂！水生生物棲位與構造互動觀察箱（點擊下方標籤切換）</h3>
+            <h3>🔬 考前秒懂！第一～二課核心科學觀念互動觀察箱（點擊下方標籤切換）</h3>
             <button class="kawaii-btn btn-butter" style="padding: 5px 12px; font-size: 0.85rem;" onclick="openEncyclopedia(0)">
-              📖 查看完整 36 張圖鑑卡
+              📖 查看完整 48 張圖鑑卡
             </button>
           </div>
           <div class="habitat-tabs">
@@ -2757,6 +2863,7 @@
 
     // 強制過關（可從關卡地圖或測驗中直接觸發）
     function forcePassLevel(levelNum) {
+      const totalLevels = window.SCIENCE_GAME_DATA.levels.length;
       const levelObj = window.SCIENCE_GAME_DATA.levels.find(l => l.level === levelNum);
       if (!levelObj) return;
       playFanfareSound();
@@ -2766,13 +2873,13 @@
       if ((progress.bestScores[levelNum] || 0) < PASS_SCORE) {
         progress.bestScores[levelNum] = PASS_SCORE;
       }
-      if (levelNum < 5 && progress.unlockedLevel < levelNum + 1) {
+      if (levelNum < totalLevels && progress.unlockedLevel < levelNum + 1) {
         progress.unlockedLevel = levelNum + 1;
       }
       saveProgress();
       const t = getTheme();
-      if (levelNum === 5) {
-        setMascot(t.mascotVictory, `已為 <b>${progress.playerName}</b> 強制通過 <b>${levelObj.name}</b>！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+      if (levelNum === totalLevels) {
+        setMascot(t.mascotVictory, `已為 <b>${progress.playerName}</b> 強制通過 <b>${levelObj.name}</b>！快來領取你的【<b>${t.levelBadges[totalLevels - 1]}</b>】專屬榮譽證書吧！🎉`);
         showCertificateScreen();
       } else {
         setMascot(t.mascotHappy, `⚡ 已為 <b>${progress.playerName}</b> 強制通過 <b>${levelObj.name}</b>，並成功解鎖 <b>Level ${levelNum + 1}</b> 囉！${t.scorePointIcon}`);
@@ -2792,10 +2899,23 @@
       const t = getTheme();
       document.body.classList.add('in-quiz');
 
-      // 採用智能自適應加權抽樣：答對過的題目出現機率自動下降，優先抽取未做過的新題與常錯弱點
-      const selectedPool = selectAdaptiveQuestions(levelObj.questions, QUESTIONS_PER_ROUND);
+      // 確保每輪 10 題中一定包含「勾選題（多重選項複選題）」與「單選題」，並套用自適應加權抽樣
+      const multiPool = levelObj.questions.filter(q => q.isMulti && Array.isArray(q.answers));
+      const singlePool = levelObj.questions.filter(q => !q.isMulti);
+      let selectedPool = [];
+      if (multiPool.length > 0 && singlePool.length > 0) {
+        const targetMulti = Math.min(multiPool.length, levelNum >= 6 ? 4 : 3);
+        const targetSingle = QUESTIONS_PER_ROUND - targetMulti;
+        const pickedMulti = selectAdaptiveQuestions(multiPool, targetMulti);
+        const pickedSingle = selectAdaptiveQuestions(singlePool, targetSingle);
+        selectedPool = shuffleArray([...pickedMulti, ...pickedSingle]);
+      } else {
+        selectedPool = selectAdaptiveQuestions(levelObj.questions, QUESTIONS_PER_ROUND);
+      }
+
       const preparedQuestions = selectedPool.map(q => ({
         ...q,
+        selectedIndices: [],
         shuffledOptions: shuffleArray(q.options)
       }));
 
@@ -2811,7 +2931,7 @@
 
       setMascot(
         t.mascotAvatar,
-        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已隨機抽出 <b>10 道題目</b>，只要答對 <b>${PASS_SCORE} 題以上（80分）</b> 就能過關晉級喔！${t.hintIcon}`
+        `挑戰者 <b>${progress.playerName}</b>，現在進入 <b>${levelObj.name}</b>！已隨機抽出 <b>10 道題目（含☑️多重勾選題）</b>，只要答對 <b>${PASS_SCORE} 題以上（80分）</b> 就能過關晉級喔！${t.hintIcon}`
       );
       renderQuestionScreen();
       const stage = document.getElementById('main-stage');
@@ -2840,14 +2960,43 @@
       const totalQ = s.questions.length;
       const progressPct = Math.round((qNum / totalQ) * 100);
       const levelThemeIcon = t.levelIcons[s.level - 1] || s.levelObj.icon;
+      const isMulti = Boolean(q.isMulti && Array.isArray(q.answers));
+      if (!Array.isArray(q.selectedIndices)) q.selectedIndices = [];
 
-      const optionLabels = ['A', 'B', 'C', 'D'];
-      const optionsHtml = q.shuffledOptions.map((opt, idx) => `
-        <button class="option-btn" id="opt-btn-${idx}" onclick="submitAnswer(${idx})">
-          <span class="option-index">${optionLabels[idx]}</span>
-          <span>${opt}</span>
-        </button>
-      `).join('');
+      const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const optionsHtml = q.shuffledOptions.map((opt, idx) => {
+        if (isMulti) {
+          const isSel = q.selectedIndices.includes(idx);
+          return `
+            <button class="option-btn ${isSel ? 'selected' : ''}" id="opt-btn-${idx}" onclick="toggleMultiOption(${idx})">
+              <span class="option-checkbox" id="opt-chk-${idx}">${isSel ? '☑️' : '⬜'}</span>
+              <span class="option-index">${optionLabels[idx] || (idx + 1)}</span>
+              <span>${opt}</span>
+            </button>
+          `;
+        }
+        return `
+          <button class="option-btn" id="opt-btn-${idx}" onclick="submitAnswer(${idx})">
+            <span class="option-index">${optionLabels[idx] || (idx + 1)}</span>
+            <span>${opt}</span>
+          </button>
+        `;
+      }).join('');
+
+      const multiBannerHtml = isMulti ? `
+        <div class="multi-question-banner">
+          <span>☑️ 【勾選題・多重選項】本題共有 <b>${q.answers.length} 個</b> 正確答案，請點擊勾選所有正確選項後，按下方「確認送出勾選答案」！</span>
+          <span style="background:#FFF; color:#B45309; padding:3px 10px; border-radius:999px; font-size:0.84rem; border:1.5px solid #F59E0B;">應選 ${q.answers.length} 項</span>
+        </div>
+      ` : '';
+
+      const multiSubmitHtml = isMulti ? `
+        <div class="multi-submit-bar" id="multi-submit-bar">
+          <button class="kawaii-btn btn-primary" id="multi-submit-btn" onclick="submitMultiAnswer()" style="font-size:1.12rem; padding:12px 32px;">
+            ✅ 確認送出勾選答案（已勾選 <span id="multi-selected-count">${q.selectedIndices.length}</span> / ${q.answers.length} 項）
+          </button>
+        </div>
+      ` : '';
 
       stage.innerHTML = `
         <div class="quiz-topbar">
@@ -2878,6 +3027,7 @@
             <span class="lesson-badge">🔬 單元範圍：${card.activityTitle}（${card.tag}）</span>
             <button class="hint-btn" onclick="toggleHint()">${t.hintIcon} 科學提示</button>
           </div>
+          ${multiBannerHtml}
           <div class="question-text">${q.prompt}</div>
           <div class="hint-popup" id="hint-box">💡 提示：${q.hint}</div>
         </div>
@@ -2885,6 +3035,8 @@
         <div class="options-grid" id="options-grid">
           ${optionsHtml}
         </div>
+
+        ${multiSubmitHtml}
 
         <div class="feedback-panel" id="feedback-panel"></div>
       `;
@@ -2895,6 +3047,103 @@
       if (box) {
         box.style.display = box.style.display === 'block' ? 'none' : 'block';
       }
+    }
+
+    // 切換勾選題（複選）選項狀態
+    function toggleMultiOption(idx) {
+      const s = currentSession;
+      if (!s || s.answered) return;
+      const q = s.questions[s.currentIndex];
+      if (!Array.isArray(q.selectedIndices)) q.selectedIndices = [];
+
+      const pos = q.selectedIndices.indexOf(idx);
+      if (pos >= 0) {
+        q.selectedIndices.splice(pos, 1);
+      } else {
+        q.selectedIndices.push(idx);
+      }
+
+      const isSel = q.selectedIndices.includes(idx);
+      const btn = document.getElementById(`opt-btn-${idx}`);
+      const chk = document.getElementById(`opt-chk-${idx}`);
+      if (btn) btn.classList.toggle('selected', isSel);
+      if (chk) chk.textContent = isSel ? '☑️' : '⬜';
+
+      const countEl = document.getElementById('multi-selected-count');
+      if (countEl) countEl.textContent = q.selectedIndices.length;
+    }
+
+    // 送出勾選題（多重選項複選題）答案
+    function submitMultiAnswer() {
+      const s = currentSession;
+      if (!s || s.answered) return;
+      const t = getTheme();
+      const q = s.questions[s.currentIndex];
+      if (!q.selectedIndices || q.selectedIndices.length === 0) {
+        playWrongSound();
+        setMascot(t.mascotCheer, `提醒 <b>${progress.playerName}</b>：這題是<b>☑️ 勾選題（複選題）</b>，請先點擊勾選你認為正確的選項，再按「確認送出勾選答案」喔！`);
+        return;
+      }
+
+      s.answered = true;
+      const submitBar = document.getElementById('multi-submit-bar');
+      if (submitBar) submitBar.style.display = 'none';
+
+      const optGrid = document.getElementById('options-grid');
+      if (optGrid) optGrid.classList.add('answered-compact');
+
+      const sortedIndices = [...q.selectedIndices].sort((a, b) => a - b);
+      const chosenOptions = sortedIndices.map(i => q.shuffledOptions[i]);
+      const correctSet = new Set(q.answers || []);
+      const isCorrect = chosenOptions.length === correctSet.size && chosenOptions.every(opt => correctSet.has(opt));
+      const card = getCardById(q.cardId);
+
+      q.shuffledOptions.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        const chk = document.getElementById(`opt-chk-${idx}`);
+        if (!btn) return;
+        btn.disabled = true;
+        btn.classList.remove('selected');
+        const wasPicked = q.selectedIndices.includes(idx);
+        const isAns = correctSet.has(opt);
+
+        if (isAns && wasPicked) {
+          btn.classList.add('correct');
+          if (chk) chk.textContent = '✅';
+        } else if (isAns && !wasPicked) {
+          btn.classList.add('missed');
+          if (chk) chk.textContent = '💡';
+        } else if (!isAns && wasPicked) {
+          btn.classList.add('wrong');
+          if (chk) chk.textContent = '❌';
+        }
+      });
+
+      const chosenAnswerStr = chosenOptions.join('、');
+      const correctAnswerStr = (q.answers || []).join('、') || q.answer;
+
+      if (isCorrect) {
+        s.correctCount++;
+        playCorrectSound();
+        recordQuestionCorrect(q);
+        if (s.isMistakeQuiz) {
+          resolveMistake(q.prompt);
+        }
+        setMascot(t.mascotHappy, `太厲害了 <b>${progress.playerName}</b>！這道☑️勾選複選題全數勾選正確！${s.isMistakeQuiz ? '已成功克服一題弱點！' : ''}${t.scorePointIcon}「<b>${card.title}</b>」完全難不倒你！`);
+      } else {
+        recordQuestionWrong(q);
+        recordMistake(q, chosenAnswerStr, card);
+        s.wrongRecords.push({
+          question: q.prompt,
+          yourAnswer: chosenAnswerStr,
+          correctAnswer: correctAnswerStr,
+          card
+        });
+        playWrongSound();
+        setMascot(t.mascotCheer, `差一點點 <b>${progress.playerName}</b>！這道☑️勾選題的完整正確選項是「<b>${correctAnswerStr}</b>」（黃色虛線代表漏選的正解），已收錄至錯題筆記本供你隨時複習！💪`);
+      }
+
+      renderFeedbackPanel(s, q, card, isCorrect, correctAnswerStr);
     }
 
     function submitAnswer(selectedIndex) {
@@ -2943,6 +3192,11 @@
         setMascot(t.mascotCheer, `別氣餒 <b>${progress.playerName}</b>！已為你收錄至自然錯題筆記本，正確答案是「<b>${q.answer}</b>」，多看一次解析小卡加深記憶喔！💪`);
       }
 
+      renderFeedbackPanel(s, q, card, isCorrect, q.answer);
+    }
+
+    function renderFeedbackPanel(s, q, card, isCorrect, correctAnswerDisplay) {
+      const t = getTheme();
       const totalQ = s.questions.length;
       const pillStatus = document.getElementById('pill-status');
       const pillScore = document.getElementById('pill-score');
@@ -2958,7 +3212,7 @@
       panel.innerHTML = `
         <div class="feedback-header">
           <div class="feedback-title" style="color: ${isCorrect ? '#16694A' : '#C9385A'};">
-            ${isCorrect ? `${t.scorePointIcon} 答對了！科學觀念超正確！` : `💦 答錯囉！正確答案是：「${q.answer}」`}
+            ${isCorrect ? `${t.scorePointIcon} 答對了！科學觀念超正確！` : `💦 答錯囉！正確答案是：「${correctAnswerDisplay}」`}
           </div>
           <button class="kawaii-btn ${isCorrect ? 'btn-accent' : 'btn-primary'}" id="next-q-btn" onclick="nextQuestion()">
             ${isLast ? '🏁 查看闖關結算' : '下一題 ➡'}
@@ -3015,6 +3269,7 @@
       const s = currentSession;
       const t = getTheme();
       const total = s.questions.length;
+      const totalLevels = window.SCIENCE_GAME_DATA.levels.length;
 
       if (s.isMistakeQuiz) {
         playFanfareSound();
@@ -3101,21 +3356,21 @@
         if (!progress.clearedLevels.includes(s.level)) {
           progress.clearedLevels.push(s.level);
         }
-        if (s.level < 5 && progress.unlockedLevel < s.level + 1) {
+        if (s.level < totalLevels && progress.unlockedLevel < s.level + 1) {
           progress.unlockedLevel = s.level + 1;
         }
         saveProgress();
 
-        if (s.level === 5 && s.wrongRecords.length === 0) {
+        if (s.level === totalLevels && s.wrongRecords.length === 0) {
           startConfetti();
-          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把五個等級的自然科學難關全部破解了！快來領取你的【<b>${t.levelBadges[4]}</b>】專屬榮譽證書吧！🎉`);
+          setMascot(t.mascotVictory, `太不可思議了 <b>${progress.playerName}</b>！！你把八個等級的自然科學難關全部破解了！快來領取你的【<b>${t.levelBadges[totalLevels - 1]}</b>】專屬榮譽證書吧！🎉`);
           showCertificateScreen();
           return;
         }
 
         startConfetti();
         const passTypeLabel = isForced ? '⚡ 強制過關成功' : `答對 ${s.correctCount} / ${total} 題（${s.correctCount * 10}分）過關`;
-        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> ${passTypeLabel}！${s.level < 5 ? `成功解鎖 <b>Level ${s.level + 1}</b> 囉！` : '已完成全部五個關卡！'}${t.scorePointIcon}`);
+        setMascot(t.mascotHappy, `太強啦！！<b>${progress.playerName}</b> 在 <b>${s.levelObj.name}</b> ${passTypeLabel}！${s.level < totalLevels ? `成功解鎖 <b>Level ${s.level + 1}</b> 囉！` : '已完成全部八個關卡！'}${t.scorePointIcon}`);
 
         stage.innerHTML = `
           <div class="result-box">
@@ -3123,19 +3378,19 @@
             <div class="result-title">${t.progressIcon} 恭喜 ${progress.playerName} 闖關成功！ ${t.progressIcon}</div>
             <div class="result-subtitle">
               你在「${s.levelObj.name}」${isForced ? '使用了「⚡ 強制過關」特權' : `答對了 ${s.correctCount} 道題目（達 ${PASS_SCORE} 題過關標準）`}！<br>
-              獲得本關科學榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} ${s.level < 5 ? '並成功解鎖下一關！' : '並解鎖全破榮譽證書！'}
+              獲得本關科學榮譽稱號：【<b>${themeBadge}</b>】${t.scorePointIcon} ${s.level < totalLevels ? '並成功解鎖下一關！' : '並解鎖全破榮譽證書！'}
             </div>
             <div class="score-big-badge">
               <span>🎉 成績：${isForced ? `強制過關（答對 ${s.correctCount} / ${total} 題）` : `${s.correctCount * 10} 分（答對 ${s.correctCount} / ${total} 題）`}</span>
             </div>
             <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-              ${s.level < 5 ? `
+              ${s.level < totalLevels ? `
                 <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); startLevel(${s.level + 1})">
                   ${t.progressIcon} 立即挑戰 Level ${s.level + 1} ➡
                 </button>
               ` : `
                 <button class="kawaii-btn btn-primary" style="font-size:1.15rem; padding:14px 28px;" onclick="stopConfetti(); showCertificateScreen()">
-                  🏆 領取「${t.levelBadges[4]}」榮譽證書
+                  🏆 領取「${t.levelBadges[totalLevels - 1]}」榮譽證書
                 </button>
               `}
               <button class="kawaii-btn btn-butter" onclick="stopConfetti(); showMapScreen()">
@@ -3180,13 +3435,14 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ====== 畫面 4：Level 5 全破榮譽證書 ======
+    // ====== 畫面 4：Level 8 全破榮譽證書 ======
     function showCertificateScreen() {
       currentSession = null;
       document.body.classList.remove('in-quiz');
       startConfetti();
       const stage = document.getElementById('main-stage');
       const t = getTheme();
+      const totalLevels = window.SCIENCE_GAME_DATA.levels.length;
       const today = new Date();
       const dateStr = `${today.getFullYear()} 年 ${today.getMonth() + 1} 月 ${today.getDate()} 日`;
 
@@ -3208,10 +3464,10 @@
           </div>
 
           <div class="cert-body">
-            在「國小四年級自然科：水生生物與環境（活動1～活動3，共 180 題大題庫）」中，<br>
-            以 <b>100% 全對</b> 的完美表現在五大難度關卡中過關斬將，<br>
-            正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[4]}</b>】之最高稱號！<br>
-            不僅精通水生動植物的奇妙構造，更具備守護水域生態的科學素養，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
+            在「國小四年級自然科：第一～二課（地表環境與岩石沙土、水生生物與環境，共 336 題大題庫）」中，<br>
+            成功挑戰並通過全數 <b>八大難度關卡（包含☑️多重勾選題型）</b>，<br>
+            正式榮獲【<b style="color:var(--primary-deep); font-size:1.25rem;">${t.levelBadges[totalLevels - 1]}</b>】之最高稱號！<br>
+            不僅精通岩石風化、土壤保育與水生動植物的奇妙構造，更具備守護地球生態的科學素養，特頒此狀，以資鼓勵！${t.scoreStatusIcon}
           </div>
 
           <div class="cert-badges-row">
